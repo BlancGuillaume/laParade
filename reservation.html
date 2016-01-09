@@ -1,0 +1,81 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Librairie la Parade</title>
+		<link href="css/style.css" rel="stylesheet" type="text/css">
+	</head>
+	<body>
+		<header>
+			<h1>Librairie la Parade</h1>
+			<div>
+				<div class="col s9">
+					<ul class="tabs">
+						<li class="tab col s3"><img id="logo" src="images/blason.gif"></li>
+						<li class="tab col s3"><a href="index.html">Présentation</a></li>
+						<li class="tab col s3"><a class="active" href="reservation.html">Réservation</a></li>
+						<li class="tab col s3"><a href="contact.html">Contact</a></li>
+					</ul>
+			    </div>
+			</div>
+		</header>
+		
+		<!-- Page Layout here -->
+		<div class="row">
+			<div class="col s3">
+				<!-- Section livre -->
+				<section>
+					<h2>Mon livre</h2>
+					<div>
+						<label for="titre">Titre :</label>
+						<input type="text" id="titre" />
+					</div>
+					<div>
+						<label for="auteur">Auteur :</label>
+						<input type="text" id="auteur" />
+					</div>
+					<div>
+						<label for="editeur">Editeur :</label>
+						<input type="text" id="editeur" />
+					</div>
+					<div>
+						<label for="commentaire">Commentaire :</label>
+						<textarea id="commentaire"></textarea>
+					</div>
+				</section>
+			</div>
+
+			<div class="col s9">
+				<!-- Section client -->
+				<section>
+					<h2>Mes informations</h2>
+					<div>
+						<label for="nom">Nom :</label>
+						<input type="text" id="nom" />
+					</div>
+					<div>
+						<label for="nom">Prénom :</label>
+						<input type="text" id="prenom" />
+					</div>
+					<div>
+						<label for="mail">Mail :</label>
+						<input type="email" id="mail" />
+					</div>
+			
+					<div>
+						<label for="telephone">Téléphone :</label>
+						<input type="tel" pattern="[0-9]{10} id="telephone" />
+					</div>
+				<!-- TODO : photo du livre a acheter -->
+			</section>
+			</div>
+		</div>
+		
+		<form action="todo" method="post">
+			<!-- Validation de la commande -->
+			<div class="button">
+				<button type="submit">Effectuer votre réservation</button>
+			</div>
+		</form>
+	</body>
+</html>
