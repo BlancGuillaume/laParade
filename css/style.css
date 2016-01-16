@@ -7794,7 +7794,7 @@ small {
 }
 
 .card.small {
-  height: 300px;
+  height: 200px;
 }
 
 .card.medium {
@@ -7848,7 +7848,7 @@ small {
 }
 
 .card .card-action a:not(.btn):not(.btn-large):not(.btn-floating) {
-  color: #ffab40;
+  color: #ffffff;
   margin-right: 20px;
   transition: color .3s ease;
   text-transform: uppercase;
@@ -11260,4 +11260,16 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
   width: 150px;
   height: auto;
   display:block;
+}
+
+#container-cards {
+  
+  position:absolute;
+  right:8px;
+  left:80%;
+
+}
+
+#container-cards .card {
+  text-align: justify;
 }
