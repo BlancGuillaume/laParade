@@ -1,4 +1,4 @@
-/*!
+!
  * Materialize v0.97.5 (http://materializecss.com)
  * Copyright 2014-2015 Materialize
  * MIT License (https://raw.githubusercontent.com/Dogfalo/materialize/master/LICENSE)
@@ -2203,6 +2203,7 @@ html {
  * Remove default margin.
  */
 body {
+  background-color: #ededed;
   margin: 0;
 }
 
@@ -11264,7 +11265,7 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
 
 .container-cards {
   float:right;
-  width: 18%;
+  width: 15%;
   margin-top: 1%;
   margin-right: 1%;
 /*  position:absolute;
@@ -11279,9 +11280,10 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
 
 #presentation {
   float:left;
-  width: 78%;
-  margin:1% 2% 2% 1%;
+  width: 81.8%;
+  margin:1% 0% 2% 1%;
   text-align: justify;
+
 }
 
 #imageDevanture {
@@ -11293,13 +11295,39 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
 #presentationReservation, #presentationNews {
   margin-right: 2%;
   width:32%;
+  height: 380px;
 }
 
  #presentationContact {
   width:32%;
+  height: 380px;
  }
 
  h5, h3 {
   text-align: center;
   color: #8d6e63;
  }
+
+ #formulaireReservation {
+   margin-top: 1%;
+ }
+
+ .container-cards p, a{
+  font-size: small;
+ }
+ .container-cards span{
+  font-size: medium;
+ }
+ a {
+  color:#ff5722;
+ }
+
+ #message {
+  color: #8d6e63;
+  font-size: medium;
+ }
+
+ #imageLivre, #imageNews, #imageContact {
+    width:100%;
+ }
+ 
