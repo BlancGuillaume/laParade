@@ -60,11 +60,11 @@
 
 		<!-- Page Layout here -->
 		<div class="row" id="formulaireReservation">
-			<!------------------------- Section ouvrage -----------------------> 
-			<div class="col s12 m5">
-				<div class="card orange lighten-5">
-					<span class="card-title">Le livre</span>
-					<div class="row">
+			<!-- - - - - - - - - - -  Section ouvrage  - - - - - - - - - - --> 
+			<div id="cardLivre" class="col s12 m5">
+				<div class="card col white">
+					<h5>Le livre</h5>
+					<div class="row">   
 						<form class="col s12">
 							<!-- Titre du livre -->
 							<div class="input-field col s12">
@@ -125,58 +125,58 @@
 					</div>
 				</div>
 			</div>
-			<!---------------------- Section Client et etudiant ----------------------->
+			<!-- - - - - - - - - - - Section Client et etudiant - - - - - - - - - - -->
 			<div class="col s12 m5">
-				<!---- Card Client ----->
-				<div class="card amber lighten-5">
-					<span class="card-title">Mes informations</span>
-					<div class="row">
-						<form class="col s12">
-							<!-- Nom + prénom -->
-							<div class="input-field col s6">
-								<i class="material-icons prefix">account_circle</i>
-								<input id="prenom" type="text" class="validate">
-								<label for="prenom">Prenom</label>
-							</div>
-							<div class="input-field col s6">
-								<input id="nom" type="text" class="validate">
-								<label for="nom">Nom</label>
-							</div>
-							<!-- Telephone -->
-							<div class="input-field col s12">
-								<i class="material-icons prefix">phone</i>
-								<input id="telephone" type="text" class="validate">
-								<label for="telephone">Telephone</label>
-							</div>
-							<!-- Email -->
-							<div class="input-field col s12">
-								<i class="material-icons prefix">email</i>
-								<input id="email" type="email" class="validate">
-								<label for="email">Email</label>
-							</div>
-						</form>
+				<div id="cardclient">
+					<!-- - - Card Client - - - -->
+					<div class="card col white">
+						<h5>Mes informations</h5>
+						<div class="row">
+							<form class="col s12">
+								<!-- Nom + prénom -->
+								<div class="input-field col s6">
+									<i class="material-icons prefix">account_circle</i>
+									<input id="prenom" type="text" class="validate">
+									<label for="prenom">Prenom</label>
+								</div>
+								<div class="input-field col s6">
+									<input id="nom" type="text" class="validate">
+									<label for="nom">Nom</label>
+								</div>
+								<!-- Telephone -->
+								<div class="input-field col s12">
+									<i class="material-icons prefix">phone</i>
+									<input id="telephone" type="text" class="validate">
+									<label for="telephone">Telephone</label>
+								</div>
+								<!-- Email -->
+								<div class="input-field col s12">
+									<i class="material-icons prefix">email</i>
+									<input id="email" type="email" class="validate">
+									<label for="email">Email</label>
+								</div>
+							</form>
+						</div>
+					</div>
+					<!-- - - Card etudiant - - -->
+					<div id="cardEtudiant" class="card col white">
+						<h5>Etudiant</h5>
+						<div class="row">
+							<form class="col s12">
+								Le livre que vous commandez est pour un usage scolaire ? <br/>
+								Dites nous quel établissement vous l'a demandé :
+								<div class="input-field col s12">
+									<i class="material-icons prefix">store</i>
+									<input id="etablissement" type="text" class="validate">
+									<label for="etablissement">Etablissement</label>
+								</div>
+							</form>
+						</div>
 					</div>
 				</div>
-				<!---- Card etudiant ---->
-				<div class="card amber lighten-5">
-					<span class="card-title">Etudiant</span>
-					<br/>
-					<div class="row">
-						<form class="col s12">
-							Le livre que vous commandez est pour un usage scolaire ? <br />
-							Dites nous quel établissement vous l'a demandé : 
-							<div class="input-field col s12">
-								<i class="material-icons prefix">store</i>
-								<input id="etablissement" type="text" class="validate">
-								<label for="etablissement">Etablissement</label>
-							</div>
-						</form>
-					</div>
-				</div>
-				
 				<!-- Validation de la commande -->
 				<form action="todo" method="post">
-					<button class="btn waves-effect waves-light" type="submit" name="action">reserver
+					<button id="boutonReservation" class="btn waves-effect waves-light" type="submit" name="action">reserver
 						<i class="material-icons right">send</i>
 					</button>
 				</form>

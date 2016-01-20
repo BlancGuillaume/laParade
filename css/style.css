@@ -11283,7 +11283,10 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
   width: 81.8%;
   margin:1% 0% 2% 1%;
   text-align: justify;
+}
 
+#cardQuestions {
+  width: 100%;
 }
 
 #imageDevanture {
@@ -11295,15 +11298,15 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
 #presentationReservation, #presentationNews {
   margin-right: 2%;
   width:32%;
-  height: 380px;
+  height: 450px;
 }
 
  #presentationContact {
   width:32%;
-  height: 380px;
+  height: 450px;
  }
 
- h5, h3 {
+ h5, h3, h4 {
   text-align: center;
   color: #8d6e63;
  }
@@ -11330,4 +11333,11 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
  #imageLivre, #imageNews, #imageContact {
     width:100%;
  }
- 
+
+ #cardEtudiant {
+  width: 100%;
+ }
+
+ #boutonReservation {
+  margin-top: 5px;
+ }
