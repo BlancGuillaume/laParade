@@ -7,7 +7,7 @@
    $id = "flo";
    $mdp = "root";
    $isAdmin = true;
-   bd->insert_utilisateur($id, $mdp, $isAdmin);
+   $bd->insert_utilisateur($id, $mdp, $isAdmin);
    $result = $bd->get_utilisateur($id);
    echo "Mot de passe : " . $result['mdpUtilisateur'];
 ?>
