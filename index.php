@@ -1,3 +1,17 @@
+<?php 
+   include('bd/accessBD.php'); 
+
+   $bd = new accessBD;
+   $bd->connect();
+
+   $id = "flo";
+   $mdp = "root";
+   $isAdmin = true;
+   bd->insert_utilisateur($id, $mdp, $isAdmin);
+   $result = $bd->get_utilisateur($id);
+   echo "Mot de passe : " . $result['mdpUtilisateur'];
+?>
+
 <!DOCTYPE HTML>
 <html>
    <head>
@@ -29,7 +43,7 @@
       <!-- Présentation --> 
       <section id="presentation" class="row"> 
          <div id="accrochePresentation" class="card col white">
-            <h3>Bienvenue <?php echo "ojdezjfdjes";?></h3>
+            <h3>Bienvenue</h3>
             <p>Reprise en 2004 par Arnauld et Patricia GIVELET, la librairie la Parade n'a de cesse de se diversifier afin de satisfaire pleinement tous ses clients : presse, papeterie, librairie, LOTO, PMU, point de vente RTM, confiserie etc. C'est dans cet état d'esprit, que nous avons la joie de vous présenter les nouveaux services en ligne !<br><br></p>
             <img id="imageDevanture" src="images/devanture.jpg"></img>
          </div>
