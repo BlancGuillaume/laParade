@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Librairie la Parade</title>
+		<link href="css/style.css" rel="stylesheet" type="text/css">
+		<!--Import Google Icon Font-->
+		<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<!--Import materialize.css-->
+		<!--<link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/> -->
+	</head>
+	<body>
+		<!--Import jQuery before materialize.js-->
+		<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+		<script type="text/javascript" src="js/materialize.min.js"></script>
+		<header>
+			<nav>
+				<div class="nav-wrapper">
+					<!--<h1><img id="logo" class="brand-logo" src="images/blason.gif"/></h1>-->
+					<a href="images/blason.gif" class="brand-logo">Librairie la Parade</a>
+					<ul id="nav-mobile" class="right hide-on-med-and-down">
+						<li><a href="index.php">Presentation</a></li>
+						<li class="active"><a href="reservation.html">Reservation</a></li>
+						<li><a href="contact.html">Contact</a></li>
+					</ul>
+				</div>
+			</nav>
+		</header>
+
+		<!-- Page Layout here -->
+		<div class="row" id="formulaireReservation">
+			<div id="cardNews" class="col s12 m5">
+				<div class="card col white">
+					<h5>La news</h5>
+					<div class="row">   
+						<form class="col s12">
+							<!-- Titre de la news-->
+							<div class="input-field col s12">
+								<i class="material-icons prefix">label</i>
+								<input id="nomNews" type="text" class="validate">
+								<label for="nomNews">Titre news</label>
+							</div>
+							<!-- Contenu de la news -->
+							<div class="input-field col s12">
+								<i class="material-icons prefix">view_column</i>
+								<input id="contenuNews" type="text" class="validate">
+								<label for="contenuNews">Contenu</label>
+							</div>
+							<!-- Lien news -->
+							<div class="input-field col s12">
+								<i class="material-icons prefix">view_column</i>
+								<input id="lienNews" type="text" class="validate">
+								<label for="lienNews">Lien</label>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			
+			<!-- Formulaire d'upload d'image. TODO : en faire un seul avec le formulaire d'en haut -->
+			<form action="upload.php" method="post" enctype="multipart/form-data">
+				Image a uploader : 
+				<input type="file" name="fileToUpload" id="fileToUpload">
+				<input type="submit" value="Upload Image" name="submit">
+			</form>
+		
+			
+				<!-- Validation de la commande -->
+				<form action="reservation.html" method="post">
+					<button id="boutonReservation" class="btn waves-effect waves-light" type="submit" onSubmit="alert('Reservation effectuée');" name="action">reserver
+					
+						<i class="material-icons right">send</i>
+					</button>
+				</form>
+			</div>
+		</div>
+		
+	</body>
+</html>
