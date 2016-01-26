@@ -33,7 +33,7 @@
                <a href="images/blason.gif" class="brand-logo">Librairie la Parade</a>
                <!-- Barre de navigation -->
                <ul id="nav-mobile" class="right hide-on-med-and-down">
-                  <li class="active"><a href="index.html">Presentation</a></li>
+                  <li class="active"><a href="index.php">Presentation</a></li>
                   <li><a href="reservation.html">Reservation</a></li>
                   <li><a href="contact.html">Contact</a></li>
                </ul>
