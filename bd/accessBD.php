@@ -32,6 +32,37 @@ class accessBD {
             return -1;
         }
     }
+	
+	/*
+	function insert_reservation_client($mailClient, $nomClient, $prenomClient, $numClient, $dateLimiteReservation, $commentaireReservation,     ) {
+	
+		// La date actuelle, celle de la reservation
+		$dateReservation = date("d-m-Y");
+		
+		// TODO : verifier que l'utilisateur n'existe pas déja
+		$sql = "INSERT INTO CLIENT VALUES ('$mailClient', '$nomClient', '$prenomClient', '$numClient')
+				INSERT INTO RESERVATION ($dateReservation, '$dateLimiteReservation', '$commentaireReservation', '$mailClient'";
+				
+		// SELECT de la dernière reservation pour chopper l'id reservation ? Risqué ?
+		
+				
+		$sql .= "INSERT INTO LIVRE ($numISBM, $nomLivre, $auteurLivre, $editeurLivre, $idReservation)";
+		
+		
+		
+		if ($this->conn->query($sql) === TRUE) {
+            echo "Ajout de la reservation effectuée";
+            return 0;
+        } else {
+            echo "Erreur : " . $this->conn->error;
+            return -1;
+        }
+	}
+	
+	*/
+	
+	
+	
 
     function get_utilisateur($id) {
         $sql = "SELECT * FROM UTILISATEUR WHERE idUtilisateur='$id'";

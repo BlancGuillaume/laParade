@@ -44,7 +44,7 @@ $sql = "CREATE TABLE CLIENT (
 mailClient VARCHAR(50) PRIMARY KEY, 
 nomClient VARCHAR(50) NOT NULL,
 prenomClient VARCHAR(50) NOT NULL,
-numClient INT(10)
+numClient VARCHAR(50)
 )";
 
 if ($conn->query($sql) === TRUE) {
@@ -75,11 +75,11 @@ $sql = "CREATE TABLE RESERVATION (
 idReservation INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
 dateReservation DATETIME NOT NULL,
 dateLimiteReservation DATETIME, 
-commentaireReservation TEXT  NOT NULL, -- Stocke des chaînes de 65535 caractères maximum. Ce champ est insensible à la casse
+commentaireReservation TEXT, -- Stocke des chaînes de 65535 caractères maximum. Ce champ est insensible à la casse
 mailAuteurReservation VARCHAR(50), 
 CONSTRAINT fk_reservation_client             -- On donne un nom à notre clé
         FOREIGN KEY (mailAuteurReservation)  -- Colonne sur laquelle on crée la clé
-        REFERENCES CLIENT(mailClient)    -- Colonne de référence
+        REFERENCES CLIENT(mailClient)    	 -- Colonne de référence
 )";
 
 if ($conn->query($sql) === TRUE) {
