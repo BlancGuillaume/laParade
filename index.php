@@ -4,12 +4,25 @@
    $bd = new accessBD;
    $bd->connect();
 
-   $id = "flo";
+   $id = "arnauld";
    $mdp = "root";
    $isAdmin = true;
-   $bd->insert_utilisateur($id, $mdp, $isAdmin);
-   $result = $bd->get_utilisateur($id);
-   echo "Mot de passe : " . $result['mdpUtilisateur'];
+   $req = "INSERT INTO UTILISATEUR (idUtilisateur, mdpUtilisateur, isAdmin) VALUES ('".$id."', '".$mdp."', '".$isAdmin."')";
+   // echo $req."<br />";
+
+   $result = $bd->set_requete($req);
+   // var_dump($result);
+
+   $req = "SELECT * FROM UTILISATEUR WHERE idUtilisateur='".$id."'";
+   // echo $req."<br />";
+   $result = $bd->get_requete($req);
+   // var_dump($result);
+
+   $req = "SELECT * FROM UTILISATEUR";
+   // echo $req."<br />";
+   $result = $bd->get_requete($req);
+   var_dump($result);
+
 ?>
 
 <!DOCTYPE HTML>
@@ -18,13 +31,9 @@
       <meta charset="utf-8" />
       <title>Librairie la Parade</title>
       <link href="css/style.css" rel="stylesheet" type="text/css">
-      <!--Import Google Icon Font-->
       <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-      <!--Import materialize.css-->
-      <!--<link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/> -->
    </head>
    <body>
-      <!--Import jQuery before materialize.js-->
       <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
       <script type="text/javascript" src="js/materialize.min.js"></script>
       <header>
