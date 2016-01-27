@@ -1,8 +1,12 @@
-!
+/*
  * Materialize v0.97.5 (http://materializecss.com)
  * Copyright 2014-2015 Materialize
  * MIT License (https://raw.githubusercontent.com/Dogfalo/materialize/master/LICENSE)
  */
+
+ img.card-image {
+  width: 100%;
+ }
 .materialize-red.lighten-5 {
   background-color: #fdeaeb !important;
 }
@@ -2355,6 +2359,8 @@ sub {
  */
 img {
   border: 0;
+  max-width: 100%;
+  max-height: 100%;
 }
 
 /**
@@ -7776,8 +7782,8 @@ small {
 }
 
 .card.small .card-image, .card.medium .card-image, .card.large .card-image {
-  max-height: 60%;
-  overflow: hidden;
+/*  height: 100%;
+  overflow: hidden;*/
 }
 
 .card.small .card-content, .card.medium .card-content, .card.large .card-content {
@@ -7807,11 +7813,11 @@ small {
 }
 
 .card .card-image {
-  position: relative;
+  /*position: relative;*/
 }
 
 .card .card-image img {
-  display: block;
+/*  display: block;
   border-radius: 2px 2px 0 0;
   position: relative;
   left: 0;
@@ -7819,14 +7825,17 @@ small {
   top: 0;
   bottom: 0;
   width: 100%;
+  height: auto;*/
+  width: 100%;
+  height:auto;
 }
 
 .card .card-image .card-title {
-  color: #fff;
+/*  color: #fff;
   position: absolute;
   bottom: 0;
   left: 0;
-  padding: 20px;
+  padding: 20px;*/
 }
 
 .card .card-content {
