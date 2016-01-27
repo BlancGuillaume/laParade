@@ -1,3 +1,87 @@
+<?php 
+   include('bd/accessBD.php'); 
+
+   // On regarde si le formulaire a été complété 
+   if (!empty($_POST)) {
+   
+		foreach($_POST as $key => $val) echo '$_POST["'.$key.'"]='.$val.'<br />';
+   
+		// le formulaire a été complété, connexion à la BD
+		$bd = new accessBD;
+		$bd->connect();
+
+		// Récupération de toutes les informations du formulaire de réservation
+		$dateReservation = date("d-m-Y");
+		$dateLimiteReservation = $dateReservation;  // TODO : recuperer valeur du formulaire
+		$commentaireReservation = $_POST['commentaire'];
+		$mailClient = $_POST['email'];
+		$nomClient = $_POST['nom'];
+		$prenomClient = $_POST['prenom'];
+		$numClient = $_POST['telephone'];
+		$nomEtablissement = $_POST['etablissement'];
+		$numISBM = $_POST['isbn'];
+		$nomLivre = $_POST['titre'];
+		$auteurLivre = $_POST['auteur'];
+		$editeurLivre = $_POST['editeur'];
+   
+		$reqClientExiste = 	"SELECT * 
+							FROM CLIENT 
+							WHERE mailClient = '".$mailClient."'"; 
+		$resultClientExiste = $bd->get_requete($reqClientExiste);
+   
+		// Le client est t'il déja dans la bd ? 
+		if (empty($resultClientExiste)) {
+			// Non : ajout du client
+			$reqInsertionClient = "INSERT INTO CLIENT VALUES ('".$mailClient."', '".$nomClient."', '".$prenomClient."', '".$numClient."')"; 
+			$result = $bd->set_requete($reqInsertionClient);
+		} 
+   
+		// Un établissement a t'il été renseigné ?
+		if (!empty($nomEtablissement)) {
+			// Oui un établissement a été renseigné
+		
+			$reqEtablissementExiste = 	"SELECT * 
+										FROM ETABLISSEMENT 
+										WHERE nomEtablissement = '".$nomEtablissement."'"; 
+			$resultEtablissementExiste = $bd->get_requete($reqEtablissementExiste);
+		
+			// existe-il dans la bd ? 
+			if (empty($resultClientExiste)) {
+				// Non : ajout de l'établissement
+				$reqInsertionEtablissement = "INSERT INTO ETABLISSEMENT VALUES ('".$nomEtablissement."')"; 
+				$result = $bd->set_requete($reqInsertionEtablissement);
+			} 
+		}	
+   
+		$reqReservation = "INSERT INTO RESERVATION (dateReservation, 
+													dateLimiteReservation,
+													commentaireReservation,
+													mailClientReservation,
+													nomEtablissementReservation,
+													numISBM,
+													nomLivre,
+													auteurLivre,
+													editeurLivre)
+		
+		VALUES ('".$dateReservation."', 
+				'".$dateLimiteReservation."', 
+				'".$commentaireReservation."',
+				'".$mailClient."',
+				'".$nomEtablissement."',
+				'".$numISBM."',
+				'".$nomLivre."',
+				'".$auteurLivre."',
+				'".$editeurLivre."')";
+													  
+		var_dump($reqReservation);											  
+													  
+		$result = $bd->set_requete($reqReservation);	  
+	}												  
+?>
+
+
+
+
 <!DOCTYPE HTML>
 <html>
 	<head>
@@ -59,47 +143,41 @@
       	</aside>
 
 		<!-- Page Layout here -->
+		
+		
+		<form action="reservation.php" method="post">
+		
+		
 		<div class="row" id="formulaireReservation">
 			<!-- - - - - - - - - - -  Section ouvrage  - - - - - - - - - - --> 
 			<div id="cardLivre" class="col s12 m5">
 				<div class="card col white">
 					<h5>Le livre</h5>
 					<div class="row">   
-						<form class="col s12">
+						<div class="col s12">
 							<!-- Titre du livre -->
 							<div class="input-field col s12">
 								<i class="material-icons prefix">label</i>
-								<input id="titre" type="text" class="validate">
+								<input id="titre" name="titre" type="text" class="validate">
 								<label for="titre">Titre</label>
 							</div>
 
 							<!-- Auteur du livre -->
 							<div class="input-field col s12">
 								<i class="material-icons prefix">perm_contact_calendar</i>
-								<input id="auteur" type="text" class="validate">
+								<input id="auteur" name="auteur" type="text" class="validate">
 								<label for="auteur">Auteur</label>
 							</div>
 							<!-- Editeur du livre -->
-							<!-- Initialisation du combobox -->
-							<script type="text/javascript">
-								$(document).ready(function() {
-									$('select').material_select();
-								});
-							</script>
-							<!-- <i class="material-icons prefix">work</i> -->
 							<div class="input-field col s12">
-								<select>
-									<option value="" disabled selected>Sans préférence</option>
-									<option value="1">Galimard</option>
-									<option value="2">Hachette</option>
-									<option value="3">Larroque</option>
-								</select>
-								<label>Editeur</label>
+								<i class="material-icons prefix">view_column</i>
+								<input id="editeur" name="editeur" type="text" class="validate">
+								<label for="editeur">Editeur</label>
 							</div>
 							<!-- ISBN du livre -->
 							<div class="input-field col s12">
 								<i class="material-icons prefix">view_column</i>
-								<input id="isbn" type="text" class="validate">
+								<input id="isbn" name="isbn" type="text" class="validate">
 								<label for="isbn">ISBN</label>
 							</div>
 							<!-- Date limite de réception -->
@@ -118,10 +196,10 @@
 							<!-- Commentaire -->
 							<div class="input-field col s12">
 								<i class="material-icons prefix">chat</i>
-								<textarea id="textarea1" class="materialize-textarea validate"></textarea>
+								<textarea id="commentaire" name="commentaire" class="materialize-textarea validate"></textarea>
 								<label for="commentaire">Commentaire</label>
 							</div>
-						</form>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -132,52 +210,57 @@
 					<div class="card col white">
 						<h5>Mes informations</h5>
 						<div class="row">
-							<form class="col s12">
+							<div class="col s12">
 								<!-- Nom + prénom -->
 								<div class="input-field col s6">
 									<i class="material-icons prefix">account_circle</i>
-									<input id="prenom" type="text" class="validate">
+									<input id="prenom" name="prenom" type="text" class="validate">
 									<label for="prenom">Prenom</label>
 								</div>
 								<div class="input-field col s6">
-									<input id="nom" type="text" class="validate">
+									<input id="nom" name="nom" type="text" class="validate">
 									<label for="nom">Nom</label>
 								</div>
 								<!-- Telephone -->
 								<div class="input-field col s12">
 									<i class="material-icons prefix">phone</i>
-									<input id="telephone" type="text" class="validate">
+									<input id="telephone" name="telephone" type="text" class="validate">
 									<label for="telephone">Telephone</label>
 								</div>
 								<!-- Email -->
 								<div class="input-field col s12">
 									<i class="material-icons prefix">email</i>
-									<input id="email" type="email" class="validate">
+									<input id="email" name="email" type="email" class="validate">
 									<label for="email">Email</label>
 								</div>
-							</form>
+							</div>
 						</div>
 					</div>
 					<!-- - - Card etudiant - - -->
 					<div id="cardEtudiant" class="card col white">
 						<h5>Etudiant</h5>
 						<div class="row">
-							<form class="col s12">
+							<div class="col s12">
 								Le livre que vous commandez est pour un usage scolaire ? <br/>
 								Dites nous quel établissement vous l'a demandé :
 								<div class="input-field col s12">
 									<i class="material-icons prefix">store</i>
-									<input id="etablissement" type="text" class="validate">
+									<input id="etablissement" name="etablissement" type="text" class="validate">
 									<label for="etablissement">Etablissement</label>
 								</div>
-							</form>
+							</div>
 						</div>
 					</div>
 				</div>
 				<!-- Validation de la commande -->
-				<form action="reservation.html" method="post">
+				
+				
+				
+				
+				
+				
+				
 					<button id="boutonReservation" class="btn waves-effect waves-light" type="submit"  name="action">reserver
-					
 						<i class="material-icons right">send</i>
 					</button>
 				</form>
