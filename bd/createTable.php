@@ -70,11 +70,6 @@ if ($conn->query($sql) === TRUE) {
     echo "Error creating table: " . $conn->error;
 }
 
-if ($conn->query($sql) === TRUE) {
-    echo "Table LIVRE created successfully";
-} else {
-    echo "Error creating table: " . $conn->error;
-}
 
 // CREATION TABLE ETABLISSEMENT
 $sql = "CREATE TABLE ETABLISSEMENT (
@@ -95,12 +90,11 @@ dateReservation DATETIME NOT NULL,
 dateLimiteReservation DATETIME, 
 commentaireReservation TEXT, -- Stocke des chaînes de 65535 caractères maximum. Ce champ est insensible à la casse
 mailClientReservation VARCHAR(50) NOT NULL, 
-idLivreReservation INT(6) UNSIGNED NOT NULL, 
 nomEtablissementReservation VARCHAR(50),
 numISBM INT(20),
 nomLivre VARCHAR(50) NOT NULL, 
 auteurLivre VARCHAR(50) NOT NULL, 
-editeurLivre VARCHAR(50) NOT NULL
+editeurLivre VARCHAR(50) NOT NULL,
 CONSTRAINT fk_reservation_client                -- On donne un nom à notre clé
         FOREIGN KEY (mailClientReservation)     -- Colonne sur laquelle on crée la clé
         REFERENCES CLIENT(mailClient),          -- Colonne de référence      
