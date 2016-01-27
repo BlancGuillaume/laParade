@@ -4,25 +4,8 @@
    $bd = new accessBD;
    $bd->connect();
 
-   $id = "arnauld";
-   $mdp = "root";
-   $isAdmin = true;
-   $req = "INSERT INTO UTILISATEUR (idUtilisateur, mdpUtilisateur, isAdmin) VALUES ('".$id."', '".$mdp."', '".$isAdmin."')";
-   // echo $req."<br />";
-
-   $result = $bd->set_requete($req);
-   // var_dump($result);
-
-   $req = "SELECT * FROM UTILISATEUR WHERE idUtilisateur='".$id."'";
-   // echo $req."<br />";
-   $result = $bd->get_requete($req);
-   // var_dump($result);
-
-   $req = "SELECT * FROM UTILISATEUR";
-   // echo $req."<br />";
-   $result = $bd->get_requete($req);
-   var_dump($result);
-
+   $req = "SELECT * FROM NEWS ORDER BY idNews DESC";
+   $news = $bd->get_requete($req);
 ?>
 
 <!DOCTYPE HTML>
@@ -43,7 +26,7 @@
                <!-- Barre de navigation -->
                <ul id="nav-mobile" class="right hide-on-med-and-down">
                   <li class="active"><a href="index.php">Presentation</a></li>
-                  <li><a href="reservation.html">Reservation</a></li>
+                  <li><a href="reservation.php">Reservation</a></li>
                   <li><a href="contact.html">Contact</a></li>
                </ul>
             </div>
@@ -76,35 +59,32 @@
       </section>
 
       <!-- cards pour les news -->
-      <aside class="container-cards"> <!-- ajout d'une nouvelle news -> dans cette div -->
-            <div class="col s3 m3">
-               <div class="card orange darken-2">
-                  <div class="card-content white-text">
-                     <span>News 1 du 16 janvier 2016</span>
-                     <p>Voici la dernière nouveauté à la Librairie la Parade ! Nous vous invitons à venir achter des livres, pleins de livres blablabla. Venez nombreux ! Café offert ! COULEUR : orange darken-2</p>
-                     <a href="#">LIEN</a>
+      <?php if (!empty($news)): ?>
+         <aside class="container-cards"> <!-- ajout d'une nouvelle news -> dans cette div -->   
+         <?php for ($i = 0; $i < 5; $i++) : ?>
+               <div class="col s3 m3">
+                  <?php if ($news[$i]['idNews']% 2 == 0): ?>
+                     <div class="card orange">
+                  <?php elseif($news[$i]['idNews']% 3 != 0): ?>
+                     <div class="card orange lighten-1">
+                  <?php else: ?>
+                     <div class="card orange darken-2">
+                  <?php endif ?>
+                     <div class="card-content white-text">
+                        <span><?php echo $news[$i]['nomNews']; echo $news[$i]['idNews'];?></span>
+                        <p><?php echo $news[$i]['contenuNews']; ?></p>
+                        <?php if (isset($news[$i]['lienNews'])): ?>
+                           <a href=<?php echo "\"" . $news[$i]['lienNews'] . "\""; ?>>LIEN</a>
+                        <?php endif ?>
+                        <?php if (isset($news[$i]['imageNews'])): ?>
+                           <img src=<?php echo "\"" . $news[$i]['imageNews'] . "\""; ?>></img>
+                        <?php endif ?>
+                     </div>
                   </div>
                </div>
-            </div>
-            <div class="col s3 m3">
-               <div class="card orange">
-                  <div class="card-content white-text">
-                     <span>News 2 du 16 janvier 2016</span>
-                     <p>Nous vous souhaitons une bonne année ! COULEUR : orange</p>
-                     <a href="#">LIEN</a>
-                  </div>
-               </div>
-            </div>
-            <div class="col s3 m3">
-               <div class="card orange lighten-1">
-                  <div class="card-content white-text">
-                     <span>News 3 du 16 janvier 2016</span>
-                     <p>Blablablablablablab lablablablablaba COULEUR : orange lighten-1</p>
-                     <a href="#">LIEN</a>
-                  </div>
-               </div>
-            </div>
-      </aside>
+         <?php endfor; ?>
+         </aside>
+      <?php endif ?>
       
    </body>
 </html>
