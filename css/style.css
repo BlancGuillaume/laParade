@@ -5,7 +5,8 @@
  */
 
  img.card-image {
-  width: 100%;
+  max-width: 100%;
+  max-height: 100%;
  }
 .materialize-red.lighten-5 {
   background-color: #fdeaeb !important;
@@ -2714,7 +2715,7 @@ i.large {
 img.responsive-img,
 video.responsive-video {
   max-width: 100%;
-  height: auto;
+  max-height: 100%;
 }
 
 .pagination li {
@@ -2822,8 +2823,8 @@ video.responsive-video {
   position: absolute;
   left: 50%;
   bottom: 0;
-  min-width: 100%;
-  min-height: 100%;
+  max-width: 100%;
+  max-height: 100%;
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
   -webkit-transform: translateX(-50%);
@@ -7827,7 +7828,7 @@ small {
   width: 100%;
   height: auto;*/
   width: 100%;
-  height:auto;
+  height:100%;
 }
 
 .card .card-image .card-title {

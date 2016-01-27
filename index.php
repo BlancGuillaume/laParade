@@ -71,7 +71,7 @@
                      <div class="card orange darken-2">
                   <?php endif ?>
                      <div class="card-content white-text">
-                        <span><?php echo $news[$i]['nomNews']; echo $news[$i]['idNews'];?></span>
+                        <span><?php echo $news[$i]['nomNews'];?></span>
                         <p><?php echo $news[$i]['contenuNews']; ?></p>
                         <?php if (isset($news[$i]['lienNews'])): ?>
                            <a href=<?php echo "\"" . $news[$i]['lienNews'] . "\""; ?>>LIEN</a>
