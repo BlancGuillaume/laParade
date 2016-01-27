@@ -70,15 +70,6 @@ if ($conn->query($sql) === TRUE) {
     echo "Error creating table: " . $conn->error;
 }
 
-// CREATION TABLE LIVRE
-$sql = "CREATE TABLE LIVRE (
-idLivre INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
-numISBM INT(20),
-nomLivre VARCHAR(50) NOT NULL, 
-auteurLivre VARCHAR(50) NOT NULL, 
-editeurLivre VARCHAR(50) NOT NULL
-)";
-
 if ($conn->query($sql) === TRUE) {
     echo "Table LIVRE created successfully";
 } else {
@@ -106,12 +97,13 @@ commentaireReservation TEXT, -- Stocke des chaînes de 65535 caractères maximum
 mailClientReservation VARCHAR(50) NOT NULL, 
 idLivreReservation INT(6) UNSIGNED NOT NULL, 
 nomEtablissementReservation VARCHAR(50),
+numISBM INT(20),
+nomLivre VARCHAR(50) NOT NULL, 
+auteurLivre VARCHAR(50) NOT NULL, 
+editeurLivre VARCHAR(50) NOT NULL
 CONSTRAINT fk_reservation_client                -- On donne un nom à notre clé
         FOREIGN KEY (mailClientReservation)     -- Colonne sur laquelle on crée la clé
-        REFERENCES CLIENT(mailClient),          -- Colonne de référence
-CONSTRAINT fk_reservation_livre           
-        FOREIGN KEY (idLivreReservation)  
-        REFERENCES LIVRE(idLivre),       
+        REFERENCES CLIENT(mailClient),          -- Colonne de référence      
 CONSTRAINT fk_reservation_etablissement           
         FOREIGN KEY (nomEtablissementReservation)  
         REFERENCES ETABLISSEMENT(nomEtablissement)      
