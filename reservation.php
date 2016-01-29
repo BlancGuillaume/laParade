@@ -1,17 +1,16 @@
 <?php 
+   ini_set('display_errors','off'); // Pour ne pas avoir le message d'erreur : The mysql extension is deprecated
    include('bd/accessBD.php'); 
 
    // On regarde si le formulaire a été complété 
    if (!empty($_POST)) {
-   
-		foreach($_POST as $key => $val) echo '$_POST["'.$key.'"]='.$val.'<br />';
    
 		// le formulaire a été complété, connexion à la BD
 		$bd = new accessBD;
 		$bd->connect();
 
 		// Récupération de toutes les informations du formulaire de réservation
-		$dateReservation = date("d-m-Y");
+		$dateReservation = date("Y-m-d H:i:s"); // le format DATETIME de MySQL
 		$dateLimiteReservation = $dateReservation;  // TODO : recuperer valeur du formulaire
 		$commentaireReservation = $_POST['commentaire'];
 		$mailClient = $_POST['email'];
@@ -104,8 +103,8 @@
 					<a href="images/blason.gif" class="brand-logo">Librairie la Parade</a>
 					<ul id="nav-mobile" class="right hide-on-med-and-down">
 						<li><a href="index.php">Presentation</a></li>
-						<li class="active"><a href="reservation.html">Reservation</a></li>
-						<li><a href="contact.html">Contact</a></li>
+						<li class="active"><a href="reservation.php">Reservation</a></li>
+						<li><a href="contact.php">Contact</a></li>
 					</ul>
 				</div>
 			</nav>
@@ -253,16 +252,9 @@
 					</div>
 				</div>
 				<!-- Validation de la commande -->
-				
-				
-				
-				
-				
-				
-				
-					<button id="boutonReservation" class="btn waves-effect waves-light" type="submit"  name="action">reserver
-						<i class="material-icons right">send</i>
-					</button>
+				<button id="boutonReservation" class="btn waves-effect waves-light" type="submit"  name="action">reserver
+					<i class="material-icons right">send</i>
+				</button>
 				</form>
 			</div>
 		</div>
