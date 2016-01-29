@@ -1,4 +1,5 @@
 <?php 
+   ini_set('display_errors','off'); // Pour ne pas avoir le message d'erreur : The mysql extension is deprecated
    include('bd/accessBD.php'); 
 
    $bd = new accessBD;
@@ -27,7 +28,7 @@
                <ul id="nav-mobile" class="right hide-on-med-and-down">
                   <li class="active"><a href="index.php">Presentation</a></li>
                   <li><a href="reservation.php">Reservation</a></li>
-                  <li><a href="contact.html">Contact</a></li>
+                  <li><a href="contact.php">Contact</a></li>
                </ul>
             </div>
          </nav>
