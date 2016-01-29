@@ -1,3 +1,42 @@
+<?php 
+   ini_set('display_errors','off'); // Pour ne pas avoir le message d'erreur : The mysql extension is deprecated
+   include('bd/accessBD.php'); 
+
+   // On regarde si le formulaire a été complété 
+   if (!empty($_POST)) {
+   
+		// le formulaire a été complété, connexion à la BD
+		$bd = new accessBD;
+		$bd->connect();
+
+		// Récupération de toutes les informations du formulaire de contact
+		$dateMessage = date("Y-m-d H:i:s"); // le format DATETIME de MySQL
+		$contenuMessage = $_POST['commentaire'];
+		$mailClient = $_POST['email'];
+		$nomClient = $_POST['nomMessage'];
+		$prenomClient = $_POST['prenomMessage'];
+		$numClient = $_POST['telephone'];
+   
+		$reqClientExiste = 	"SELECT * 
+							FROM CLIENT 
+							WHERE mailClient = '".$mailClient."'"; 
+		$resultClientExiste = $bd->get_requete($reqClientExiste);
+   
+		// Le client est t'il déja dans la bd ? 
+		if (empty($resultClientExiste)) {
+			// Non : ajout du client
+			$reqInsertionClient = "INSERT INTO CLIENT VALUES ('".$mailClient."', '".$nomClient."', '".$prenomClient."', '".$numClient."')"; 
+			$result = $bd->set_requete($reqInsertionClient);
+		} 
+   
+		$reqMessage = 	"INSERT INTO MESSAGE (contenuMessage, dateMessage, mailClientMessage)
+						 VALUES ('".$contenuMessage."','".$dateMessage."','".$mailClient."')";
+												  
+																								  
+		$result = $bd->set_requete($reqMessage);	  
+	}												  
+?>
+
 <!DOCTYPE HTML>
 <html>
 	<head>
@@ -34,36 +73,39 @@
 					width="300" height="225" frameborder="0" style="border:0" allowfullscreen></iframe>
 				<br/> <br/>
 			</div>
+			
+			<form action="contact.php" method="post">
+			
 			<div id="cardQuestions" class="card col white">
 				<h4>Posez vos questions</h4>
 				<div class="input-field col s12">
 					<i class="material-icons prefix">label</i>
-					<input id="nomMessage" type="text" class="validate">
+					<input id="nomMessage" name="nomMessage" type="text" class="validate">
 					<label for="nomMessage">Nom</label>
 				</div>
 				<div class="input-field col s12">
 					<i class="material-icons prefix">perm_contact_calendar</i>
-					<input id="prenomMessage" type="text" class="validate">
+					<input id="prenomMessage" name="prenomMessage" type="text" class="validate">
 					<label for="prenomMessage">Prenom</label>
 				</div>
 				<div class="input-field col s12">
 					<i class="material-icons prefix">email</i>
-					<input id="email" type="email" class="validate">
+					<input id="email" name="email" type="email" class="validate">
 					<label for="email">Email</label>
 				</div>
 				<div class="input-field col s12">
 					<i class="material-icons prefix">phone</i>
-					<input id="telephone" type="text" class="validate">
+					<input id="telephone" name="telephone" type="text" class="validate">
 					<label for="telephone">Telephone</label>
 				</div>
 				<div class="input-field col s12">
 					<i class="material-icons prefix">chat</i>
-					<textarea id="textarea1" class="materialize-textarea validate"></textarea>
+					<textarea id="commentaire" name="commentaire" class="materialize-textarea validate"></textarea>
 					<label for="commentaire">Message</label>
 				</div>
 			</div>
 			<!-- Validation du message -->
-			<form action="todo" method="post">
+			
 				<button class="btn waves-effect waves-light" type="submit" name="action">envoyer message
 				<i class="material-icons right">send</i>
 				</button>
