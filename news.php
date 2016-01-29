@@ -20,12 +20,15 @@
 					<a href="images/blason.gif" class="brand-logo">Librairie la Parade</a>
 					<ul id="nav-mobile" class="right hide-on-med-and-down">
 						<li><a href="index.php">Presentation</a></li>
-						<li class="active"><a href="reservation.html">Reservation</a></li>
-						<li><a href="contact.html">Contact</a></li>
+						<li class="active"><a href="reservation.php">Reservation</a></li>
+						<li><a href="contact.php">Contact</a></li>
 					</ul>
 				</div>
 			</nav>
 		</header>
+		
+		<form action="upload.php" method="post" enctype="multipart/form-data">
+		
 
 		<!-- Page Layout here -->
 		<div class="row" id="formulaireReservation">
@@ -37,43 +40,39 @@
 							<!-- Titre de la news-->
 							<div class="input-field col s12">
 								<i class="material-icons prefix">label</i>
-								<input id="nomNews" type="text" class="validate">
+								<input id="nomNews" name="nomNews" type="text" class="validate">
 								<label for="nomNews">Titre news</label>
 							</div>
 							<!-- Contenu de la news -->
 							<div class="input-field col s12">
 								<i class="material-icons prefix">view_column</i>
-								<input id="contenuNews" type="text" class="validate">
+								<input id="contenuNews" name="contenuNews" type="text" class="validate">
 								<label for="contenuNews">Contenu</label>
 							</div>
 							<!-- Lien news -->
 							<div class="input-field col s12">
 								<i class="material-icons prefix">view_column</i>
-								<input id="lienNews" type="text" class="validate">
+								<input id="lienNews" name="lienNews" type="text" class="validate">
 								<label for="lienNews">Lien</label>
 							</div>
-						</form>
+							<div class="input-field col s12">
+								<i class="material-icons prefix">perm_media</i>
+								<input type="file" name="fileToUpload" id="fileToUpload">
+							</div>
 					</div>
 				</div>
 			</div>
 			
-			<!-- Formulaire d'upload d'image. TODO : en faire un seul avec le formulaire d'en haut -->
-			<form action="upload.php" method="post" enctype="multipart/form-data">
-				Image a uploader : 
-				<input type="file" name="fileToUpload" id="fileToUpload">
-				<input type="submit" value="Upload Image" name="submit">
-			</form>
-		
-			
-				<!-- Validation de la commande -->
-				<form action="reservation.html" method="post">
-					<button id="boutonReservation" class="btn waves-effect waves-light" type="submit" onSubmit="alert('Reservation effectuée');" name="action">reserver
-					
-						<i class="material-icons right">send</i>
-					</button>
-				</form>
 			</div>
+			
+			
 		</div>
+		
+		<button id="boutonAjoutNews" class="btn waves-effect waves-light" type="submit" name="action">uploader
+				<i class="material-icons right">send</i>
+			</button>
+			
+			</form>
 		
 	</body>
 </html>

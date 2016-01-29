@@ -1,4 +1,30 @@
 <?php
+ini_set('display_errors', 'off'); // Pour ne pas avoir le message d'erreur : The mysql extension is deprecated
+include('bd/accessBD.php');
+
+// On regarde si le formulaire a été complété 
+if (!empty($_POST)) {
+    
+    // le formulaire a été complété, connexion à la BD
+    $bd = new accessBD;
+    $bd->connect();
+    
+    // Récupération de toutes les informations du formulaire d'ajout de news
+    $nomNews     = $_POST['nomNews'];
+    $contenuNews = $_POST['contenuNews'];
+    $lienNews    = $_POST['lienNews'];
+	
+    // Dossier dans lequel est stocké l'image. On s'en sert pour afficher les cards news
+    $imageNews = "uploads/";
+    $imageNews .= basename($_FILES["fileToUpload"]["name"]);
+    
+    $reqNews = "INSERT INTO NEWS (nomNews, contenuNews, imageNews,  lienNews)
+						 VALUES ('" . $nomNews . "','" . $contenuNews . "','" . $imageNews . "','" . $lienNews . "')";
+    
+    $result = $bd->set_requete($reqNews);
+}
+
+//////////////////////////  UPLOAD DE L'IMAGE //////////////////////	
 $target_dir    = "uploads/";
 $target_file   = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 $uploadOk      = 1;
@@ -36,8 +62,8 @@ if ($uploadOk == 0) {
 } else {
     if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
         echo "The file " . basename($_FILES["fileToUpload"]["name"]) . " a ete uploade.";
-		// redirection sur la même page
-        header('Location: news.html');
+        // redirection sur la même page
+        header('Location: news.php');
         exit();
     } else {
         echo "Désolé, il y a eu une erreur pendant l'upload de l'image";
