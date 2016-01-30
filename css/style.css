@@ -11305,14 +11305,21 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
   margin-bottom: 2%;
 }
 
-#presentationReservation, #presentationNews {
-  margin-right: 2%;
-  width:32%;
-  height: 450px;
+#presentationContact, #presentationNews {
+  margin-left: 2%;
+  width:34%;
+  height: 214px;
 }
 
- #presentationContact {
-  width:32%;
+/* #presentationNewsContact {
+  margin-right: 2%;
+  width:48%;
+  height: 225px;
+ }*/
+
+ #presentationReservation {
+  width: 64%;
+  /*height: 450px;*/
   height: 450px;
  }
 
@@ -11340,9 +11347,14 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
   font-size: medium;
  }
 
- #imageLivre, #imageNews, #imageContact {
-    width:100%;
+ #imageNews, #imageContact {
+    width: 100%;
+    height: 35%;
  }
+  #imageLivre {
+    width: 100%;
+    height:55%;
+  }
 
  #cardEtudiant {
   width: 100%;

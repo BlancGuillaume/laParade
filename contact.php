@@ -2,12 +2,12 @@
    ini_set('display_errors','off'); // Pour ne pas avoir le message d'erreur : The mysql extension is deprecated
    include('bd/accessBD.php'); 
 
+   $bd = new accessBD;
+   $bd->connect();
+   
    // On regarde si le formulaire a été complété 
    if (!empty($_POST)) {
-   
-		// le formulaire a été complété, connexion à la BD
-		$bd = new accessBD;
-		$bd->connect();
+  
 
 		// Récupération de toutes les informations du formulaire de contact
 		$dateMessage = date("Y-m-d H:i:s"); // le format DATETIME de MySQL
@@ -34,7 +34,10 @@
 												  
 																								  
 		$result = $bd->set_requete($reqMessage);	  
-	}												  
+	}
+
+	$req = "SELECT * FROM NEWS ORDER BY idNews DESC";
+   	$news = $bd->get_requete($req);												  
 ?>
 
 <!DOCTYPE HTML>
@@ -113,35 +116,31 @@
 		</section>
 		
 		<!-- cards pour les news -->
-		<aside class="container-cards">
-			<!-- ajout d'une nouvelle news -> dans cette div -->
-			<div class="col s2 m3">
-				<div class="card orange darken-2">
-					<div class="card-content white-text">
-						<span>News 1 du 16 janvier 2016</span>
-						<p>Voici la dernière nouveauté à la Librairie la Parade ! Nous vous invitons à venir achter des livres, pleins de livres blablabla. Venez nombreux ! Café offert ! COULEUR : orange darken-2</p>
-						<a href="#">LIEN</a>
-					</div>
-				</div>
-			</div>
-			<div class="col s2 m3">
-				<div class="card orange">
-					<div class="card-content white-text">
-						<span>News 2 du 16 janvier 2016</span>
-						<p>Nous vous souhaitons une bonne année ! COULEUR : orange</p>
-						<a href="#">LIEN</a>
-					</div>
-				</div>
-			</div>
-			<div class="col s2 m3">
-				<div class="card orange lighten-1">
-					<div class="card-content white-text">
-						<span>News 3 du 16 janvier 2016</span>
-						<p>Blablablablablablab lablablablablaba COULEUR : orange lighten-1</p>
-						<a href="#">LIEN</a>
-					</div>
-				</div>
-			</div>
-		</aside>
+      <?php if (!empty($news)): ?>
+         <aside class="container-cards"> <!-- ajout d'une nouvelle news -> dans cette div -->   
+         <?php for ($i = 0; $i < 5; $i++) : ?>
+               <div class="col s3 m3">
+                  <?php if ($i == 0 || $i == 3): ?>
+                     <div class="card orange darken-2">
+                  <?php elseif($i == 1 || $i == 4): ?>
+                     <div class="card orange">
+                  <?php else: ?>
+                     <div class="card orange lighten-1">
+                  <?php endif ?>
+                     <div class="card-content white-text">
+                        <span><?php echo $news[$i]['nomNews'];?></span>
+                        <p><?php echo $news[$i]['contenuNews']; ?></p>
+                        <?php if ($news[$i]['lienNews'] != NULL): ?>
+                           <a href=<?php echo "\"" . $news[$i]['lienNews'] . "\""; ?>>LIEN</a>
+                        <?php endif ?>
+                        <?php if ($news[$i]['imageNews'] != NULL): ?>
+                           <img src=<?php echo "\"" . $news[$i]['imageNews'] . "\""; ?>></img>
+                        <?php endif ?>
+                     </div>
+                  </div>
+               </div>
+         <?php endfor; ?>
+         </aside>
+      <?php endif ?>
 	</body>
 </html>
