@@ -22,6 +22,7 @@
 		$nomLivre = $_POST['titre'];
 		$auteurLivre = $_POST['auteur'];
 		$editeurLivre = $_POST['editeur'];
+		$statusReservation = 0;
    
 		$reqClientExiste = 	"SELECT * 
 							FROM CLIENT 
@@ -44,8 +45,7 @@
 										WHERE nomEtablissement = '".$nomEtablissement."'"; 
 			$resultEtablissementExiste = $bd->get_requete($reqEtablissementExiste);
 		
-			// existe-il dans la bd ? 
-			if (empty($resultClientExiste)) {
+			if (!$resultEtablissementExiste) {			
 				// Non : ajout de l'établissement
 				$reqInsertionEtablissement = "INSERT INTO ETABLISSEMENT VALUES ('".$nomEtablissement."')"; 
 				$result = $bd->set_requete($reqInsertionEtablissement);
@@ -60,7 +60,8 @@
 													numISBM,
 													nomLivre,
 													auteurLivre,
-													editeurLivre)
+													editeurLivre,
+													statusReservation)
 		
 		VALUES ('".$dateReservation."', 
 				'".$dateLimiteReservation."', 
@@ -70,7 +71,8 @@
 				'".$numISBM."',
 				'".$nomLivre."',
 				'".$auteurLivre."',
-				'".$editeurLivre."')";
+				'".$editeurLivre."',
+				'".$statusReservation."')";
 													  
 		var_dump($reqReservation);											  
 													  
