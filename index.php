@@ -7,6 +7,9 @@
 
    $req = "SELECT * FROM NEWS ORDER BY idNews DESC";
    $news = $bd->get_requete($req);
+   $dir    = 'uploads';
+   $photosGalerie = scandir($dir, 1);
+
 ?>
 
 <!DOCTYPE HTML>
@@ -20,6 +23,7 @@
    <body>
       <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
       <script type="text/javascript" src="js/materialize.min.js"></script>
+      <script type="text/javascript" src="js/script.js"></script>
       <header>
          <nav>
             <div class="nav-wrapper">
@@ -40,7 +44,26 @@
             <p>Reprise en 2004 par Arnauld et Patricia GIVELET, la librairie la Parade n'a de cesse de se diversifier afin de satisfaire pleinement tous ses clients :
              presse, papeterie, librairie, LOTO, PMU, point de vente RTM, confiserie etc. C'est dans cet état d'esprit, que nous avons la joie de vous présenter 
              les nouveaux services en ligne !<br><br></p>
-            <img id="imageDevanture" src="images/devanture.jpg"></img>
+
+            <div id="galerie">
+               <ul id="galerie_mini">
+                  <?php $i = 1;foreach ($photosGalerie as $photo) :?>
+                     <?php if (!in_array($photo,array(".",".."))) : ?>
+                        <li><a href=<?php echo 'uploads/' . $photo;?>></a></li>
+                     <?php endif;?>
+                  <?php endforeach;?>
+               </ul>
+               <dl id="photo">
+                  <?php if (!in_array($photosGalerie[0],array(".",".."))) : ?>
+                     <dt><?php echo $photosGalerie[0];?></dt>
+                     <dd><img id="big_pict" src=<?php echo 'uploads/' . $photosGalerie[0];?> alt=<?php echo 'uploads/' . $photosGalerie[0];?> /></dd>
+                  <?php endif; ?>
+               </dl>
+               <ul id="nav">
+                  <li><a class="waves-effect waves-light btn-large" id="prevButton" ><i class="material-icons left">skip_previous</i></a></li>
+                  <li><a class="waves-effect waves-light btn-large" id="nextButton" ><i class="material-icons left">skip_next</i></a></li>
+               </ul>
+         </div>
          </div>
          <div id="presentationService" class="row">
             <div id="presentationReservation" class="card col orange lighten-5">
@@ -88,7 +111,7 @@
                </div>
          <?php endfor; ?>
          </aside>
-      <?php endif ?>
+      <?php endif; ?>
       
    </body>
 </html>
