@@ -95,6 +95,7 @@ numISBM INT(20),
 nomLivre VARCHAR(50) NOT NULL, 
 auteurLivre VARCHAR(50) NOT NULL, 
 editeurLivre VARCHAR(50) NOT NULL,
+statusReservation INT(6), -- nouvelle = 0 ; en cours = 1 ; termine = 2 ; 
 CONSTRAINT fk_reservation_client                -- On donne un nom à notre clé
         FOREIGN KEY (mailClientReservation)     -- Colonne sur laquelle on crée la clé
         REFERENCES CLIENT(mailClient),          -- Colonne de référence      
