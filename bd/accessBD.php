@@ -20,7 +20,14 @@ class accessBD {
         // Exécution de la requête
         // echo $requete . '<br />';
         $result = mysql_query($requete);
+		
 
+		if (mysql_errno()) { 
+          $error = "MySQL error ".mysql_errno().": ".mysql_error()."\n<br>When executing:<br>\n$query\n<br>"; 
+		  echo $requete;
+		  echo $error;
+        }
+	
         return $result;
     }
 
@@ -40,77 +47,5 @@ class accessBD {
     function deconnect() {
         mysql_close($this->conn);
     }
-
-    // Suppression de $num articles du type $artnr du panier
-
-    // function insert_utilisateur($id, $mdp, $isAdmin) {
-    //     // CREATION TABLE UTILISATEUR
-    //     $sql = "INSERT INTO UTILISATEUR (idUtilisateur, mdpUtilisateur, isAdmin) VALUES ('$id', '$mdp', '$isAdmin')";
-
-    //     if ($this->conn->query($sql) === TRUE) {
-    //         echo "Ajout utilisateur effectuée";
-    //         return 0;
-    //     } else {
-    //         echo "Erreur : " . $this->conn->error;
-    //         return -1;
-    //     }
-    // }
-	
-	/*
-	function insert_reservation_client($mailClient, $nomClient, $prenomClient, $numClient, $dateLimiteReservation, $commentaireReservation,     ) {
-	
-		// La date actuelle, celle de la reservation
-		$dateReservation = date("d-m-Y");
-		
-		// TODO : verifier que l'utilisateur n'existe pas déja
-		$sql = "INSERT INTO CLIENT VALUES ('$mailClient', '$nomClient', '$prenomClient', '$numClient')
-				INSERT INTO RESERVATION ($dateReservation, '$dateLimiteReservation', '$commentaireReservation', '$mailClient'";
-				
-		// SELECT de la dernière reservation pour chopper l'id reservation ? Risqué ?
-		
-				
-		$sql .= "INSERT INTO LIVRE ($numISBM, $nomLivre, $auteurLivre, $editeurLivre, $idReservation)";
-		
-		
-		
-		if ($this->conn->query($sql) === TRUE) {
-            echo "Ajout de la reservation effectuée";
-            return 0;
-        } else {
-            echo "Erreur : " . $this->conn->error;
-            return -1;
-        }
-	}
-	
-	*/
-	
-	
-	
-
-    // function get_utilisateur($id) {
-    //     $sql = "SELECT * FROM UTILISATEUR WHERE idUtilisateur='$id'";
-
-    //     if ($result = $this->conn->query($sql)) {
-    //         return $result->fetch_assoc();
-    //     } else {
-    //         echo "Erreur : " . $this->conn->error;
-    //         return -1;
-    //     }
-    // }
-
-    // function get_news() {
-    //     $i = 0;
-    //     $result = array();
-    //     $sql = mysql_query('SELECT idNews, nomNews, contenuNews, imageNews, lienNews FROM NEWS');
-    //     while (mysql_fetch_array($sql) = $row) {
-    //         $result[$i]['idNews'] = $row['idNews'];
-    //         $result[$i]['nomNews'] = $row['nomNews'];
-    //         $result[$i]['contenuNews'] = $row['contenuNews'];
-    //         $result[$i]['imageNews'] = $row['imageNews'];
-    //         $result[$i]['lienNews'] = $row['lienNews'];
-    //         $i++;
-    //     }
-    //     return $result;
-    // }
 }
 ?>
