@@ -30,7 +30,7 @@
                <a href="images/blason.gif" class="brand-logo">Librairie la Parade</a>
                <!-- Barre de navigation -->
                <ul id="nav-mobile" class="right hide-on-med-and-down">
-                  <li class="active"><a href="index.php">Presentation</a></li>
+                  <li class="active"><a href="index.php">Acceuil</a></li>
                   <li><a href="reservation.php">Reservation</a></li>
                   <li><a href="contact.php">Contact</a></li>
                </ul>
@@ -40,10 +40,12 @@
       <!-- Présentation --> 
       <section id="presentation" class="row"> 
          <div id="accrochePresentation" class="card col white">
-            <h3>Bienvenue</h3>
-            <p>Reprise en 2004 par Arnauld et Patricia GIVELET, la librairie la Parade n'a de cesse de se diversifier afin de satisfaire pleinement tous ses clients :
-             presse, papeterie, librairie, LOTO, PMU, point de vente RTM, confiserie etc. C'est dans cet état d'esprit, que nous avons la joie de vous présenter 
-             les nouveaux services en ligne !<br><br></p>
+            <div id="bienvenue">
+               <h3>Bienvenue</h3>
+               <p>Reprise en 2004 par Arnauld et Patricia GIVELET, la librairie la Parade n'a de cesse de se diversifier afin de satisfaire pleinement tous ses clients :
+                presse, papeterie, librairie, LOTO, PMU, point de vente RTM, confiserie etc. C'est dans cet état d'esprit, que nous avons la joie de vous présenter 
+                les nouveaux services en ligne !<br><br></p>
+            </div>
 
             <div id="galerie">
                <ul id="galerie_mini">
@@ -60,13 +62,13 @@
                   <?php endif; ?>
                </dl>
                <ul id="nav">
-                  <li><a class="waves-effect waves-light btn-large" id="prevButton" ><i class="material-icons left">skip_previous</i></a></li>
-                  <li><a class="waves-effect waves-light btn-large" id="nextButton" ><i class="material-icons left">skip_next</i></a></li>
+                  <li id="prec"><a class="waves-effect waves-light btn-large" id="prevButton" ><i class="material-icons left">skip_previous</i></a></li>
+                  <li id="suiv"><a class="waves-effect waves-light btn-large" id="nextButton" ><i class="material-icons left">skip_next</i></a></li>
                </ul>
          </div>
          </div>
          <div id="presentationService" class="row">
-            <div id="presentationReservation" class="card col orange lighten-5">
+            <div id="presentationReservation" class="card col white">
                <h5>Reservation de livres</h5>
                <img id="imageLivre" src="images/livre.jpg"></img>
                <p>Grace a l'onglet <a href="reservation.html">RESERVATION</a>, vous pouvez désormais réserver vos livres en remplissant simplement le formulaire.
