@@ -1,4 +1,10 @@
 <?php 
+   session_start();
+   if (isset($_SESSION['login']))
+   {
+      var_dump($_SESSION['login']);
+   }
+
    ini_set('display_errors','off'); // Pour ne pas avoir le message d'erreur : The mysql extension is deprecated
    include('bd/accessBD.php'); 
 
@@ -33,6 +39,7 @@
                   <li class="active"><a href="index.php">Acceuil</a></li>
                   <li><a href="reservation.php">Reservation</a></li>
                   <li><a href="contact.php">Contact</a></li>
+                  <li><a href="connexion.php">Espace utilisateur</a></li>
                </ul>
             </div>
          </nav>

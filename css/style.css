@@ -11436,3 +11436,11 @@ dt {
 #bienvenue p {
   font-size: medium;
 }
+
+#cardConnexion {
+  width:100%;
+}
+
+#boutonConnexion {
+  margin-right:2%;
+}
