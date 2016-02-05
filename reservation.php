@@ -11,7 +11,8 @@
 
 		// Récupération de toutes les informations du formulaire de réservation
 		$dateReservation = date("Y-m-d H:i:s"); // le format DATETIME de MySQL
-		$dateLimiteReservation = $dateReservation;  // TODO : recuperer valeur du formulaire
+		$dateLimiteReservation =  $_POST['dateLimiteReception'];  
+		var_dump($dateLimiteReservation);
 		$commentaireReservation = $_POST['commentaire'];
 		$mailClient = $_POST['email'];
 		$nomClient = $_POST['nom'];
@@ -45,7 +46,8 @@
 										WHERE nomEtablissement = '".$nomEtablissement."'"; 
 			$resultEtablissementExiste = $bd->get_requete($reqEtablissementExiste);
 		
-			if (!$resultEtablissementExiste) {			
+			// L'etablissement est il dans la bd ? 
+			if (empty($resultEtablissementExiste)) {			
 				// Non : ajout de l'établissement
 				$reqInsertionEtablissement = "INSERT INTO ETABLISSEMENT VALUES ('".$nomEtablissement."')"; 
 				$result = $bd->set_requete($reqInsertionEtablissement);
@@ -73,10 +75,11 @@
 				'".$auteurLivre."',
 				'".$editeurLivre."',
 				'".$statusReservation."')";
-													  
-		var_dump($reqReservation);											  
-													  
+													  										 
 		$result = $bd->set_requete($reqReservation);	  
+		
+		// Popup de succès 
+		echo "<script> alert(\"Réservation effectuée. Nous vous contacterons prochainement\");</script>";
 	}												  
 ?>
 
@@ -145,6 +148,8 @@
 
 		<!-- Page Layout here -->
 		
+	
+		
 		
 		<form action="reservation.php" method="post">
 		
@@ -184,7 +189,7 @@
 							<!-- Date limite de réception -->
 							<div class="input-field col s12">
 								<i class="material-icons prefix">web</i>
-								<input type="date" class="datepicker">
+								<input type="date" class="datepicker" name="dateLimiteReception">
 								<label for="commentaire">Date limite de reception</label>
 							</div>
 							<!-- Initialisation du dateppicker -->
