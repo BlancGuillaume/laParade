@@ -5,7 +5,8 @@
    $bd = new accessBD;
    $bd->connect();
 
-   $reqNouvellesReservations = "SELECT  r.dateReservation, 
+   $reqNouvellesReservations = "SELECT  r.idReservation,
+										r.dateReservation, 
 										r.dateLimiteReservation, 
 										r.commentaireReservation, 
 										r.nomEtablissementReservation,
@@ -22,7 +23,8 @@
 								WHERE statusReservation = 0
 								AND r.mailClientReservation = c.mailClient";
 								
-   $reqReservationsEnCours = "SELECT  r.dateReservation, 
+   $reqReservationsEnCours = "SELECT    r.idReservation,
+										r.dateReservation, 
 										r.dateLimiteReservation, 
 										r.commentaireReservation, 
 										r.nomEtablissementReservation,
@@ -39,7 +41,8 @@
 								WHERE statusReservation = 1
 								AND r.mailClientReservation = c.mailClient";
 
-	$reqReservationsTerminees = "SELECT  r.dateReservation, 
+	$reqReservationsTerminees = "SELECT r.idReservation, 
+										r.dateReservation, 
 										r.dateLimiteReservation, 
 										r.commentaireReservation, 
 										r.nomEtablissementReservation,
@@ -85,8 +88,23 @@
             </div>
          </nav>
       </header>
-        
-      <!-- cards pour les nouvelles reservations -->
+	  
+	  <!-- Initialisation du menu "acordéon" -->
+	  <script type="text/javascript">
+	   $(document).ready(function(){
+			$('.collapsible').collapsible({
+				accordion : false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+			});
+		});
+      </script>
+	  
+	  
+	<ul class="collapsible" data-collapsible="expandable"> <!-- Plusieurs menus peuvent être ouvert en même temps -->
+    <li>
+	  <!-- Par défaut on déploie les nouvelles demandes de réservations -->
+      <div class="collapsible-header active"><i class="material-icons">call_made</i>Nouvelles réservations</div>
+      <div class="collapsible-body"><p>
+	  <!-- cards pour les nouvelles reservations -->
       <?php if (!empty($nouvellesReservations)): ?>
           
          <?php foreach ($nouvellesReservations as $value){  ?>
@@ -94,6 +112,7 @@
                  
                      <div class="card red">
                      <div class="card-content white-text">
+						<p><?php echo $value['idReservation']; ?></p>
 						<p><?php echo $value['nomLivre']; ?></p>
 						<p><?php echo $value['numISBM']; ?></p>
                         <p><?php echo $value['auteurLivre']; ?></p>
@@ -115,13 +134,19 @@
          
       <?php endif ?>
 	  
-	   <!-- cards pour les reservations en cours-->
+	</p></div>
+    </li>
+    <li>
+      <div class="collapsible-header"><i class="material-icons">trending_flat</i>Réservations en cours</div>
+      <div class="collapsible-body"><p>
+	  	   <!-- cards pour les reservations en cours-->
 	  <?php if (!empty($reservationsEnCours)): ?>
           
          <?php foreach ($reservationsEnCours as $value){  ?>
                <div class="col s3 m3">
                      <div class="card green">
                      <div class="card-content white-text">
+						<p><?php echo $value['idReservation']; ?></p>
 						<p><?php echo $value['nomLivre']; ?></p>
 						<p><?php echo $value['numISBM']; ?></p>
                         <p><?php echo $value['auteurLivre']; ?></p>
@@ -143,14 +168,20 @@
          
       <?php endif ?>
 	  
+	  </p></div>
+    </li>
+    <li>
+      <div class="collapsible-header"><i class="material-icons">done</i>Réservations terminées</div>
+      <div class="collapsible-body"><p>
 	  
-	   <!-- cards pour les reservations  terminées-->
+	  	   <!-- cards pour les reservations  terminées-->
 	  <?php if (!empty($reservationsTerminees)): ?>
           
          <?php foreach ($reservationsTerminees as $value){  ?>
                <div class="col s3 m3">
                      <div class="card yellow">
                      <div class="card-content white-text">
+						<p><?php echo $value['idReservation']; ?></p>
 						<p><?php echo $value['nomLivre']; ?></p>
 						<p><?php echo $value['numISBM']; ?></p>
                         <p><?php echo $value['auteurLivre']; ?></p>
@@ -171,6 +202,18 @@
          <?php } ?>
          
       <?php endif ?>
+	  
+	  
+	  </p></div>
+    </li>
+  </ul>
+	  
+        
+      
+	  
+
+	  
+
       
    </body>
 </html>
