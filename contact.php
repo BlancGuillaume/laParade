@@ -115,10 +115,10 @@
 			</form>
 		</section>
 		
-		<!-- cards pour les news -->
+      <!-- cards pour les news -->
       <?php if (!empty($news)): ?>
          <aside class="container-cards"> <!-- ajout d'une nouvelle news -> dans cette div -->   
-         <?php for ($i = 0; $i < 5; $i++) : ?>
+         <?php for ($i = 0; $i < 5 && !empty($news[$i]); $i++) : ?>
                <div class="col s3 m3">
                   <?php if ($i == 0 || $i == 3): ?>
                      <div class="card orange darken-2">
@@ -141,6 +141,6 @@
                </div>
          <?php endfor; ?>
          </aside>
-      <?php endif ?>
+      <?php endif; ?>
 	</body>
 </html>

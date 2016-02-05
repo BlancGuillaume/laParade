@@ -11320,7 +11320,7 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
  #presentationReservation {
   width: 64%;
   /*height: 450px;*/
-  height: 450px;
+  
  }
 
  h5, h3, h4 {
@@ -11329,8 +11329,12 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
  }
 
  #formulaireReservation {
-   margin-top: 1%;
+  float:left;
+  width: 82.5%;
+  margin:1% 0% 2% 1%;
+  text-align: justify;
  }
+
 
  .container-cards p, a{
   font-size: small;
@@ -11356,8 +11360,20 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
     height:55%;
   }
 
- #cardEtudiant {
+#cardEtudiant {
   width: 100%;
+ }
+ #cardClient {
+  width: 100%;
+ }
+ 
+
+ #cardClientEtudiant {
+  width: 50%;
+ }
+
+  #cardLivre {
+  width: 50%;
  }
 
  #boutonReservation {
