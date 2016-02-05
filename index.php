@@ -32,8 +32,7 @@
       <script type="text/javascript" src="js/script.js"></script>
       <header>
          <nav>
-            <div class="nav-wrapper">
-               <a href="images/blason.gif" class="brand-logo">Librairie la Parade</a>
+            <div>
                <!-- Barre de navigation -->
                <ul id="nav-mobile" class="right hide-on-med-and-down">
                   <li class="active"><a href="index.php">Acceuil</a></li>
@@ -83,12 +82,12 @@
             </div>
             <div id="presentationNews"class="card col white">
                <h5>News</h5>
-               <img id="imageNews" src="images/news.jpg"></img>
+               <!-- <img id="imageNews" src="images/news.jpg"></img> -->
                <p>Afin de vous tenir informés de toutes les dernières nouveautés de votre libraire, des news apparaissent à gauche de votre écran.</p>
             </div>
              <div id="presentationContact" class="card col white">
                <h5>Contact</h5>
-               <img id="imageContact" src="images/contact.jpg"></img>
+               <!-- <img id="imageContact" src="images/contact.jpg"></img> -->
                <p>Pour toutes questions, vous pouvez contacter votre librairie grâce à l'onglet <a href="contact.html">CONTACT</a>.</p>
             </div>
          </div>
@@ -100,11 +99,11 @@
          <?php for ($i = 0; $i < 5 && !empty($news[$i]); $i++) : ?>
                <div class="col s3 m3">
                   <?php if ($i == 0 || $i == 3): ?>
-                     <div class="card orange darken-2">
+                     <div class="card orangefonce">
                   <?php elseif($i == 1 || $i == 4): ?>
                      <div class="card orange">
                   <?php else: ?>
-                     <div class="card orange lighten-1">
+                     <div class="card orangeclair">
                   <?php endif ?>
                      <div class="card-content white-text">
                         <span><?php echo $news[$i]['nomNews'];?></span>

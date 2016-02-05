@@ -52,7 +52,6 @@
       <header>
          <nav>
             <div class="nav-wrapper">
-               <a href="images/blason.gif" class="brand-logo">Librairie la Parade</a>
                <!-- Barre de navigation -->
                <ul id="nav-mobile" class="right hide-on-med-and-down">
                   <li><a href="index.php">Acceuil</a></li>
@@ -106,7 +105,7 @@
          <?php for ($i = 0; $i < 5 && !empty($news[$i]); $i++) : ?>
                <div class="col s3 m3">
                   <?php if ($i == 0 || $i == 3): ?>
-                     <div class="card orange darken-2">
+                     <div class="card orange fonce">
                   <?php elseif($i == 1 || $i == 4): ?>
                      <div class="card orange">
                   <?php else: ?>
