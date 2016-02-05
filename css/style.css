@@ -2687,13 +2687,13 @@ i {
 }
 
 i.left {
-  float: left;
-  margin-right: 15px;
+  /*float: left;*/
+  /*margin-right: 15px;*/
 }
 
 i.right {
-  float: right;
-  margin-left: 15px;
+  /*float: right;*/
+  /*margin-left: 15px;*/
 }
 
 i.tiny {
@@ -11365,13 +11365,16 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
  }
 
 div#galerie {
-  width: 410px ;
-  background: #eed ;
-  border: 1px solid #dcb ;
-  padding: 15px ;
-  margin: 15px 30px ;
+  width: 467.2px;
+  height:324.8px;
+  padding: 5px;
+  display : table;
+  margin : 0 auto;
+  margin-top : 1%;
+  margin-right:1%;
   text-align: center ;
-  font: 0.9em Georgia, serif ;}
+  font: 0.9em Georgia, serif ;
+  float:right;}
 
 ul#galerie_mini {
   margin: 0 ;
@@ -11386,16 +11389,32 @@ ul#galerie_mini li a img {
   border: 1px solid #dcb ; }
 
 ul#nav {
-  margin: 0 ;
   padding: 0 ;
-  list-style-type: none ;}
+  list-style-type: none ;
+  margin:0;
+}
 
-ul#nav li {
-  float: left ; }
+ul#nav li i {
+  float: center ;
+}
+
+#prec {
+  float: left ;
+  margin-bottom: 15px;
+  margin-top: 0px;
+}
+#suiv {
+  float: right ;
+  margin-bottom: 15px;
+  margin-top:0;
+}
 
 dl#photo {
+  width:467.2px;
+  height: 324.8px;
   clear: both ;
-  margin: 0 auto ; }
+  margin: 0 auto ; 
+}
 
 dl#photo dt {
   font: italic 2.5em/1.5em Georgia, serif ;
@@ -11404,9 +11423,24 @@ dl#photo dt {
 dl#photo dd {
   margin: 0 ; }
 
-dl#photo img{
-  border: 1px solid #dcb ; }
 
-  dt {
-    position:absolute; top:-999px; left:-9999px;
-  }
+dt {
+  position:absolute; top:-999px; left:-9999px;
+}
+
+#bienvenue {
+  float:left;
+  width: 65%;
+}
+
+#bienvenue p {
+  font-size: medium;
+}
+
+#cardConnexion {
+  width:100%;
+}
+
+#boutonConnexion {
+  margin-right:2%;
+}
