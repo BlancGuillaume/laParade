@@ -58,7 +58,8 @@ $sql = "CREATE TABLE MESSAGE (
 idMessage INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
 contenuMessage TEXT  NOT NULL, -- Stocke des chaînes de 65535 caractères maximum. Ce champ est insensible à la casse
 dateMessage DATETIME NOT NULL, 
-mailClientMessage VARCHAR(50) NOT NULL, 
+mailClientMessage VARCHAR(50) NOT NULL,
+statusMessage INT(11), 
 CONSTRAINT fk_message_client             -- On donne un nom à notre clé
         FOREIGN KEY (mailClientMessage)  -- Colonne sur laquelle on crée la clé
         REFERENCES CLIENT(mailClient)    -- Colonne de référence

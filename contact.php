@@ -11,12 +11,12 @@
 
 		// Récupération de toutes les informations du formulaire de contact
 		$dateMessage = date("Y-m-d H:i:s"); // le format DATETIME de MySQL
-		$contenuMessage = $_POST['commentaire'];
+		$contenuMessage = addslashes($_POST['commentaire']);
 		$mailClient = $_POST['email'];
 		$nomClient = $_POST['nomMessage'];
 		$prenomClient = $_POST['prenomMessage'];
 		$numClient = $_POST['telephone'];
-   
+		$statusMessage = 0; // nouveau message
 		$reqClientExiste = 	"SELECT * 
 							FROM CLIENT 
 							WHERE mailClient = '".$mailClient."'"; 
@@ -29,8 +29,8 @@
 			$result = $bd->set_requete($reqInsertionClient);
 		} 
    
-		$reqMessage = 	"INSERT INTO MESSAGE (contenuMessage, dateMessage, mailClientMessage)
-						 VALUES ('".$contenuMessage."','".$dateMessage."','".$mailClient."')";
+		$reqMessage = 	"INSERT INTO MESSAGE (contenuMessage, dateMessage, mailClientMessage, statusMessage)
+						 VALUES ('".$contenuMessage."','".$dateMessage."','".$mailClient."','".$statusMessage."')";
 												  
 																								  
 		$result = $bd->set_requete($reqMessage);	  
@@ -63,7 +63,7 @@
 					<ul id="nav-mobile" class="right hide-on-med-and-down">
 						<li><a href="index.php">Presentation</a></li>
 						<li><a href="reservation.php">Reservation</a></li>
-						<li class="active"><a href="contact.html">Contact</a></li>
+						<li class="active"><a href="contact.php">Contact</a></li>
 					</ul>
 				</div>
 			</nav>
