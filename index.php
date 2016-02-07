@@ -2,7 +2,7 @@
    session_start();
    if (isset($_SESSION['login']))
    {
-      var_dump($_SESSION['login']);
+      //var_dump($_SESSION['login']);
    }
 
    ini_set('display_errors','off'); // Pour ne pas avoir le message d'erreur : The mysql extension is deprecated
@@ -15,6 +15,11 @@
    $news = $bd->get_requete($req);
    $dir    = 'uploads';
    $photosGalerie = scandir($dir, 1);
+
+   if ($_SESSION['erreur'] == -1) {
+      var_dump($_SESSION['erreur']);
+      header('Location: deconnexion.php');
+   }
 
 ?>
 
@@ -38,9 +43,14 @@
                <!-- Barre de navigation -->
                <ul id="nav-mobile" class="right hide-on-med-and-down">
                   <li class="active"><a href="index.php">Acceuil</a></li>
-                  <li><a href="reservation.php">Reservation</a></li>
-                  <li><a href="contact.php">Contact</a></li>
-                  <li><a href="connexion.php">Espace utilisateur</a></li>
+                  <?php if (!isset($_SESSION['login'])) :?>
+                     <li><a href="reservation.php">Reservation</a></li>
+                     <li><a <href="contact.php">Contact</a></li>
+                  <?php else :?>
+                     <li><a href="gestionNews.php">News</a></li>
+                     <li><a href="gestionReservation.php">Reservation</a></li>
+                     <li><a href="gestionContact.php">Messages</a></li>
+                  <?php endif; ?>
                </ul>
             </div>
          </nav>
@@ -124,8 +134,38 @@
                   </div>
                </div>
          <?php endfor; ?>
+         <footer>
+            <?php if (isset($_SESSION['login'])) : ?>
+               <a id="lienEspaceUtilisateur" href="deconnexion.php">Deconnexion</a>
+            <?php else : ?>
+               <a id="lienEspaceUtilisateur" href="#" data-width="500" data-rel="popup1" class="poplight">Connexion</a>
+            <?php endif; ?>
+         </footer>
          </aside>
       <?php endif; ?>
-      
    </body>
+
+   <div id="popup1" class="popup_block">
+      <form action="connexion.php" method="post">
+         <h5>Connexion</h5>
+         <div class="row">   
+            <div class="col s12">
+               <div class="input-field col s12">
+                  <i class="material-icons prefix">mail</i>
+                  <input id="mailUtilisateur" name="mailUtilisateur" type="text" class="validate">
+                  <label for="mailUtilisateur">Mail</label>
+               </div>
+               <div class="input-field col s12">
+                  <i class="material-icons prefix">vpn_key</i>
+                  <input id="mdpUtilisateur" name="mdpUtilisateur" type="text" class="validate">
+                  <label for="mdpUtilisateur">Mot de passe</label>
+               </div>
+            </div>
+         </div>
+         <button id="boutonConnexion" class="btn waves-effect waves-light" type="submit"  name="action">Connexion
+            <i class="material-icons right">send</i>
+         </button>
+      </form>
+   </div>
+   
 </html>
