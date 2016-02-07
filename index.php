@@ -50,9 +50,13 @@
          <div id="accrochePresentation" class="card col white">
             <div id="bienvenue">
                <h3>Bienvenue</h3>
-               <p>Reprise en 2004 par Arnauld et Patricia GIVELET, la librairie la Parade n'a de cesse de se diversifier afin de satisfaire pleinement tous ses clients :
-                presse, papeterie, librairie, LOTO, PMU, point de vente RTM, confiserie etc. C'est dans cet état d'esprit, que nous avons la joie de vous présenter 
-                les nouveaux services en ligne !<br><br></p>
+               <p><?php
+                  $fichier='presentation.txt';
+                  $contenu_string = file_get_contents($fichier);
+                  print utf8_encode($contenu_string);
+               ?></p>
+
+                  <br><br></p>
             </div>
 
             <div id="galerie">
