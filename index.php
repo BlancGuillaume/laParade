@@ -33,6 +33,8 @@
       <header>
          <nav>
             <div>
+               <!-- Titre du site non affiché -->
+               <h1 id="titreSite">Librairie La Parade</h1>
                <!-- Barre de navigation -->
                <ul id="nav-mobile" class="right hide-on-med-and-down">
                   <li class="active"><a href="index.php">Acceuil</a></li>

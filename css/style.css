@@ -1644,3 +1644,8 @@ dt {
 #boutonConnexion {
   margin-right:2%;
 }
+
+#titreSite {
+  position:absolute; top:-999px; left:-9999px;
+  visibility: hidden;
+}
