@@ -23,6 +23,8 @@ img.card-image {
 body {
   background-color: #ededed;
   margin: 0;
+  min-width: 950px;
+  min-width: 740px;
 }
 img {
   border: 0;
@@ -1562,8 +1564,8 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
  }
 
 #galerie {
-  width: 447.2px;
-  height:304.8px;
+  width: 30%;
+  height:auto;
   padding: 5px;
   display : table;
   margin : 0 auto;
@@ -1597,20 +1599,21 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
 
 #prec {
   float: left ;
-  margin-bottom: 15px;
+  margin-bottom: 10%;
   margin-top: 0px;
 }
 #suiv {
   float: right ;
-  margin-bottom: 15px;
+  margin-bottom: 10%
   margin-top:0;
 }
 
 #photo {
-  width:467.2px;
-  height: 324.8px;
+  width:100%;
+  height: auto;
   clear: both ;
   margin: 0 auto ; 
+  margin-bottom:4%;
 }
 
 #photo dt {
