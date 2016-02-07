@@ -60,7 +60,7 @@
             </div>
 
             <div id="galerie">
-               <ul id="galerie_mini">
+               <ul id="ensemblePhotos">
                   <?php $i = 1;foreach ($photosGalerie as $photo) :?>
                      <?php if (!in_array($photo,array(".",".."))) : ?>
                         <li><a href=<?php echo 'uploads/' . $photo;?>></a></li>
@@ -70,7 +70,7 @@
                <dl id="photo">
                   <?php if (!in_array($photosGalerie[0],array(".",".."))) : ?>
                      <dt><?php echo $photosGalerie[0];?></dt>
-                     <dd><img id="big_pict" src=<?php echo 'uploads/' . $photosGalerie[0];?> alt=<?php echo 'uploads/' . $photosGalerie[0];?> /></dd>
+                     <dd><img id="photoAAfficher" src=<?php echo 'uploads/' . $photosGalerie[0];?> alt=<?php echo 'uploads/' . $photosGalerie[0];?> /></dd>
                   <?php endif; ?>
                </dl>
                <ul id="nav">
