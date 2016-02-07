@@ -308,6 +308,9 @@ nav ul a:hover {
 a {
   text-decoration: none;
 }
+a:hover {
+  color:black;
+}
 
 html {
   line-height: 1.5;
