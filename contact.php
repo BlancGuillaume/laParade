@@ -58,8 +58,6 @@
 		<header>
 			<nav>
 				<div class="nav-wrapper">
-					<!--<h1><img id="logo" class="brand-logo" src="images/blason.gif"/></h1>-->
-					<a href="images/blason.gif" class="brand-logo">Librairie la Parade</a>
 					<ul id="nav-mobile" class="right hide-on-med-and-down">
 						<li><a href="index.php">Presentation</a></li>
 						<li><a href="reservation.php">Reservation</a></li>
@@ -115,10 +113,10 @@
 			</form>
 		</section>
 		
-		<!-- cards pour les news -->
+      <!-- cards pour les news -->
       <?php if (!empty($news)): ?>
          <aside class="container-cards"> <!-- ajout d'une nouvelle news -> dans cette div -->   
-         <?php for ($i = 0; $i < 5; $i++) : ?>
+         <?php for ($i = 0; $i < 5 && !empty($news[$i]); $i++) : ?>
                <div class="col s3 m3">
                   <?php if ($i == 0 || $i == 3): ?>
                      <div class="card orange darken-2">
@@ -141,6 +139,6 @@
                </div>
          <?php endfor; ?>
          </aside>
-      <?php endif ?>
+      <?php endif; ?>
 	</body>
 </html>

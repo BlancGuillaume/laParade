@@ -27,8 +27,6 @@ var_dump($_SESSION['login']);
     <header>
         <nav>
             <div class="nav-wrapper">
-                <!--<h1><img id="logo" class="brand-logo" src="images/blason.gif"/></h1>-->
-                <a href="images/blason.gif" class="brand-logo">Librairie la Parade</a>
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
                     <li><a href="index.php">Presentation</a>
                     </li>

@@ -1,46 +1,88 @@
-function displayPics()
-{
-  var photos = document.getElementById('galerie_mini') ;
-  // On récupère l'élément ayant pour id galerie_mini
-  var liens = photos.getElementsByTagName('a') ;
-  // On récupère dans une variable tous les liens contenu dans galerie_mini
-  var big_photo = document.getElementById('big_pict') ;
-  // Ici c'est l'élément ayant pour id big_pict qui est récupéré, c'est notre photo en taille normale
 
-  var titre_photo = document.getElementById('photo').getElementsByTagName('dt')[0] ;
-  // Et enfin le titre de la photo de taille normale
+jQuery(function($){
+                     
+  //Lorsque vous cliquez sur un lien de la classe poplight
+  $('a.poplight').on('click', function() {
+    var popID = $(this).data('rel'); //Trouver la pop-up correspondante
+    var popWidth = $(this).data('width'); //Trouver la largeur
+
+    //Faire apparaitre la pop-up et ajouter le bouton de fermeture
+    $('#' + popID).fadeIn().css({ 'width': popWidth}).prepend();
+    
+    //Récupération du margin, qui permettra de centrer la fenêtre - on ajuste de 80px en conformité avec le CSS
+    var popMargTop = ($('#' + popID).height() + 80) / 2;
+    var popMargLeft = ($('#' + popID).width() + 80) / 2;
+    
+    //Apply Margin to Popup
+    $('#' + popID).css({ 
+      'margin-top' : -popMargTop,
+      'margin-left' : -popMargLeft
+    });
+    
+    //Apparition du fond - .css({'filter' : 'alpha(opacity=80)'}) pour corriger les bogues d'anciennes versions de IE
+    $('body').append('<div id="fade"></div>');
+    $('#fade').css({'filter' : 'alpha(opacity=80)'}).fadeIn();
+    
+    return false;
+  });
   
-  var posPhoto=0;
+  
+  //Close Popups and Fade Layer
+  $('body').on('click', 'a.close, #fade', function() { //Au clic sur le body...
+    $('#fade , .popup_block').fadeOut(function() {
+      $('#fade, a.close').remove();  
+  }); //...ils disparaissent ensemble
+    
+    return false;
+  });
+
+  
+});
+
+
+function afficherImages()
+{
+  // on récupère l'ensemble des photos de la galerie dans $photos
+  var photos = document.getElementById('ensemblePhotos') ;
+  
+  // on récupère tous les liens contenus dans ensemblePhotos dans $liens
+  var liens = photos.getElementsByTagName('a') ;
+  
+  // on récupère la photo à afficher
+  var photo = document.getElementById('photoAAfficher') ;
+  
+  var numPhoto=0;
   
   var next = document.getElementById('nextButton');
   var prev = document.getElementById('prevButton');
 
-  // Une boucle parcourant l'ensemble des liens contenu dans galerie_mini
+
   for (var i = 0 ; i < liens.length ; i++) {
-    // Au clique sur le bouton next
+
+    // quand on appuie sur le bouton suivant
     next.onclick = function() {
-      big_photo.src = liens[posPhoto+1].href; // On change l'attribut src de l'image en le remplaçant par la valeur du lien
-      big_photo.alt = liens[posPhoto+1].title; // On change son titre
-      titre_photo.firstChild.nodeValue = liens[posPhoto+1].title; // On change le texte de titre de la photo
-    posPhoto++;
-      };
-    // Au clique sur le bouton previous 
+      if (numPhoto == (liens.length - 1)) {
+        photo.src = liens[0].href;
+        numPhoto = 0;
+      }
+      else {
+        photo.src = liens[numPhoto+1].href;
+        numPhoto++;
+      }
+    };
+
+    // quand on appuie sur le bouton precedent
     prev.onclick = function() {
-      big_photo.src = liens[posPhoto-1].href; // On change l'attribut src de l'image en le remplaçant par la valeur du lien
-      big_photo.alt = liens[posPhoto-1].title; // On change son titre
-      titre_photo.firstChild.nodeValue = liens[posPhoto-1].title; // On change le texte de titre de la photo
-    posPhoto--;
-      };
-    // Au clique sur les liens des vignettes
-    liens[i].onclick = function() {
-      big_photo.src = this.href; // On change l'attribut src de l'image en le remplaçant par la valeur du lien
-      big_photo.alt = this.title; // On change son titre
-      titre_photo.firstChild.nodeValue = this.title; // On change le texte de titre de la photo
-    posPhoto=this.id;
-    return false; // Et pour finir on inhibe l'action réelle du lien
-      };
+      if (numPhoto == 0) {
+        photo.src = liens[(liens.length - 1)].href;
+        numPhoto = (liens.length - 1);
+      }
+      else {
+        photo.src = liens[numPhoto-1].href; 
+        numPhoto--;
+      }
+    };
   } 
 }
 
-// Il ne reste plus qu'à appeler notre fonction au chargement de la page
-window.onload = displayPics;
+window.onload = afficherImages;

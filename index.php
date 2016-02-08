@@ -2,7 +2,7 @@
    session_start();
    if (isset($_SESSION['login']))
    {
-      var_dump($_SESSION['login']);
+      //var_dump($_SESSION['login']);
    }
 
    ini_set('display_errors','off'); // Pour ne pas avoir le message d'erreur : The mysql extension is deprecated
@@ -15,6 +15,11 @@
    $news = $bd->get_requete($req);
    $dir    = 'uploads';
    $photosGalerie = scandir($dir, 1);
+
+   if ($_SESSION['erreur'] == -1) {
+      var_dump($_SESSION['erreur']);
+      header('Location: deconnexion.php');
+   }
 
 ?>
 
@@ -32,14 +37,20 @@
       <script type="text/javascript" src="js/script.js"></script>
       <header>
          <nav>
-            <div class="nav-wrapper">
-               <a href="images/blason.gif" class="brand-logo">Librairie la Parade</a>
+            <div>
+               <!-- Titre du site non affiché -->
+               <h1 id="titreSite">Librairie La Parade</h1>
                <!-- Barre de navigation -->
                <ul id="nav-mobile" class="right hide-on-med-and-down">
                   <li class="active"><a href="index.php">Acceuil</a></li>
-                  <li><a href="reservation.php">Reservation</a></li>
-                  <li><a href="contact.php">Contact</a></li>
-                  <li><a href="connexion.php">Espace utilisateur</a></li>
+                  <?php if (!isset($_SESSION['login'])) :?>
+                     <li><a href="reservation.php">Reservation</a></li>
+                     <li><a <href="contact.php">Contact</a></li>
+                  <?php else :?>
+                     <li><a href="gestionNews.php">News</a></li>
+                     <li><a href="gestionReservation.php">Reservation</a></li>
+                     <li><a href="gestionContact.php">Messages</a></li>
+                  <?php endif; ?>
                </ul>
             </div>
          </nav>
@@ -49,13 +60,17 @@
          <div id="accrochePresentation" class="card col white">
             <div id="bienvenue">
                <h3>Bienvenue</h3>
-               <p>Reprise en 2004 par Arnauld et Patricia GIVELET, la librairie la Parade n'a de cesse de se diversifier afin de satisfaire pleinement tous ses clients :
-                presse, papeterie, librairie, LOTO, PMU, point de vente RTM, confiserie etc. C'est dans cet état d'esprit, que nous avons la joie de vous présenter 
-                les nouveaux services en ligne !<br><br></p>
+               <p><?php
+                  $fichier='presentation.txt';
+                  $contenu_string = file_get_contents($fichier);
+                  print utf8_encode($contenu_string);
+               ?></p>
+
+                  <br><br></p>
             </div>
 
             <div id="galerie">
-               <ul id="galerie_mini">
+               <ul id="ensemblePhotos">
                   <?php $i = 1;foreach ($photosGalerie as $photo) :?>
                      <?php if (!in_array($photo,array(".",".."))) : ?>
                         <li><a href=<?php echo 'uploads/' . $photo;?>></a></li>
@@ -65,7 +80,7 @@
                <dl id="photo">
                   <?php if (!in_array($photosGalerie[0],array(".",".."))) : ?>
                      <dt><?php echo $photosGalerie[0];?></dt>
-                     <dd><img id="big_pict" src=<?php echo 'uploads/' . $photosGalerie[0];?> alt=<?php echo 'uploads/' . $photosGalerie[0];?> /></dd>
+                     <dd><img id="photoAAfficher" src=<?php echo 'uploads/' . $photosGalerie[0];?> alt=<?php echo 'uploads/' . $photosGalerie[0];?> /></dd>
                   <?php endif; ?>
                </dl>
                <ul id="nav">
@@ -83,12 +98,12 @@
             </div>
             <div id="presentationNews"class="card col white">
                <h5>News</h5>
-               <img id="imageNews" src="images/news.jpg"></img>
+               <!-- <img id="imageNews" src="images/news.jpg"></img> -->
                <p>Afin de vous tenir informés de toutes les dernières nouveautés de votre libraire, des news apparaissent à gauche de votre écran.</p>
             </div>
              <div id="presentationContact" class="card col white">
                <h5>Contact</h5>
-               <img id="imageContact" src="images/contact.jpg"></img>
+               <!-- <img id="imageContact" src="images/contact.jpg"></img> -->
                <p>Pour toutes questions, vous pouvez contacter votre librairie grâce à l'onglet <a href="contact.html">CONTACT</a>.</p>
             </div>
          </div>
@@ -97,14 +112,14 @@
       <!-- cards pour les news -->
       <?php if (!empty($news)): ?>
          <aside class="container-cards"> <!-- ajout d'une nouvelle news -> dans cette div -->   
-         <?php for ($i = 0; $i < 5; $i++) : ?>
+         <?php for ($i = 0; $i < 5 && !empty($news[$i]); $i++) : ?>
                <div class="col s3 m3">
                   <?php if ($i == 0 || $i == 3): ?>
-                     <div class="card orange darken-2">
+                     <div class="card orangefonce">
                   <?php elseif($i == 1 || $i == 4): ?>
                      <div class="card orange">
                   <?php else: ?>
-                     <div class="card orange lighten-1">
+                     <div class="card orangeclair">
                   <?php endif ?>
                      <div class="card-content white-text">
                         <span><?php echo $news[$i]['nomNews'];?></span>
@@ -119,8 +134,38 @@
                   </div>
                </div>
          <?php endfor; ?>
+         <footer>
+            <?php if (isset($_SESSION['login'])) : ?>
+               <a id="lienEspaceUtilisateur" href="deconnexion.php">Deconnexion</a>
+            <?php else : ?>
+               <a id="lienEspaceUtilisateur" href="#" data-width="500" data-rel="popup1" class="poplight">Connexion</a>
+            <?php endif; ?>
+         </footer>
          </aside>
       <?php endif; ?>
-      
    </body>
+
+   <div id="popup1" class="popup_block">
+      <form action="connexion.php" method="post">
+         <h5>Connexion</h5>
+         <div class="row">   
+            <div class="col s12">
+               <div class="input-field col s12">
+                  <i class="material-icons prefix">mail</i>
+                  <input id="mailUtilisateur" name="mailUtilisateur" type="text" class="validate">
+                  <label for="mailUtilisateur">Mail</label>
+               </div>
+               <div class="input-field col s12">
+                  <i class="material-icons prefix">vpn_key</i>
+                  <input id="mdpUtilisateur" name="mdpUtilisateur" type="text" class="validate">
+                  <label for="mdpUtilisateur">Mot de passe</label>
+               </div>
+            </div>
+         </div>
+         <button id="boutonConnexion" class="btn waves-effect waves-light" type="submit"  name="action">Connexion
+            <i class="material-icons right">send</i>
+         </button>
+      </form>
+   </div>
+   
 </html>
