@@ -112,6 +112,24 @@
                  
                      <div class="card red">
                      <div class="card-content white-text">
+						
+						<button id=<?php echo "bouton".$value['idReservation']; ?> onclick="setToEnCours()">Click me</button>
+						<script>
+							function setToEnCours() {
+								<?php
+								
+								$idReservation  = $value['idReservation'];
+								var_dump($value['idReservation']);
+								 $reqChangerStatusReservation = "UPDATE RESERVATION
+																 SET statusReservation = 1
+																 WHERE idReservation ='".$idReservation."'";
+																 
+								 echo $reqChangerStatusReservation;								 
+							     $updateStatusReservation = $bd->set_requete($reqChangerStatusReservation);
+								?>
+							}
+						</script>
+						
 						<p><?php echo $value['idReservation']; ?></p>
 						<p><?php echo $value['nomLivre']; ?></p>
 						<p><?php echo $value['numISBM']; ?></p>
@@ -146,6 +164,23 @@
                <div class="col s3 m3">
                      <div class="card green">
                      <div class="card-content white-text">
+					 
+					 <button onclick="setToTermine()">Click me</button>
+						<script>
+							function setToTermine() {
+								<?php
+								 $idReservation  = $value['idReservation'];
+								var_dump($value['idReservation']);
+								 $reqChangerStatusReservation = "UPDATE RESERVATION
+																 SET statusReservation = 2
+																 WHERE idReservation ='".$idReservation."'";
+																 
+							     $updateStatusReservation = $bd->set_requete($reqChangerStatusReservation);
+								 echo $reqChangerStatusReservation;		
+								?>
+							}
+						</script>
+					 
 						<p><?php echo $value['idReservation']; ?></p>
 						<p><?php echo $value['nomLivre']; ?></p>
 						<p><?php echo $value['numISBM']; ?></p>
@@ -181,6 +216,24 @@
                <div class="col s3 m3">
                      <div class="card yellow">
                      <div class="card-content white-text">
+					 
+					 <!-- juste pour tester     A SUPPRIMER !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+					  <button onclick="setToTermine()">Click me</button>
+						<script>
+							function setToTermine() {
+								<?php
+								 $idReservation  = $value['idReservation'];
+								 var_dump($value['idReservation']);
+								 $reqChangerStatusReservation = "UPDATE RESERVATION
+																 SET statusReservation = 0
+																 WHERE idReservation ='".$idReservation."'";
+																 
+							     $updateStatusReservation = $bd->set_requete($reqChangerStatusReservation);
+								 //header('Location: gestionReservation.php');
+								?>
+							}
+						</script>
+					 
 						<p><?php echo $value['idReservation']; ?></p>
 						<p><?php echo $value['nomLivre']; ?></p>
 						<p><?php echo $value['numISBM']; ?></p>
