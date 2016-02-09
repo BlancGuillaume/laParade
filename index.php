@@ -140,7 +140,7 @@
             <?php if (isset($_SESSION['login'])) : ?>
                <a id="lienEspaceUtilisateur" href="deconnexion.php">Deconnexion</a>
             <?php else : ?>
-               <a id="lienEspaceUtilisateur" href="#" data-rel="popup1" class="poplight">Connexion</a>
+               <a id="lienEspaceUtilisateur" href="#" data-width="500" data-rel="popup1" class="poplight">Connexion</a>
             <?php endif; ?>
          </footer>
          </aside>
