@@ -37,8 +37,17 @@
 						WHERE m.statusMessage = 1
 						AND m.mailClientMessage = c.mailClient";
 
-					
-														
+   if (isset($_POST['status'])){
+      // On update le status du message
+	  if ($_POST['status'] == 1) {
+		$idMessageStatusChange = $_POST['idMessageAChanger'];
+		$reqChangerStatusMessage      = "UPDATE MESSAGE
+										SET statusMessage = 1
+										WHERE idMessage ='".$idMessageStatusChange."'";
+		$updateStatusMessage = $bd->set_requete($reqChangerStatusMessage);								
+	  }
+	} 
+	
    $nouveauMessage = $bd->get_requete($reqNouveauMessage);
    $messageTraite = $bd->get_requete($reqMessageTraite);
 ?>
@@ -83,18 +92,23 @@
 	<section id="presentation">
    	<ul class="collapsible" data-collapsible="expandable"> <!-- Plusieurs menus peuvent être ouvert en même temps -->
          <li>
-   	   <!-- Par défaut on déploie les nouvelles demandes de réservations -->
+   	   <!-- Par défaut on déploie les nouvelles demandes de contact -->
             <div class="collapsible-header active"><i class="material-icons">call_made</i>Nouveau message</div>
             <div class="collapsible-body">
                <p>
          	   <!-- cards pour les nouveaux messages -->
                <?php if (!empty($nouveauMessage)): ?>
                    
-                  <?php foreach ($nouveauMessage as $value){  ?>
-                        <div class="col s3 m3">
-                          
+                  <?php foreach ($nouveauMessage as $value){  ?> 
+					<!-- Bouton pour changer le status du message : de nouveau à traité 
+					     On envoie par POST l'id du message à modifier -->
+					<form action="gestionContact.php" method="post">
+						<input type="hidden" name="status" value="1" /> <!-- 1 pour traité (0 quand c'est un nouveau message) -->
+						<input type="hidden" name="idMessageAChanger" value=<?php echo $value['idMessage']; ?> /> 
+						<button id="boutonGestionMessage" type="submit"  name="action">traiter </button>
+					</form>				  
                               <div class="card red">
-                              <div class="card-content white-text">
+                              <div class="card-content black-text">
          						<p><?php echo $value['idMessage']; ?></p>
          						<p><?php echo $value['contenuMessage']; ?></p>
          						<p><?php echo $value['dateMessage']; ?></p>
@@ -105,7 +119,6 @@
          						<p><?php echo $value['numClient']; ?></p>
                               </div>
                            </div>
-                        </div>
                   <?php } ?>
                   
                <?php endif ?>
@@ -121,7 +134,7 @@
                   <?php foreach ($messageTraite as $value){  ?>
                         <div class="col s3 m3">
                               <div class="card green">
-                              <div class="card-content white-text">
+                              <div class="card-content black-text">
          						<p><?php echo $value['idMessage']; ?></p>
          						<p><?php echo $value['contenuMessage']; ?></p>
          						<p><?php echo $value['dateMessage']; ?></p>
