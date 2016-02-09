@@ -11,9 +11,6 @@
 
    $bd = new accessBD;
    $bd->connect();
-
-   $req = "SELECT * FROM NEWS ORDER BY idNews DESC";
-   $news = $bd->get_requete($req);
    
    $dir    = 'uploads';
    $photosGalerie = scandir($dir, 1);
@@ -22,6 +19,17 @@
       var_dump($_SESSION['erreur']);
       header('Location: deconnexion.php');
    }
+   
+   if (isset($_POST['idNewsASupprimer'])){
+		$idNewsASupprimer = $_POST['idNewsASupprimer'];
+		var_dump($idNewsASupprimer);
+		$reqSupprimerNews = "DELETE FROM NEWS
+							 WHERE idNews ='".$idNewsASupprimer."'";
+		$supprimerNews = $bd->set_requete($reqSupprimerNews);								
+	} 
+	
+	$req = "SELECT * FROM NEWS ORDER BY idNews DESC";
+    $news = $bd->get_requete($req);
 
 ?>
 
@@ -101,10 +109,10 @@
 
       <section id="containerAllNews">
          <?php for ($i = 0; !empty($news[$i]); $i++) : ?>
-         <form action="supprNews.php" method="post" enctype="multipart/form-data">
             <div class="card orange eachNew">
                <!-- TITRE NEWS -->
-               <h5><?php echo $news[$i]['nomNews'];?></h5>
+			   <?php echo $news[$i]['nomNews'];?>
+               <h5><?php echo $nomNews; ?></h5>
                <!-- CONTENU NEWS -->
                <p><?php echo $news[$i]['contenuNews']; ?></p>
                <!-- IMAGE NEWS -->
@@ -115,7 +123,11 @@
                <?php if ($news[$i]['lienNews'] != NULL): ?>
                   <a href=<?php echo "\"" . $news[$i]['lienNews'] . "\""; ?>>LIEN</a><br />
                <?php endif ?>
-               <button id="boutonSupprimerNew" class="btn waves-effect waves-light" type="submit" name="action">Supprimer</button>
+			   <!-- Bouton pour supprimer la news : on envoie par POST l'id de la news à supprimer -->
+			   <form action="gestionNews.php" method="post">
+						<input type="hidden" name="idNewsASupprimer"  value=<?php echo $idNews; ?> />  
+						<button id="boutonSupprimerNew" type="submit"  name="action">Supprimer</button>
+			    </form>	 
             </div>
          <?php endfor;?>
          </form>
