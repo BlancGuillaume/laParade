@@ -5,16 +5,13 @@
    {
       header('Location: index.php');
    }
-
+     
    ini_set('display_errors','off'); // Pour ne pas avoir le message d'erreur : The mysql extension is deprecated
    include('bd/accessBD.php'); 
-
    $bd = new accessBD;
    $bd->connect();
-
-    $req = "SELECT * FROM NEWS ORDER BY idNews DESC";
-   	$news = $bd->get_requete($req);
-
+   $req = "SELECT * FROM NEWS ORDER BY idNews DESC";
+   $news = $bd->get_requete($req);
    $reqNouvellesReservations = "SELECT  r.idReservation,
 										r.dateReservation, 
 										r.dateLimiteReservation, 
@@ -50,7 +47,6 @@
 								FROM RESERVATION r, CLIENT c
 								WHERE statusReservation = 1
 								AND r.mailClientReservation = c.mailClient";
-
 	$reqReservationsTerminees = "SELECT r.idReservation, 
 										r.dateReservation, 
 										r.dateLimiteReservation, 
@@ -69,9 +65,31 @@
 								WHERE statusReservation = 2
 								AND r.mailClientReservation = c.mailClient";							
 														
+   if (isset($_POST['status'])){
+      // On update le status de la reservation
+	  if ($_POST['status'] == 1) {
+		$idReservationaChanger = $_POST['idReservationAChanger'];
+		$reqChangerStatusReservation = "UPDATE RESERVATION
+										SET statusReservation = 1
+										WHERE idReservation ='".$idReservationaChanger."'";
+ 																 
+ 													 
+ 		$updateStatusReservation = $bd->set_requete($reqChangerStatusReservation);
+	  } else if($_POST['status'] == 2 ) {
+		$idReservationaChanger = $_POST['idReservationAChanger'];
+		$reqChangerStatusReservation = "UPDATE RESERVATION
+										SET statusReservation = 2
+										WHERE idReservation ='".$idReservationaChanger."'";									 
+ 		echo $reqChangerStatusReservation;								 
+ 		$updateStatusReservation = $bd->set_requete($reqChangerStatusReservation);
+	  }
+	}
+	
    $nouvellesReservations = $bd->get_requete($reqNouvellesReservations);
    $reservationsEnCours = $bd->get_requete($reqReservationsEnCours);
    $reservationsTerminees = $bd->get_requete($reqReservationsTerminees);
+   
+
 ?>
 
 <!DOCTYPE HTML>
@@ -110,184 +128,29 @@
 		});
       </script>
 	  
-<<<<<<< HEAD
-	  
-	<ul class="collapsible" data-collapsible="expandable"> <!-- Plusieurs menus peuvent être ouvert en même temps -->
-    <li>
-	  <!-- Par défaut on déploie les nouvelles demandes de réservations -->
-      <div class="collapsible-header active"><i class="material-icons">call_made</i>Nouvelles réservations</div>
-      <div class="collapsible-body"><p>
-	  <!-- cards pour les nouvelles reservations -->
-      <?php if (!empty($nouvellesReservations)): ?>
-          
-         <?php foreach ($nouvellesReservations as $value){  ?>
-               <div class="col s3 m3">
-                 
-                     <div class="card red">
-                     <div class="card-content white-text">
-						
-						<button id=<?php echo "bouton".$value['idReservation']; ?> onclick="setToEnCours()">Click me</button>
-						<script>
-							function setToEnCours() {
-								<?php
-								
-								$idReservation  = $value['idReservation'];
-								var_dump($value['idReservation']);
-								 $reqChangerStatusReservation = "UPDATE RESERVATION
-																 SET statusReservation = 1
-																 WHERE idReservation ='".$idReservation."'";
-																 
-								 echo $reqChangerStatusReservation;								 
-							     $updateStatusReservation = $bd->set_requete($reqChangerStatusReservation);
-								?>
-							}
-						</script>
-						
-						<p><?php echo $value['idReservation']; ?></p>
-						<p><?php echo $value['nomLivre']; ?></p>
-						<p><?php echo $value['numISBM']; ?></p>
-                        <p><?php echo $value['auteurLivre']; ?></p>
-						<p><?php echo $value['editeurLivre']; ?></p>	
-						
-						<p><?php echo $value['dateReservation']; ?></p>
-						<p><?php echo $value['dateLimiteReservation']; ?></p>
-						<p><?php echo $value['commentaireReservation']; ?></p>
-						<p><?php echo $value['statusReservation']; ?></p>
-						
-						<p><?php echo $value['prenomClient']; ?></p>
-						<p><?php echo $value['nomClient']; ?></p>
-						<p><?php echo $value['mailClient']; ?></p>
-						<p><?php echo $value['numClient']; ?></p>
-                     </div>
-                  </div>
-               </div>
-         <?php } ?>
-         
-      <?php endif ?>
-	  
-	</p></div>
-    </li>
-    <li>
-      <div class="collapsible-header"><i class="material-icons">trending_flat</i>Réservations en cours</div>
-      <div class="collapsible-body"><p>
-	  	   <!-- cards pour les reservations en cours-->
-	  <?php if (!empty($reservationsEnCours)): ?>
-          
-         <?php foreach ($reservationsEnCours as $value){  ?>
-               <div class="col s3 m3">
-                     <div class="card green">
-                     <div class="card-content white-text">
-					 
-					 <button onclick="setToTermine()">Click me</button>
-						<script>
-							function setToTermine() {
-								<?php
-								 $idReservation  = $value['idReservation'];
-								var_dump($value['idReservation']);
-								 $reqChangerStatusReservation = "UPDATE RESERVATION
-																 SET statusReservation = 2
-																 WHERE idReservation ='".$idReservation."'";
-																 
-							     $updateStatusReservation = $bd->set_requete($reqChangerStatusReservation);
-								 echo $reqChangerStatusReservation;		
-								?>
-							}
-						</script>
-					 
-						<p><?php echo $value['idReservation']; ?></p>
-						<p><?php echo $value['nomLivre']; ?></p>
-						<p><?php echo $value['numISBM']; ?></p>
-                        <p><?php echo $value['auteurLivre']; ?></p>
-						<p><?php echo $value['editeurLivre']; ?></p>	
-						
-						<p><?php echo $value['dateReservation']; ?></p>
-						<p><?php echo $value['dateLimiteReservation']; ?></p>
-						<p><?php echo $value['commentaireReservation']; ?></p>
-						<p><?php echo $value['statusReservation']; ?></p>
-						
-						<p><?php echo $value['prenomClient']; ?></p>
-						<p><?php echo $value['nomClient']; ?></p>
-						<p><?php echo $value['mailClient']; ?></p>
-						<p><?php echo $value['numClient']; ?></p>
-                     </div>
-                  </div>
-               </div>
-         <?php } ?>
-         
-      <?php endif ?>
-	  
-	  </p></div>
-    </li>
-    <li>
-      <div class="collapsible-header"><i class="material-icons">done</i>Réservations terminées</div>
-      <div class="collapsible-body"><p>
-	  
-	  	   <!-- cards pour les reservations  terminées-->
-	  <?php if (!empty($reservationsTerminees)): ?>
-          
-         <?php foreach ($reservationsTerminees as $value){  ?>
-               <div class="col s3 m3">
-                     <div class="card yellow">
-                     <div class="card-content white-text">
-					 
-					 <!-- juste pour tester     A SUPPRIMER !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
-					  <button onclick="setToTermine()">Click me</button>
-						<script>
-							function setToTermine() {
-								<?php
-								 $idReservation  = $value['idReservation'];
-								 var_dump($value['idReservation']);
-								 $reqChangerStatusReservation = "UPDATE RESERVATION
-																 SET statusReservation = 0
-																 WHERE idReservation ='".$idReservation."'";
-																 
-							     $updateStatusReservation = $bd->set_requete($reqChangerStatusReservation);
-								 //header('Location: gestionReservation.php');
-								?>
-							}
-						</script>
-					 
-						<p><?php echo $value['idReservation']; ?></p>
-						<p><?php echo $value['nomLivre']; ?></p>
-						<p><?php echo $value['numISBM']; ?></p>
-                        <p><?php echo $value['auteurLivre']; ?></p>
-						<p><?php echo $value['editeurLivre']; ?></p>	
-						
-						<p><?php echo $value['dateReservation']; ?></p>
-						<p><?php echo $value['dateLimiteReservation']; ?></p>
-						<p><?php echo $value['commentaireReservation']; ?></p>
-						<p><?php echo $value['statusReservation']; ?></p>
-						
-						<p><?php echo $value['prenomClient']; ?></p>
-						<p><?php echo $value['nomClient']; ?></p>
-						<p><?php echo $value['mailClient']; ?></p>
-						<p><?php echo $value['numClient']; ?></p>
-                     </div>
-                  </div>
-               </div>
-         <?php } ?>
-         
-      <?php endif ?>
-	  
-	  
-	  </p></div>
-    </li>
-  </ul>
-=======
 	<section id="presentation"> 
 		<ul class="collapsible" data-collapsible="expandable"> <!-- Plusieurs menus peuvent être ouvert en même temps -->
 	    <li>
 		  <!-- Par défaut on déploie les nouvelles demandes de réservations -->
 	      <div class="collapsible-header active"><i class="material-icons">call_made</i>Nouvelles réservations</div>
 	      <div class="collapsible-body"><p>
+		  
+		  
 		  <!-- cards pour les nouvelles reservations -->
 	      <?php if (!empty($nouvellesReservations)): ?>
 	          
 	         <?php foreach ($nouvellesReservations as $value){  ?>
-	               <div class="col s3 m3">
-	                 
 	                     <div class="card red">
-	                     <div class="card-content white-text">
+	                     <div class="card-content black-text">
+						 
+						 <!-- Bouton pour changer l'état de la réservation : de nouvelle (0) à en cours (1)
+						   -- On envoie par POST l'id de la réservation à modifier -->
+						 <form action="gestionReservation.php" method="post">
+							<input type="hidden" name="status" value="1" /> 
+							<input type="hidden" name="idReservationAChanger" value=<?php echo $value['idReservation']; ?> /> 
+							<button id="boutonGestionReservation" type="submit"  name="action">traiter </button>
+						  </form>
+						 
 							<p><?php echo $value['idReservation']; ?></p>
 							<p><?php echo $value['nomLivre']; ?></p>
 							<p><?php echo $value['numISBM']; ?></p>
@@ -304,7 +167,6 @@
 							<p><?php echo $value['mailClient']; ?></p>
 							<p><?php echo $value['numClient']; ?></p>
 	                     </div>
-	                  </div>
 	               </div>
 	         <?php } ?>
 	         
@@ -319,9 +181,17 @@
 		  <?php if (!empty($reservationsEnCours)): ?>
 	          
 	         <?php foreach ($reservationsEnCours as $value){  ?>
-	               <div class="col s3 m3">
 	                     <div class="card green">
-	                     <div class="card-content white-text">
+	                     <div class="card-content black-text">
+						 
+						 <!-- Bouton pour changer l'état de la réservation : de en cours (1) à terminé (2)
+						   -- On envoie par POST l'id de la réservation à modifier -->
+						 <form action="gestionReservation.php" method="post">
+							<input type="hidden" name="status" value= 2 /> 
+							<input type="hidden" name="idReservationAChanger" value=<?php echo $value['idReservation']; ?> /> 
+							<button id="boutonGestionReservation" type="submit"  name="action">traiter </button>
+						</form>
+						
 							<p><?php echo $value['idReservation']; ?></p>
 							<p><?php echo $value['nomLivre']; ?></p>
 							<p><?php echo $value['numISBM']; ?></p>
@@ -338,7 +208,6 @@
 							<p><?php echo $value['mailClient']; ?></p>
 							<p><?php echo $value['numClient']; ?></p>
 	                     </div>
-	                  </div>
 	               </div>
 	         <?php } ?>
 	         
@@ -350,13 +219,13 @@
 	      <div class="collapsible-header"><i class="material-icons">done</i>Réservations terminées</div>
 	      <div class="collapsible-body"><p>
 		  
-		  	   <!-- cards pour les reservations  terminées-->
+		  <!-- cards pour les reservations  terminées-->
 		  <?php if (!empty($reservationsTerminees)): ?>
 	          
 	         <?php foreach ($reservationsTerminees as $value){  ?>
-	               <div class="col s3 m3">
 	                     <div class="card yellow">
-	                     <div class="card-content white-text">
+	                     <div class="card-content black-text">
+						 	 
 							<p><?php echo $value['idReservation']; ?></p>
 							<p><?php echo $value['nomLivre']; ?></p>
 							<p><?php echo $value['numISBM']; ?></p>
@@ -373,7 +242,6 @@
 							<p><?php echo $value['mailClient']; ?></p>
 							<p><?php echo $value['numClient']; ?></p>
 	                     </div>
-	                  </div>
 	               </div>
 	         <?php } ?>
 	         
@@ -420,14 +288,5 @@
 		</aside>
 	<?php endif; ?>
 
->>>>>>> d20620d19712128f28210129fe9b62c6e2805e66
-	  
-        
-      
-	  
-
-	  
-
-      
    </body>
 </html>
