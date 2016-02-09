@@ -36,7 +36,7 @@
    <body>
       <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
       <script type="text/javascript" src="js/materialize.min.js"></script>
-      <script type="text/javascript" src="js/script.js"></script>
+      <!--<script type="text/javascript" src="js/script.js"></script>-->
       <header>
          <nav>
             <div>
@@ -54,39 +54,71 @@
          </nav>
       </header>
       
-      <!-- Présentation --> 
-      <section id="presentation" class="row"> 
+      <section id="formulaireAjoutNews" class="row"> 
+         <form action="upload.php" method="post" enctype="multipart/form-data">
+        <!-- Page Layout here -->
+            <div id="cardNews" class="card col white">
+               <h5>La news</h5>
+               <div class="row">
+                  <form class="col s12">
+                      <!-- Titre de la news-->
+                      <div class="input-field col s12">
+                          <i class="material-icons prefix">label</i>
+                          <input id="nomNews" name="nomNews" type="text" class="validate">
+                          <label for="nomNews">Titre news</label>
+                      </div>
+                      <!-- Contenu de la news -->
+                      <div class="input-field col s12">
+                          <i class="material-icons prefix">view_column</i>
+                          <input id="contenuNews" name="contenuNews" type="text" class="validate">
+                          <label for="contenuNews">Contenu</label>
+                      </div>
+                      <!-- Lien news -->
+                      <div class="input-field col s12">
+                          <i class="material-icons prefix">view_column</i>
+                          <input id="lienNews" name="lienNews" type="text" class="validate">
+                          <label for="lienNews">Lien</label>
+                      </div>
+                      <div class="input-field col s12">
+                          <i class="material-icons prefix">perm_media</i>
+                          <input type="file" name="fileToUpload" id="fileToUpload">
+                      </div>
+               </div>
+            </div>
+
+           <button id="boutonAjoutNews" onclick="affichePopUp()" class="btn waves-effect waves-light" type="submit" name="action">uploader
+               <i class="material-icons right">send</i>
+           </button>
+
+        </form>
+        <!-- Affiche PopUp d'ajout de news -->
+        <script>
+            function affichePopUp() {
+                alert("La news a été ajouté à la galerie");
+            }
+        </script>
       </section>
 
-      <!-- cards pour les news -->
-      <?php if (!empty($news)): ?>
-         <aside class="container-cards"> <!-- ajout d'une nouvelle news -> dans cette div -->   
-         <?php for ($i = 0; $i < 5 && !empty($news[$i]); $i++) : ?>
-               <div class="col s3 m3">
-                  <?php if ($i == 0 || $i == 3): ?>
-                     <div class="card orangefonce">
-                  <?php elseif($i == 1 || $i == 4): ?>
-                     <div class="card orange">
-                  <?php else: ?>
-                     <div class="card orangeclair">
-                  <?php endif ?>
-                     <div class="card-content white-text">
-                        <span><?php echo $news[$i]['nomNews'];?></span>
-                        <p><?php echo $news[$i]['contenuNews']; ?></p>
-                        <?php if ($news[$i]['lienNews'] != NULL): ?>
-                           <a href=<?php echo "\"" . $news[$i]['lienNews'] . "\""; ?>>LIEN</a>
-                        <?php endif ?>
-                        <?php if ($news[$i]['imageNews'] != NULL): ?>
-                           <img src=<?php echo "\"" . $news[$i]['imageNews'] . "\""; ?>></img>
-                        <?php endif ?>
-                     </div>
-                  </div>
-               </div>
-         <?php endfor; ?>
-         <footer>
-            <a id="lienEspaceUtilisateur" href="deconnexion.php">Deconnexion</a>
-         </footer>
-         </aside>
-      <?php endif; ?>
+      <section id="containerAllNews">
+         <?php for ($i = 0; !empty($news[$i]); $i++) : ?>
+         <form action="supprNews.php" method="post" enctype="multipart/form-data">
+            <div class="card orange eachNew">
+               <!-- TITRE NEWS -->
+               <h5><?php echo $news[$i]['nomNews'];?></h5>
+               <!-- CONTENU NEWS -->
+               <p><?php echo $news[$i]['contenuNews']; ?></p>
+               <!-- IMAGE NEWS -->
+               <?php if ($news[$i]['imageNews'] != NULL): ?>
+                  <img src=<?php echo "\"" . $news[$i]['imageNews'] . "\""; ?>></img><br />
+               <?php endif ?>
+               <!-- LIEN NEWS -->
+               <?php if ($news[$i]['lienNews'] != NULL): ?>
+                  <a href=<?php echo "\"" . $news[$i]['lienNews'] . "\""; ?>>LIEN</a><br />
+               <?php endif ?>
+               <button id="boutonSupprimerNew" class="btn waves-effect waves-light" type="submit" name="action">Supprimer</button>
+            </div>
+         <?php endfor;?>
+         </form>
+      </section>
    </body> 
 </html>

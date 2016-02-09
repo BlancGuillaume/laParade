@@ -1702,3 +1702,35 @@ dt {
   margin-right:auto;
   margin-top: 5%;
 }
+
+#cardNews {
+  width: 100%;
+  height:400px;
+}
+
+#containerAllNews {
+  width: 100%;
+}
+
+.eachNew {
+  width: 285.438px;
+  height:379px;
+  display:inline-block;
+  text-align: center;
+  float:left;
+  margin-right:2%;
+}
+
+.eachNew img {
+  height: 50%;
+  width: auto;
+  /*margin-top:0px;
+}
+
+#formulaireAjoutNews {
+  width:100%;
+}
+
+#boutonAjoutNews {
+  /*display:inline;*/
+}
