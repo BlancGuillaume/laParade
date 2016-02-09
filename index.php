@@ -140,7 +140,7 @@
             <?php if (isset($_SESSION['login'])) : ?>
                <a id="lienEspaceUtilisateur" href="deconnexion.php">Deconnexion</a>
             <?php else : ?>
-               <a id="lienEspaceUtilisateur" href="#" data-width="500" data-rel="popup1" class="poplight">Connexion</a>
+               <a id="lienEspaceUtilisateur" href="#" data-rel="popup1" class="poplight">Connexion</a>
             <?php endif; ?>
          </footer>
          </aside>
@@ -159,14 +159,16 @@
                </div>
                <div class="input-field col s12">
                   <i class="material-icons prefix">vpn_key</i>
-                  <input id="mdpUtilisateur" name="mdpUtilisateur" type="text" class="validate">
+                  <input id="mdpUtilisateur" name="mdpUtilisateur" type="password" class="validate">
                   <label for="mdpUtilisateur">Mot de passe</label>
                </div>
             </div>
          </div>
-         <button id="boutonConnexion" class="btn waves-effect waves-light" type="submit"  name="action">Connexion
-            <i class="material-icons right">send</i>
-         </button>
+         <div id="conteneurBouton">
+            <button id="boutonConnexion" class="btn waves-effect waves-light" type="submit"  name="action">Connexion
+               <i class="material-icons right">send</i>
+            </button>
+         </div>
       </form>
    </div>
    

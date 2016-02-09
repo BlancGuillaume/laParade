@@ -275,14 +275,16 @@
                </div>
                <div class="input-field col s12">
                   <i class="material-icons prefix">vpn_key</i>
-                  <input id="mdpUtilisateur" name="mdpUtilisateur" type="text" class="validate">
+                  <input id="mdpUtilisateur" name="mdpUtilisateur" type="password" class="validate">
                   <label for="mdpUtilisateur">Mot de passe</label>
                </div>
             </div>
          </div>
-         <button id="boutonConnexion" class="btn waves-effect waves-light" type="submit"  name="action">Connexion
-            <i class="material-icons right">send</i>
-         </button>
+         <div id="conteneurBouton">
+            <button id="boutonConnexion" class="btn waves-effect waves-light" type="submit"  name="action">Connexion
+               <i class="material-icons right">send</i>
+            </button>
+         </div>
       </form>
    </div>
 </html>
