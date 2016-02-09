@@ -1516,7 +1516,7 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
 
  #formulaireReservation {
   float:left;
-  width: 82.5%;
+  width: 81.8%;
   margin:1% 0% 2% 1%;
   text-align: justify;
  }
@@ -1544,15 +1544,23 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
 }
 
 #cardEtudiant {
+  float:right;
   width: 100%;
+  margin-right:0;
+  padding-right: 0;
  }
  #cardClient {
+  float:right;
   width: 100%;
+  margin-right:0;
+  padding-right: 0;
  }
  
 
  #cardClientEtudiant {
   width: 50%;
+  margin-right:0;
+  padding-right: 0;
  }
 
   #cardLivre {

@@ -27,6 +27,9 @@ var_dump($_SESSION['login']);
     <header>
         <nav>
             <div class="nav-wrapper">
+                <!-- Titre du site non affiché -->
+                <h1 id="titreSite">Librairie La Parade</h1>
+                <img id="logo" src="images/logo.png"></img>
                 <ul id="nav-mobile" class="right hide-on-med-and-down">
                     <li><a href="index.php">Presentation</a>
                     </li>

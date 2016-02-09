@@ -1,9 +1,19 @@
 <?php 
+   session_start();
+   // page disponible uniquement par admin
+   if (!isset($_SESSION['login']))
+   {
+      header('Location: index.php');
+   }
+
    ini_set('display_errors','off'); // Pour ne pas avoir le message d'erreur : The mysql extension is deprecated
    include('bd/accessBD.php'); 
 
    $bd = new accessBD;
    $bd->connect();
+
+    $req = "SELECT * FROM NEWS ORDER BY idNews DESC";
+   	$news = $bd->get_requete($req);
 
    $reqNouvellesReservations = "SELECT  r.idReservation,
 										r.dateReservation, 
@@ -78,11 +88,15 @@
       <header>
          <nav>
             <div class="nav-wrapper">
-               <ul id="nav-mobile" class="right hide-on-med-and-down">
-                  <li class="active"><a href="index.php">Presentation</a></li>
-                  <li><a href="reservation.php">Reservation</a></li>
-                  <li><a href="contact.php">Contact</a></li>
-               </ul>
+				<!-- Titre du site non affiché -->
+				<h1 id="titreSite">Librairie La Parade</h1>
+				<img id="logo" src="images/logo.png"></img>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+	                <li><a href="index.php">Accueil</a></li>
+	                <li><a href="gestionNews.php">News</a></li>
+	                <li class="active"><a href="gestionReservation.php">Reservation</a></li>
+                    <li><a href="gestionContact.php">Messages</a></li>
+                </ul>
             </div>
          </nav>
       </header>
@@ -96,115 +110,152 @@
 		});
       </script>
 	  
-	  
-	<ul class="collapsible" data-collapsible="expandable"> <!-- Plusieurs menus peuvent être ouvert en même temps -->
-    <li>
-	  <!-- Par défaut on déploie les nouvelles demandes de réservations -->
-      <div class="collapsible-header active"><i class="material-icons">call_made</i>Nouvelles réservations</div>
-      <div class="collapsible-body"><p>
-	  <!-- cards pour les nouvelles reservations -->
-      <?php if (!empty($nouvellesReservations)): ?>
-          
-         <?php foreach ($nouvellesReservations as $value){  ?>
-               <div class="col s3 m3">
-                 
-                     <div class="card red">
-                     <div class="card-content white-text">
-						<p><?php echo $value['idReservation']; ?></p>
-						<p><?php echo $value['nomLivre']; ?></p>
-						<p><?php echo $value['numISBM']; ?></p>
-                        <p><?php echo $value['auteurLivre']; ?></p>
-						<p><?php echo $value['editeurLivre']; ?></p>	
-						
-						<p><?php echo $value['dateReservation']; ?></p>
-						<p><?php echo $value['dateLimiteReservation']; ?></p>
-						<p><?php echo $value['commentaireReservation']; ?></p>
-						<p><?php echo $value['statusReservation']; ?></p>
-						
-						<p><?php echo $value['prenomClient']; ?></p>
-						<p><?php echo $value['nomClient']; ?></p>
-						<p><?php echo $value['mailClient']; ?></p>
-						<p><?php echo $value['numClient']; ?></p>
-                     </div>
-                  </div>
-               </div>
-         <?php } ?>
-         
-      <?php endif ?>
-	  
-	</p></div>
-    </li>
-    <li>
-      <div class="collapsible-header"><i class="material-icons">trending_flat</i>Réservations en cours</div>
-      <div class="collapsible-body"><p>
-	  	   <!-- cards pour les reservations en cours-->
-	  <?php if (!empty($reservationsEnCours)): ?>
-          
-         <?php foreach ($reservationsEnCours as $value){  ?>
-               <div class="col s3 m3">
-                     <div class="card green">
-                     <div class="card-content white-text">
-						<p><?php echo $value['idReservation']; ?></p>
-						<p><?php echo $value['nomLivre']; ?></p>
-						<p><?php echo $value['numISBM']; ?></p>
-                        <p><?php echo $value['auteurLivre']; ?></p>
-						<p><?php echo $value['editeurLivre']; ?></p>	
-						
-						<p><?php echo $value['dateReservation']; ?></p>
-						<p><?php echo $value['dateLimiteReservation']; ?></p>
-						<p><?php echo $value['commentaireReservation']; ?></p>
-						<p><?php echo $value['statusReservation']; ?></p>
-						
-						<p><?php echo $value['prenomClient']; ?></p>
-						<p><?php echo $value['nomClient']; ?></p>
-						<p><?php echo $value['mailClient']; ?></p>
-						<p><?php echo $value['numClient']; ?></p>
-                     </div>
-                  </div>
-               </div>
-         <?php } ?>
-         
-      <?php endif ?>
-	  
-	  </p></div>
-    </li>
-    <li>
-      <div class="collapsible-header"><i class="material-icons">done</i>Réservations terminées</div>
-      <div class="collapsible-body"><p>
-	  
-	  	   <!-- cards pour les reservations  terminées-->
-	  <?php if (!empty($reservationsTerminees)): ?>
-          
-         <?php foreach ($reservationsTerminees as $value){  ?>
-               <div class="col s3 m3">
-                     <div class="card yellow">
-                     <div class="card-content white-text">
-						<p><?php echo $value['idReservation']; ?></p>
-						<p><?php echo $value['nomLivre']; ?></p>
-						<p><?php echo $value['numISBM']; ?></p>
-                        <p><?php echo $value['auteurLivre']; ?></p>
-						<p><?php echo $value['editeurLivre']; ?></p>	
-						
-						<p><?php echo $value['dateReservation']; ?></p>
-						<p><?php echo $value['dateLimiteReservation']; ?></p>
-						<p><?php echo $value['commentaireReservation']; ?></p>
-						<p><?php echo $value['statusReservation']; ?></p>
-						
-						<p><?php echo $value['prenomClient']; ?></p>
-						<p><?php echo $value['nomClient']; ?></p>
-						<p><?php echo $value['mailClient']; ?></p>
-						<p><?php echo $value['numClient']; ?></p>
-                     </div>
-                  </div>
-               </div>
-         <?php } ?>
-         
-      <?php endif ?>
-	  
-	  
-	  </p></div>
-    </li>
-  </ul>
+	<section id="presentation"> 
+		<ul class="collapsible" data-collapsible="expandable"> <!-- Plusieurs menus peuvent être ouvert en même temps -->
+	    <li>
+		  <!-- Par défaut on déploie les nouvelles demandes de réservations -->
+	      <div class="collapsible-header active"><i class="material-icons">call_made</i>Nouvelles réservations</div>
+	      <div class="collapsible-body"><p>
+		  <!-- cards pour les nouvelles reservations -->
+	      <?php if (!empty($nouvellesReservations)): ?>
+	          
+	         <?php foreach ($nouvellesReservations as $value){  ?>
+	               <div class="col s3 m3">
+	                 
+	                     <div class="card red">
+	                     <div class="card-content white-text">
+							<p><?php echo $value['idReservation']; ?></p>
+							<p><?php echo $value['nomLivre']; ?></p>
+							<p><?php echo $value['numISBM']; ?></p>
+	                        <p><?php echo $value['auteurLivre']; ?></p>
+							<p><?php echo $value['editeurLivre']; ?></p>	
+							
+							<p><?php echo $value['dateReservation']; ?></p>
+							<p><?php echo $value['dateLimiteReservation']; ?></p>
+							<p><?php echo $value['commentaireReservation']; ?></p>
+							<p><?php echo $value['statusReservation']; ?></p>
+							
+							<p><?php echo $value['prenomClient']; ?></p>
+							<p><?php echo $value['nomClient']; ?></p>
+							<p><?php echo $value['mailClient']; ?></p>
+							<p><?php echo $value['numClient']; ?></p>
+	                     </div>
+	                  </div>
+	               </div>
+	         <?php } ?>
+	         
+	      <?php endif ?>
+		  
+		</p></div>
+	    </li>
+	    <li>
+	      <div class="collapsible-header"><i class="material-icons">trending_flat</i>Réservations en cours</div>
+	      <div class="collapsible-body"><p>
+		  	   <!-- cards pour les reservations en cours-->
+		  <?php if (!empty($reservationsEnCours)): ?>
+	          
+	         <?php foreach ($reservationsEnCours as $value){  ?>
+	               <div class="col s3 m3">
+	                     <div class="card green">
+	                     <div class="card-content white-text">
+							<p><?php echo $value['idReservation']; ?></p>
+							<p><?php echo $value['nomLivre']; ?></p>
+							<p><?php echo $value['numISBM']; ?></p>
+	                        <p><?php echo $value['auteurLivre']; ?></p>
+							<p><?php echo $value['editeurLivre']; ?></p>	
+							
+							<p><?php echo $value['dateReservation']; ?></p>
+							<p><?php echo $value['dateLimiteReservation']; ?></p>
+							<p><?php echo $value['commentaireReservation']; ?></p>
+							<p><?php echo $value['statusReservation']; ?></p>
+							
+							<p><?php echo $value['prenomClient']; ?></p>
+							<p><?php echo $value['nomClient']; ?></p>
+							<p><?php echo $value['mailClient']; ?></p>
+							<p><?php echo $value['numClient']; ?></p>
+	                     </div>
+	                  </div>
+	               </div>
+	         <?php } ?>
+	         
+	      <?php endif ?>
+		  
+		  </p></div>
+	    </li>
+	    <li>
+	      <div class="collapsible-header"><i class="material-icons">done</i>Réservations terminées</div>
+	      <div class="collapsible-body"><p>
+		  
+		  	   <!-- cards pour les reservations  terminées-->
+		  <?php if (!empty($reservationsTerminees)): ?>
+	          
+	         <?php foreach ($reservationsTerminees as $value){  ?>
+	               <div class="col s3 m3">
+	                     <div class="card yellow">
+	                     <div class="card-content white-text">
+							<p><?php echo $value['idReservation']; ?></p>
+							<p><?php echo $value['nomLivre']; ?></p>
+							<p><?php echo $value['numISBM']; ?></p>
+	                        <p><?php echo $value['auteurLivre']; ?></p>
+							<p><?php echo $value['editeurLivre']; ?></p>	
+							
+							<p><?php echo $value['dateReservation']; ?></p>
+							<p><?php echo $value['dateLimiteReservation']; ?></p>
+							<p><?php echo $value['commentaireReservation']; ?></p>
+							<p><?php echo $value['statusReservation']; ?></p>
+							
+							<p><?php echo $value['prenomClient']; ?></p>
+							<p><?php echo $value['nomClient']; ?></p>
+							<p><?php echo $value['mailClient']; ?></p>
+							<p><?php echo $value['numClient']; ?></p>
+	                     </div>
+	                  </div>
+	               </div>
+	         <?php } ?>
+	         
+	      <?php endif ?>
+		  
+		  
+		  </p></div>
+	    </li>
+	  	</ul>
+	 </section>
+
+	<!-- cards pour les news -->
+	<?php if (!empty($news)): ?>
+		<aside class="container-cards"> <!-- ajout d'une nouvelle news -> dans cette div -->   
+		<?php for ($i = 0; $i < 5 && !empty($news[$i]); $i++) : ?>
+		   <div class="col s3 m3">
+		      <?php if ($i == 0 || $i == 3): ?>
+		         <div class="card orangefonce">
+		      <?php elseif($i == 1 || $i == 4): ?>
+		         <div class="card orange">
+		      <?php else: ?>
+		         <div class="card orangeclair">
+		      <?php endif ?>
+		         <div class="card-content white-text">
+		            <span><?php echo $news[$i]['nomNews'];?></span>
+		            <p><?php echo $news[$i]['contenuNews']; ?></p>
+		            <?php if ($news[$i]['lienNews'] != NULL): ?>
+		               <a href=<?php echo "\"" . $news[$i]['lienNews'] . "\""; ?>>LIEN</a>
+		            <?php endif ?>
+		            <?php if ($news[$i]['imageNews'] != NULL): ?>
+		               <img src=<?php echo "\"" . $news[$i]['imageNews'] . "\""; ?>></img>
+		            <?php endif ?>
+		         </div>
+		      </div>
+		   </div>
+		<?php endfor; ?>
+		<footer>
+		<?php if (isset($_SESSION['login'])) : ?>
+		   <a id="lienEspaceUtilisateur" href="deconnexion.php">Deconnexion</a>
+		<?php else : ?>
+		   <a id="lienEspaceUtilisateur" href="#" data-width="500" data-rel="popup1" class="poplight">Connexion</a>
+		<?php endif; ?>
+		</footer>
+		</aside>
+	<?php endif; ?>
+
 	  
         
       
