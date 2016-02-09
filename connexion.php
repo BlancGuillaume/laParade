@@ -22,7 +22,8 @@
   		$reqUserExists 	= 	"SELECT * 
 							 FROM UTILISATEUR 
 							 WHERE idUtilisateur = '".$idUtilisateur."'
-							 AND mdpUtilisateur = '".$mdpUtilisateur."'"; 
+							 AND mdpUtilisateur = '".$mdpUtilisateur."'
+               AND isAdmin = 1"; 
   		$user = $bd->get_requete($reqUserExists);
 
   		if (!empty($user)) {

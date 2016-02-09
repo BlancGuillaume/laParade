@@ -1,9 +1,19 @@
 <?php 
+   session_start();
+   // page disponible uniquement par admin
+   if (!isset($_SESSION['login']))
+   {
+      header('Location: index.php');
+   }
+
    ini_set('display_errors','off'); // Pour ne pas avoir le message d'erreur : The mysql extension is deprecated
    include('bd/accessBD.php'); 
 
    $bd = new accessBD;
    $bd->connect();
+
+   $req = "SELECT * FROM NEWS ORDER BY idNews DESC";
+   $news = $bd->get_requete($req);
 
    $reqNouveauMessage = "SELECT  m.idMessage,
 								 m.contenuMessage,
@@ -47,12 +57,15 @@
       <header>
          <nav>
             <div class="nav-wrapper">
-               <a href="images/blason.gif" class="brand-logo">Librairie la Parade</a>
+               <!-- Titre du site non affiché -->
+               <h1 id="titreSite">Librairie La Parade</h1>
+               <img id="logo" src="images/logo.png"></img>
                <!-- Barre de navigation -->
                <ul id="nav-mobile" class="right hide-on-med-and-down">
-                  <li class="active"><a href="index.php">Presentation</a></li>
-                  <li><a href="reservation.php">Reservation</a></li>
-                  <li><a href="contact.php">Contact</a></li>
+                  <li><a href="index.php">Accueil</a></li>
+                  <li><a href="gestionNews.php">News</a></li>
+                  <li><a href="gestionReservation.php">Reservation</a></li>
+                  <li class="active"><a href="gestionContact.php">Messages</a></li>
                </ul>
             </div>
          </nav>
@@ -67,67 +80,97 @@
 		});
       </script>
 	  
-	  
-	<ul class="collapsible" data-collapsible="expandable"> <!-- Plusieurs menus peuvent être ouvert en même temps -->
-    <li>
-	  <!-- Par défaut on déploie les nouvelles demandes de réservations -->
-      <div class="collapsible-header active"><i class="material-icons">call_made</i>Nouveau message</div>
-      <div class="collapsible-body"><p>
-	  <!-- cards pour les nouveaux messages -->
-      <?php if (!empty($nouveauMessage)): ?>
-          
-         <?php foreach ($nouveauMessage as $value){  ?>
-               <div class="col s3 m3">
-                 
-                     <div class="card red">
-                     <div class="card-content white-text">
-						<p><?php echo $value['idMessage']; ?></p>
-						<p><?php echo $value['contenuMessage']; ?></p>
-						<p><?php echo $value['dateMessage']; ?></p>
-                        
-						<p><?php echo $value['prenomClient']; ?></p>
-						<p><?php echo $value['nomClient']; ?></p>
-						<p><?php echo $value['mailClient']; ?></p>
-						<p><?php echo $value['numClient']; ?></p>
-                     </div>
+	<section id="presentation">
+   	<ul class="collapsible" data-collapsible="expandable"> <!-- Plusieurs menus peuvent être ouvert en même temps -->
+         <li>
+   	   <!-- Par défaut on déploie les nouvelles demandes de réservations -->
+            <div class="collapsible-header active"><i class="material-icons">call_made</i>Nouveau message</div>
+            <div class="collapsible-body">
+               <p>
+         	   <!-- cards pour les nouveaux messages -->
+               <?php if (!empty($nouveauMessage)): ?>
+                   
+                  <?php foreach ($nouveauMessage as $value){  ?>
+                        <div class="col s3 m3">
+                          
+                              <div class="card red">
+                              <div class="card-content white-text">
+         						<p><?php echo $value['idMessage']; ?></p>
+         						<p><?php echo $value['contenuMessage']; ?></p>
+         						<p><?php echo $value['dateMessage']; ?></p>
+                                 
+         						<p><?php echo $value['prenomClient']; ?></p>
+         						<p><?php echo $value['nomClient']; ?></p>
+         						<p><?php echo $value['mailClient']; ?></p>
+         						<p><?php echo $value['numClient']; ?></p>
+                              </div>
+                           </div>
+                        </div>
+                  <?php } ?>
+                  
+               <?php endif ?>
+      	     </p>
+            </div>
+         </li>
+         <li>
+            <div class="collapsible-header"><i class="material-icons">done</i>Message traite</div>
+            <div class="collapsible-body">
+               <p>
+      	  	   <!-- cards pour les messages traités-->
+         	  <?php if (!empty($messageTraite)): ?>
+                  <?php foreach ($messageTraite as $value){  ?>
+                        <div class="col s3 m3">
+                              <div class="card green">
+                              <div class="card-content white-text">
+         						<p><?php echo $value['idMessage']; ?></p>
+         						<p><?php echo $value['contenuMessage']; ?></p>
+         						<p><?php echo $value['dateMessage']; ?></p>
+                                 
+         						<p><?php echo $value['prenomClient']; ?></p>
+         						<p><?php echo $value['nomClient']; ?></p>
+         						<p><?php echo $value['mailClient']; ?></p>
+         						<p><?php echo $value['numClient']; ?></p>
+                              </div>
+                           </div>
+                        </div>
+                  <?php } ?>
+               <?php endif ?>
+         	  </p>
+            </div>
+          </li>
+       
+      </ul>
+   </section>
+   <!-- cards pour les news -->
+   <?php if (!empty($news)): ?>
+      <aside class="container-cards"> <!-- ajout d'une nouvelle news -> dans cette div -->   
+      <?php for ($i = 0; $i < 5 && !empty($news[$i]); $i++) : ?>
+            <div class="col s3 m3">
+               <?php if ($i == 0 || $i == 3): ?>
+                  <div class="card orangefonce">
+               <?php elseif($i == 1 || $i == 4): ?>
+                  <div class="card orange">
+               <?php else: ?>
+                  <div class="card orangeclair">
+               <?php endif ?>
+                  <div class="card-content white-text">
+                     <span><?php echo $news[$i]['nomNews'];?></span>
+                     <p><?php echo $news[$i]['contenuNews']; ?></p>
+                     <?php if ($news[$i]['lienNews'] != NULL): ?>
+                        <a href=<?php echo "\"" . $news[$i]['lienNews'] . "\""; ?>>LIEN</a>
+                     <?php endif ?>
+                     <?php if ($news[$i]['imageNews'] != NULL): ?>
+                        <img src=<?php echo "\"" . $news[$i]['imageNews'] . "\""; ?>></img>
+                     <?php endif ?>
                   </div>
                </div>
-         <?php } ?>
-         
-      <?php endif ?>
-	  
-	</p></div>
-    </li>
-    <li>
-      <div class="collapsible-header"><i class="material-icons">done</i>Message traite</div>
-      <div class="collapsible-body"><p>
-	  	   <!-- cards pour les messages traités-->
-	  <?php if (!empty($messageTraite)): ?>
-          
-         <?php foreach ($messageTraite as $value){  ?>
-               <div class="col s3 m3">
-                     <div class="card green">
-                     <div class="card-content white-text">
-						<p><?php echo $value['idMessage']; ?></p>
-						<p><?php echo $value['contenuMessage']; ?></p>
-						<p><?php echo $value['dateMessage']; ?></p>
-                        
-						<p><?php echo $value['prenomClient']; ?></p>
-						<p><?php echo $value['nomClient']; ?></p>
-						<p><?php echo $value['mailClient']; ?></p>
-						<p><?php echo $value['numClient']; ?></p>
-                     </div>
-                  </div>
-               </div>
-         <?php } ?>
-         
-      <?php endif ?>
-	  
-	  </p></div>
-    </li>
-    
-  </ul>
-	  
+            </div>
+      <?php endfor; ?>
+      <footer>
+         <a id="lienEspaceUtilisateur" href="deconnexion.php">Deconnexion</a>
+      </footer>
+      </aside>
+   <?php endif; ?>
       
    </body>
 </html>
