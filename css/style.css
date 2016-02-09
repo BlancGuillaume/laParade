@@ -24,7 +24,7 @@ body {
   background-color: #ededed;
   margin: 0;
   min-width: 950px;
-  min-width: 740px;
+  /*min-height: 740px;*/
 }
 img {
   border: 0;
@@ -237,8 +237,8 @@ nav {
   color: #fff;
   background-color: #4db6ac;
   width: 100%;
-  height: 56px;
-  line-height: 56px;
+  height: 80px;
+  line-height: 80px;
 }
 
 nav ul {
@@ -1692,4 +1692,10 @@ position: absolute;
 }
 *html .popup_block {
 position: absolute;
+}
+
+#logo {
+  height:80px;
+  width:auto;
+  float:left;
 }

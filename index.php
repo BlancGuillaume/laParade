@@ -13,6 +13,7 @@
 
    $req = "SELECT * FROM NEWS ORDER BY idNews DESC";
    $news = $bd->get_requete($req);
+   
    $dir    = 'uploads';
    $photosGalerie = scandir($dir, 1);
 
@@ -40,9 +41,10 @@
             <div>
                <!-- Titre du site non affiché -->
                <h1 id="titreSite">Librairie La Parade</h1>
+               <img id="logo" src="images/logo.png"></img>
                <!-- Barre de navigation -->
                <ul id="nav-mobile" class="right hide-on-med-and-down">
-                  <li class="active"><a href="index.php">Acceuil</a></li>
+                  <li class="active"><a href="index.php">Accueil</a></li>
                   <?php if (!isset($_SESSION['login'])) :?>
                      <li><a href="reservation.php">Reservation</a></li>
                      <li><a <href="contact.php">Contact</a></li>
