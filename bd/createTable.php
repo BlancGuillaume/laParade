@@ -88,7 +88,7 @@ if ($conn->query($sql) === TRUE) {
 $sql = "CREATE TABLE RESERVATION (
 idReservation INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
 dateReservation DATETIME NOT NULL,
-dateLimiteReservation DATETIME, 
+dateLimiteReservation VARCHAR(50), 
 commentaireReservation TEXT, -- Stocke des chaînes de 65535 caractères maximum. Ce champ est insensible à la casse
 mailClientReservation VARCHAR(50) NOT NULL, 
 nomEtablissementReservation VARCHAR(50),
