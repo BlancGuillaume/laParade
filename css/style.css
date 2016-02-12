@@ -376,6 +376,7 @@ small {
   background-color: #fff;
   transition: box-shadow .25s;
   border-radius: 2px;
+  
 }
 
 .card .card-title {
@@ -1464,16 +1465,10 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
 
 
 
-#logo {
-  width: 150px;
-  height: auto;
-  display:block;
-}
-
 .container-cards {
   float:right;
   width: 15%;
-  margin-top: 1%;
+  margin-top: 3%;
   margin-right: 1%;
 }
 
@@ -1484,7 +1479,7 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
 #presentation {
   float:left;
   width: 81.8%;
-  margin:1% 0% 2% 1%;
+  margin:3% 0% 2% 1%;
   text-align: justify;
 }
 
@@ -1554,6 +1549,7 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
   width: 100%;
   margin-right:0;
   padding-right: 0;
+  margin-top: 0;
  }
  
 
@@ -1561,10 +1557,12 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
   width: 50%;
   margin-right:0;
   padding-right: 0;
+  margin-top: 3%;
  }
 
   #cardLivre {
   width: 50%;
+  margin-top: 3%;
  }
 
  #boutonReservation {
@@ -1685,11 +1683,16 @@ dt {
 
   border-radius: 10px;
 }
-
-#logo {
-  height:80px;
-  width:auto;
-  float:left;
+nav div {
+	position: relative;
+	z-index: 998;
+}
+nav div img {
+position: absolute;
+top: 0;
+left: 0;
+height: 130px;
+max-height: inherit;
 }
 
 #conteneurBouton {
