@@ -110,6 +110,7 @@
       <section id="containerAllNews">
          <?php for ($i = 0; !empty($news[$i]); $i++) : ?>
             <div class="card orange eachNew">
+			   <?php $idNews = $news[$i]['idNews']; ?>
                <!-- TITRE NEWS -->
 			   <?php echo $news[$i]['nomNews'];?>
                <h5><?php echo $nomNews; ?></h5>
