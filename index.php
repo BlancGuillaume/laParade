@@ -41,7 +41,7 @@
             <div>
                <!-- Titre du site non affiché -->
                <h1 id="titreSite">Librairie La Parade</h1>
-               <img id="logo" src="images/logo.png"></img>
+               <img src="images/logo_laparade.png"></img>
                <!-- Barre de navigation -->
                <ul id="nav-mobile" class="right hide-on-med-and-down">
                   <li class="active"><a href="index.php">Accueil</a></li>
