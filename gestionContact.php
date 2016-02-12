@@ -99,24 +99,40 @@
          	   <!-- cards pour les nouveaux messages -->
                <?php if (!empty($nouveauMessage)): ?>
                    
-                  <?php foreach ($nouveauMessage as $value){  ?> 
-					<!-- Bouton pour changer le status du message : de nouveau à traité 
-					     On envoie par POST l'id du message à modifier -->
-					<form action="gestionContact.php" method="post">
-						<input type="hidden" name="status" value="1" /> <!-- 1 pour traité (0 quand c'est un nouveau message) -->
-						<input type="hidden" name="idMessageAChanger" value=<?php echo $value['idMessage']; ?> /> 
-						<button id="boutonGestionMessage" type="submit"  name="action">traiter </button>
-					</form>				  
+                  <?php foreach ($nouveauMessage as $value){  ?> 			  
                               <div class="card red">
                               <div class="card-content black-text">
-         						<p><?php echo $value['idMessage']; ?></p>
-         						<p><?php echo $value['contenuMessage']; ?></p>
-         						<p><?php echo $value['dateMessage']; ?></p>
-                                 
-         						<p><?php echo $value['prenomClient']; ?></p>
-         						<p><?php echo $value['nomClient']; ?></p>
-         						<p><?php echo $value['mailClient']; ?></p>
-         						<p><?php echo $value['numClient']; ?></p>
+         						<!--<p><?php echo $value['idMessage']; ?></p>-->
+								<strong>Le client : </strong>
+								<?php if (isset($value['nomClient'])) { ?>
+									<p><?php echo "Nom : ".$value['nomClient']; ?></p>
+								<?php } ?>	
+								<?php if (isset($value['prenomClient'])) { ?>
+									<p><?php echo "Prenom : ".$value['prenomClient']; ?></p>
+								<?php } ?>	
+								<?php if (isset($value['mailClient'])) { ?>
+									<p><?php echo  "Mail : ".$value['mailClient']; ?></p>
+								<?php } ?>	
+								<?php if (isset($value['numClient'])) { ?>
+									<p><?php echo  "Tel : ".$value['numClient']; ?></p>
+								<?php } ?>	
+								<br>
+								
+								<strong>Le message : </strong>
+								<?php if (isset($value['dateMessage'])) { ?>
+									<p><?php echo  "Date : ".$value['dateMessage']; ?></p>
+								<?php } ?>
+								<?php if (isset($value['contenuMessage'])) { ?>
+									<p><?php echo  "Message : ".$value['contenuMessage']; ?></p>
+								<?php } ?>	
+								<br>
+								<!-- Bouton pour changer le status du message : de nouveau à traité 
+								On envoie par POST l'id du message à modifier -->
+								<form action="gestionContact.php" method="post">
+									<input type="hidden" name="status" value="1" /> <!-- 1 pour traité (0 quand c'est un nouveau message) -->
+									<input type="hidden" name="idMessageAChanger" value=<?php echo $value['idMessage']; ?> /> 
+									<button id="boutonGestionMessage" class="btn waves-effect waves-light" type="submit"  name="action">traiter </button>
+								</form>	
                               </div>
                            </div>
                   <?php } ?>
@@ -135,14 +151,31 @@
                         <div class="col s3 m3">
                               <div class="card green">
                               <div class="card-content black-text">
-         						<p><?php echo $value['idMessage']; ?></p>
-         						<p><?php echo $value['contenuMessage']; ?></p>
-         						<p><?php echo $value['dateMessage']; ?></p>
-                                 
-         						<p><?php echo $value['prenomClient']; ?></p>
-         						<p><?php echo $value['nomClient']; ?></p>
-         						<p><?php echo $value['mailClient']; ?></p>
-         						<p><?php echo $value['numClient']; ?></p>
+         						<!-- <p><?php echo $value['idMessage']; ?></p> -->
+								<strong>Le client : </strong>
+								<?php if (isset($value['nomClient'])) { ?>
+									<p><?php echo "Nom : ".$value['nomClient']; ?></p>
+								<?php } ?>	
+								<?php if (isset($value['prenomClient'])) { ?>
+									<p><?php echo "Prenom : ".$value['prenomClient']; ?></p>
+							<?php } ?>	
+							<?php if (isset($value['mailClient'])) { ?>
+								<p><?php echo  "Mail : ".$value['mailClient']; ?></p>
+							<?php } ?>	
+							<?php if (isset($value['numClient'])) { ?>
+								<p><?php echo  "Tel : ".$value['numClient']; ?></p>
+							<?php } ?>	
+							<br>
+								
+							<strong>Le message : </strong>
+							<?php if (isset($value['dateMessage'])) { ?>
+								<p><?php echo  "Date : ".$value['dateMessage']; ?></p>
+							<?php } ?>
+							<?php if (isset($value['contenuMessage'])) { ?>
+								<p><?php echo  "Message : ".$value['contenuMessage']; ?></p>
+							<?php } ?>	
+         						
+
                               </div>
                            </div>
                         </div>
