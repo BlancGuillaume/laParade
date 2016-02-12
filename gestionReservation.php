@@ -142,30 +142,50 @@
 	         <?php foreach ($nouvellesReservations as $value){  ?>
 	                     <div class="card red">
 	                     <div class="card-content black-text">
-						 
-						 <!-- Bouton pour changer l'état de la réservation : de nouvelle (0) à en cours (1)
-						   -- On envoie par POST l'id de la réservation à modifier -->
-						 <form action="gestionReservation.php" method="post">
-							<input type="hidden" name="status" value="1" /> 
-							<input type="hidden" name="idReservationAChanger" value=<?php echo $value['idReservation']; ?> /> 
-							<button id="boutonGestionReservation" type="submit"  name="action">traiter </button>
-						  </form>
-						 
-							<p><?php echo $value['idReservation']; ?></p>
-							<p><?php echo $value['nomLivre']; ?></p>
-							<p><?php echo $value['numISBM']; ?></p>
-	                        <p><?php echo $value['auteurLivre']; ?></p>
-							<p><?php echo $value['editeurLivre']; ?></p>	
-							
-							<p><?php echo $value['dateReservation']; ?></p>
-							<p><?php echo $value['dateLimiteReservation']; ?></p>
-							<p><?php echo $value['commentaireReservation']; ?></p>
-							<p><?php echo $value['statusReservation']; ?></p>
-							
-							<p><?php echo $value['prenomClient']; ?></p>
-							<p><?php echo $value['nomClient']; ?></p>
-							<p><?php echo $value['mailClient']; ?></p>
-							<p><?php echo $value['numClient']; ?></p>
+							<strong>Le client : </strong>
+							<?php if (isset($value['nomClient'])) { ?>
+								<p><?php echo "Nom : ".$value['nomClient']; ?></p>
+							<?php } ?>	
+							<?php if (isset($value['prenomClient'])) { ?>
+								<p><?php echo "Prenom : ".$value['prenomClient']; ?></p>
+							<?php } ?>	
+							<?php if (isset($value['mailClient'])) { ?>
+								<p><?php echo  "Mail : ".$value['mailClient']; ?></p>
+							<?php } ?>	
+							<?php if (isset($value['numClient'])) { ?>
+								<p><?php echo  "Tel : ".$value['numClient']; ?></p>
+							<?php } ?>	
+							<br>
+							<strong>La reservation : </strong>
+							<?php if (isset($value['nomLivre'])) { ?>
+								<p><?php echo "Le livre : ".$value['nomLivre']; ?></p>
+							<?php } ?>	
+							<?php if (isset($value['numISBM'])) { ?>
+								<p><?php echo "NumISBN : ".$value['numISBM']; ?></p>
+							<?php } ?>	
+							<?php if (isset($value['auteurLivre'])) { ?>
+								<p><?php echo "Auteur : ".$value['auteurLivre']; ?></p>
+							<?php } ?>	
+							<?php if (isset($value['editeurLivre'])) { ?>
+								<p><?php echo "Editeur : ".$value['editeurLivre']; ?></p>
+							<?php } ?>	
+							<?php if (isset($value['dateReservation'])) { ?>
+								<p><?php echo "Date de reservation : ".$value['dateReservation']; ?></p>
+							<?php } ?>		
+							<?php if (isset($value['dateLimiteReservation'])) { ?>
+								<p><?php echo "Date limite de reservation : ".$value['dateLimiteReservation']; ?></p>
+							<?php } ?>	
+							<?php if (isset($value['commentaireReservation'])) { ?>
+								<p><?php echo "Commentaire : ".$value['commentaireReservation']; ?></p>
+							<?php } ?>	
+							<!-- Bouton pour changer l'état de la réservation : de nouvelle (0) à en cours (1)
+							  -- On envoie par POST l'id de la réservation à modifier -->
+							<br>
+							<form action="gestionReservation.php" method="post">
+								<input type="hidden" name="status" value="1" /> 
+								<input type="hidden" name="idReservationAChanger" value=<?php echo $value['idReservation']; ?> /> 
+								<button id="boutonGestionReservation" class="btn waves-effect waves-light" type="submit"  name="action">traiter </button>
+						  </form>							
 	                     </div>
 	               </div>
 	         <?php } ?>
@@ -184,29 +204,52 @@
 	                     <div class="card green">
 	                     <div class="card-content black-text">
 						 
-						 <!-- Bouton pour changer l'état de la réservation : de en cours (1) à terminé (2)
-						   -- On envoie par POST l'id de la réservation à modifier -->
-						 <form action="gestionReservation.php" method="post">
-							<input type="hidden" name="status" value= 2 /> 
-							<input type="hidden" name="idReservationAChanger" value=<?php echo $value['idReservation']; ?> /> 
-							<button id="boutonGestionReservation" type="submit"  name="action">traiter </button>
-						</form>
 						
-							<p><?php echo $value['idReservation']; ?></p>
-							<p><?php echo $value['nomLivre']; ?></p>
-							<p><?php echo $value['numISBM']; ?></p>
-	                        <p><?php echo $value['auteurLivre']; ?></p>
-							<p><?php echo $value['editeurLivre']; ?></p>	
-							
-							<p><?php echo $value['dateReservation']; ?></p>
-							<p><?php echo $value['dateLimiteReservation']; ?></p>
-							<p><?php echo $value['commentaireReservation']; ?></p>
-							<p><?php echo $value['statusReservation']; ?></p>
-							
-							<p><?php echo $value['prenomClient']; ?></p>
-							<p><?php echo $value['nomClient']; ?></p>
-							<p><?php echo $value['mailClient']; ?></p>
-							<p><?php echo $value['numClient']; ?></p>
+							<strong>Le client : </strong>
+							<?php if (isset($value['nomClient'])) { ?>
+								<p><?php echo "Nom : ".$value['nomClient']; ?></p>
+							<?php } ?>	
+							<?php if (isset($value['prenomClient'])) { ?>
+								<p><?php echo "Prenom : ".$value['prenomClient']; ?></p>
+							<?php } ?>	
+							<?php if (isset($value['mailClient'])) { ?>
+								<p><?php echo  "Mail : ".$value['mailClient']; ?></p>
+							<?php } ?>	
+							<?php if (isset($value['numClient'])) { ?>
+								<p><?php echo  "Tel : ".$value['numClient']; ?></p>
+							<?php } ?>	
+							<br>
+							<strong>La reservation : </strong>
+							<?php if (isset($value['nomLivre'])) { ?>
+								<p><?php echo "Le livre : ".$value['nomLivre']; ?></p>
+							<?php } ?>	
+							<?php if (isset($value['numISBM'])) { ?>
+								<p><?php echo "NumISBN : ".$value['numISBM']; ?></p>
+							<?php } ?>	
+							<?php if (isset($value['auteurLivre'])) { ?>
+								<p><?php echo "Auteur : ".$value['auteurLivre']; ?></p>
+							<?php } ?>	
+							<?php if (isset($value['editeurLivre'])) { ?>
+								<p><?php echo "Editeur : ".$value['editeurLivre']; ?></p>
+							<?php } ?>	
+							<?php if (isset($value['dateReservation'])) { ?>
+								<p><?php echo "Date de reservation : ".$value['dateReservation']; ?></p>
+							<?php } ?>		
+							<?php if (isset($value['dateLimiteReservation'])) { ?>
+								<p><?php echo "Date limite de reservation : ".$value['dateLimiteReservation']; ?></p>
+							<?php } ?>	
+							<?php if (isset($value['commentaireReservation'])) { ?>
+								<p><?php echo "Commentaire : ".$value['commentaireReservation']; ?></p>
+							<?php } ?>	
+						    <!-- Bouton pour changer l'état de la réservation : de en cours (1) à terminé (2)
+							-- On envoie par POST l'id de la réservation à modifier -->
+							<br>
+							<form action="gestionReservation.php" method="post">
+								<input type="hidden" name="status" value= 2 /> 
+								<input type="hidden" name="idReservationAChanger" value=<?php echo $value['idReservation']; ?> /> 
+								<button id="boutonGestionReservation" class="btn waves-effect waves-light" type="submit"  name="action">traiter </button>
+							</form>
+											
 	                     </div>
 	               </div>
 	         <?php } ?>
@@ -226,21 +269,42 @@
 	                     <div class="card yellow">
 	                     <div class="card-content black-text">
 						 	 
-							<p><?php echo $value['idReservation']; ?></p>
-							<p><?php echo $value['nomLivre']; ?></p>
-							<p><?php echo $value['numISBM']; ?></p>
-	                        <p><?php echo $value['auteurLivre']; ?></p>
-							<p><?php echo $value['editeurLivre']; ?></p>	
-							
-							<p><?php echo $value['dateReservation']; ?></p>
-							<p><?php echo $value['dateLimiteReservation']; ?></p>
-							<p><?php echo $value['commentaireReservation']; ?></p>
-							<p><?php echo $value['statusReservation']; ?></p>
-							
-							<p><?php echo $value['prenomClient']; ?></p>
-							<p><?php echo $value['nomClient']; ?></p>
-							<p><?php echo $value['mailClient']; ?></p>
-							<p><?php echo $value['numClient']; ?></p>
+								<strong>Le client : </strong>
+							<?php if (isset($value['nomClient'])) { ?>
+								<p><?php echo "Nom : ".$value['nomClient']; ?></p>
+							<?php } ?>	
+							<?php if (isset($value['prenomClient'])) { ?>
+								<p><?php echo "Prenom : ".$value['prenomClient']; ?></p>
+							<?php } ?>	
+							<?php if (isset($value['mailClient'])) { ?>
+								<p><?php echo  "Mail : ".$value['mailClient']; ?></p>
+							<?php } ?>	
+							<?php if (isset($value['numClient'])) { ?>
+								<p><?php echo  "Tel : ".$value['numClient']; ?></p>
+							<?php } ?>	
+							<br>
+							<strong>La reservation : </strong>
+							<?php if (isset($value['nomLivre'])) { ?>
+								<p><?php echo "Le livre : ".$value['nomLivre']; ?></p>
+							<?php } ?>	
+							<?php if (isset($value['numISBM'])) { ?>
+								<p><?php echo "NumISBN : ".$value['numISBM']; ?></p>
+							<?php } ?>	
+							<?php if (isset($value['auteurLivre'])) { ?>
+								<p><?php echo "Auteur : ".$value['auteurLivre']; ?></p>
+							<?php } ?>	
+							<?php if (isset($value['editeurLivre'])) { ?>
+								<p><?php echo "Editeur : ".$value['editeurLivre']; ?></p>
+							<?php } ?>	
+							<?php if (isset($value['dateReservation'])) { ?>
+								<p><?php echo "Date de reservation : ".$value['dateReservation']; ?></p>
+							<?php } ?>		
+							<?php if (isset($value['dateLimiteReservation'])) { ?>
+								<p><?php echo "Date limite de reservation : ".$value['dateLimiteReservation']; ?></p>
+							<?php } ?>	
+							<?php if (isset($value['commentaireReservation'])) { ?>
+								<p><?php echo "Commentaire : ".$value['commentaireReservation']; ?></p>
+							<?php } ?>		
 	                     </div>
 	               </div>
 	         <?php } ?>
