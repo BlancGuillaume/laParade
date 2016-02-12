@@ -15,7 +15,7 @@
 		$dateReservation = date("Y-m-d H:i:s"); // le format DATETIME de MySQL
 		$dateLimiteReservation =  $_POST['dateLimiteReception'];  
 		var_dump($dateLimiteReservation);
-		$commentaireReservation = $_POST['commentaire'];
+		$commentaireReservation = addslashes($_POST['commentaire']);
 		$mailClient = $_POST['email'];
 		$nomClient = $_POST['nom'];
 		$prenomClient = $_POST['prenom'];
@@ -106,13 +106,19 @@
 		<script type="text/javascript" src="js/script.js"></script>
 		<header>
 			<nav>
-				<div>
-					<ul id="nav-mobile" class="right hide-on-med-and-down">
-						<li><a href="index.php">Presentation</a></li>
-						<li class="active"><a href="reservation.php">Reservation</a></li>
-						<li><a href="contact.php">Contact</a></li>
-					</ul>
-				</div>
+				<nav>
+					<div>
+						<!-- Titre du site non affiché -->
+						<h1 id="titreSite">Librairie La Parade</h1>
+						<img src="images/logo_laparade.png"></img>
+					
+						<ul id="nav-mobile" class="right hide-on-med-and-down">
+							<li><a href="index.php">Presentation</a></li>
+							<li class="active"><a href="reservation.php">Reservation</a></li>
+							<li><a href="contact.php">Contact</a></li>
+						</ul>
+					</div>
+				</nav>
 			</nav>
 		</header>
 
