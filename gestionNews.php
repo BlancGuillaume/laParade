@@ -35,12 +35,9 @@
 
 <!DOCTYPE HTML>
 <html>
-   <head>
-      <meta charset="utf-8" />
-      <title>Librairie la Parade</title>
-      <link href="css/style.css" rel="stylesheet" type="text/css">
-      <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-   </head>
+    <!-- FOOTER -->
+    <?php include('html_includes/head.php');?>  
+    
    <body>
       <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
       <script type="text/javascript" src="js/materialize.min.js"></script>
@@ -50,7 +47,7 @@
             <div>
                <!-- Titre du site non affiché -->
                <h1 id="titreSite">Librairie La Parade</h1>
-               <img id="logo" src="images/logo.png"></img>
+               <img id="logo" src="images/logo_laparade.png"></img>
                <!-- Barre de navigation -->
                <ul id="nav-mobile" class="right hide-on-med-and-down">
                   <li><a href="index.php">Accueil</a></li>
@@ -107,6 +104,32 @@
         </script>
       </section>
 
+      <div class="collapsible-header" id="collapseHeader3"><i class="material-icons" >done</i>Message traite</div>
+        <div class="collapsible-body" id="collapse3"><p>
+            <?php for ($i = 0; !empty($news[$i]); $i++) : ?>
+              <div class="col s3 m3">
+                <div class="card">
+                    <div class="card-content black-text">
+                    <strong>
+                      <?php echo $news[$i]['nomNews']; ?>
+                    </strong>
+                    <!-- CONTENU NEWS -->
+                    <p><?php echo $news[$i]['contenuNews']; ?></p>
+                    <!-- IMAGE NEWS -->
+                    <?php if ($news[$i]['imageNews'] != NULL): ?>
+                      <img src=<?php echo "\"" . $news[$i]['imageNews'] . "\""; ?>></img><br />
+                    <?php endif ?>
+                    <!-- LIEN NEWS -->
+                    <?php if ($news[$i]['lienNews'] != NULL): ?>
+                      <a href=<?php echo "\"" . $news[$i]['lienNews'] . "\""; ?>>LIEN</a><br />
+                    <?php endif; ?>
+                    <br>
+                  </div>
+               </div>
+            </div>
+          <?php endfor; ?>
+        </p></div>
+
       <section id="containerAllNews">
          <?php for ($i = 0; !empty($news[$i]); $i++) : ?>
             <div class="card orange eachNew">
@@ -123,7 +146,7 @@
                <!-- LIEN NEWS -->
                <?php if ($news[$i]['lienNews'] != NULL): ?>
                   <a href=<?php echo "\"" . $news[$i]['lienNews'] . "\""; ?>>LIEN</a><br />
-               <?php endif ?>
+               <?php endif; ?>
 			   <!-- Bouton pour supprimer la news : on envoie par POST l'id de la news à supprimer -->
 			   <form action="gestionNews.php" method="post">
 						<input type="hidden" name="idNewsASupprimer"  value=<?php echo $idNews; ?> />  
@@ -133,5 +156,8 @@
          <?php endfor;?>
          </form>
       </section>
+
+      <!-- FOOTER -->
+      <?php include('html_includes/footer.php');?>
    </body> 
 </html>

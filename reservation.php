@@ -90,40 +90,41 @@
 
 <!DOCTYPE HTML>
 <html>
-	<head>
-		<meta charset="utf-8" />
-		<title>Librairie la Parade</title>
-		<link href="css/style.css" rel="stylesheet" type="text/css">
-		<!--Import Google Icon Font-->
-		<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-		<!--Import materialize.css-->
-		<!--<link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/> -->
-	</head>
+
+	<!-- HEAD -->
+    <?php include('html_includes/head.php');?>
+
 	<body>
 		<!--Import jQuery before materialize.js-->
 		<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 		<script type="text/javascript" src="js/materialize.min.js"></script>
 		<script type="text/javascript" src="js/script.js"></script>
-		<header>
-			<nav>
-				<nav>
-					<div>
-						<!-- Titre du site non affiché -->
-						<h1 id="titreSite">Librairie La Parade</h1>
-						<img src="images/logo_laparade.png"></img>
-					
-						<ul id="nav-mobile" class="right hide-on-med-and-down">
-							<li><a href="index.php">Presentation</a></li>
-							<li class="active"><a href="reservation.php">Reservation</a></li>
-							<li><a href="contact.php">Contact</a></li>
-						</ul>
-					</div>
-				</nav>
-			</nav>
+
+		<!-- HEADER -->
+      	<header>
+		   <nav>
+		      <div>
+		         <!-- Titre du site non affiché -->
+		         <h1 id="titreSite">Librairie La Parade</h1>
+		         <img id="logo" src="images/logo_laparade.png"></img>
+		         <!-- Barre de navigation -->
+		         <ul id="nav-mobile" class="right hide-on-med-and-down">
+		            <li><a href="index.php">Accueil</a></li>
+		            <?php if (!isset($_SESSION['login'])) :?>
+		               <li class="active"><a href="reservation.php">Reservation</a></li>
+		               <li><a href="contact.php">Contact</a></li>
+		            <?php else :?>
+		               <li><a href="gestionNews.php">News</a></li>
+		               <li><a href="gestionReservation.php">Reservation</a></li>
+		               <li><a href="gestionContact.php">Messages</a></li>
+		            <?php endif; ?>
+		         </ul>
+		      </div>
+		   </nav>
 		</header>
 
 		<form action="reservation.php" method="post">
-		<div class="row" id="formulaireReservation">
+		<div class="row" id="presentation">
 			<!-- - - - - - - - - - -  Section ouvrage  - - - - - - - - - - --> 
 			<div id="cardLivre" class="col s12 m5">
 				<div class="card col white">
@@ -234,63 +235,10 @@
 			</div>
 		</div>
 
-      <!-- cards pour les news -->
-      <?php if (!empty($news)): ?>
-         <aside class="container-cards"> <!-- ajout d'une nouvelle news -> dans cette div -->   
-         <?php for ($i = 0; $i < 5 && !empty($news[$i]); $i++) : ?>
-               <div class="col s3 m3">
-                  <?php if ($i == 0 || $i == 3): ?>
-                     <div class="card orangefonce">
-                  <?php elseif($i == 1 || $i == 4): ?>
-                     <div class="card orange">
-                  <?php else: ?>
-                     <div class="card orangeclair">
-                  <?php endif ?>
-                     <div class="card-content white-text">
-                        <span><?php echo $news[$i]['nomNews'];?></span>
-                        <p><?php echo $news[$i]['contenuNews']; ?></p>
-                        <?php if ($news[$i]['lienNews'] != NULL): ?>
-                           <a href=<?php echo "\"" . $news[$i]['lienNews'] . "\""; ?>>LIEN</a>
-                        <?php endif ?>
-                        <?php if ($news[$i]['imageNews'] != NULL): ?>
-                           <img src=<?php echo "\"" . $news[$i]['imageNews'] . "\""; ?>></img>
-                        <?php endif ?>
-                     </div>
-                  </div>
-               </div>
-         <?php endfor; ?>
-         <footer>
-            <?php if (isset($_SESSION['login'])) : ?>
-               <a id="lienEspaceUtilisateur" href="deconnexion.php">Deconnexion</a>
-            <?php else : ?>
-               <a id="lienEspaceUtilisateur" href="#" data-width="500" data-rel="popup1" class="poplight">Connexion</a>
-            <?php endif; ?>
-         </footer>
-         </aside>
-      <?php endif; ?>
-	</body>
-	<div id="popup1" class="popup_block">
-      <form action="connexion.php" method="post">
-         <h5>Connexion</h5>
-         <div class="row">   
-            <div class="col s12">
-               <div class="input-field col s12">
-                  <i class="material-icons prefix">mail</i>
-                  <input id="mailUtilisateur" name="mailUtilisateur" type="text" class="validate">
-                  <label for="mailUtilisateur">Mail</label>
-               </div>
-               <div class="input-field col s12">
-                  <i class="material-icons prefix">vpn_key</i>
-                  <input id="mdpUtilisateur" name="mdpUtilisateur" type="password" class="validate">
-                  <label for="mdpUtilisateur">Mot de passe</label>
-               </div>
-            </div>
-         </div>
-         <div id="conteneurBouton">
-            <button id="boutonConnexion" class="btn waves-effect waves-light" type="submit"  name="action">Connexion
-               <i class="material-icons right">send</i>
-            </button>
-         </div>
-      </form>
+		<!-- NEWS -->
+		<?php include('html_includes/news.php');?>
+
+		<!-- FOOTER -->
+		<?php include('html_includes/footer.php');?>
    </div>
 </html>

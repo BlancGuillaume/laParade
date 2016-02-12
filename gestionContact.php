@@ -54,12 +54,9 @@
 
 <!DOCTYPE HTML>
 <html>
-   <head>
-      <meta charset="utf-8" />
-      <title>Librairie la Parade</title>
-      <link href="css/style.css" rel="stylesheet" type="text/css">
-      <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-   </head>
+   <!-- HEAD -->
+   <?php include('html_includes/head.php');?>
+
    <body>
       <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
       <script type="text/javascript" src="js/materialize.min.js"></script>
@@ -68,7 +65,7 @@
             <div class="nav-wrapper">
                <!-- Titre du site non affiché -->
                <h1 id="titreSite">Librairie La Parade</h1>
-               <img id="logo" src="images/logo.png"></img>
+               <img id="logo" src="images/logo_laparade.png"></img>
                <!-- Barre de navigation -->
                <ul id="nav-mobile" class="right hide-on-med-and-down">
                   <li><a href="index.php">Accueil</a></li>
@@ -89,12 +86,12 @@
 		});
       </script>
 	  
-	<section id="presentation">
+	<section id="gestionReservation" class="row card"> 
    	<ul class="collapsible" data-collapsible="expandable"> <!-- Plusieurs menus peuvent être ouvert en même temps -->
          <li>
    	   <!-- Par défaut on déploie les nouvelles demandes de contact -->
-            <div class="collapsible-header active"><i class="material-icons">call_made</i>Nouveau message</div>
-            <div class="collapsible-body">
+            <div class="collapsible-header active" id="collapseHeader1"><i class="material-icons">call_made</i>Nouveau message</div>
+            <div class="collapsible-body" id="collapse1">
                <p>
          	   <!-- cards pour les nouveaux messages -->
                <?php if (!empty($nouveauMessage)): ?>
@@ -142,8 +139,8 @@
             </div>
          </li>
          <li>
-            <div class="collapsible-header"><i class="material-icons">done</i>Message traite</div>
-            <div class="collapsible-body">
+            <div class="collapsible-header" id="collapseHeader3"><i class="material-icons" >done</i>Message traite</div>
+            <div class="collapsible-body" id="collapse3">
                <p>
       	  	   <!-- cards pour les messages traités-->
          	  <?php if (!empty($messageTraite)): ?>
@@ -187,36 +184,12 @@
        
       </ul>
    </section>
-   <!-- cards pour les news -->
-   <?php if (!empty($news)): ?>
-      <aside class="container-cards"> <!-- ajout d'une nouvelle news -> dans cette div -->   
-      <?php for ($i = 0; $i < 5 && !empty($news[$i]); $i++) : ?>
-            <div class="col s3 m3">
-               <?php if ($i == 0 || $i == 3): ?>
-                  <div class="card orangefonce">
-               <?php elseif($i == 1 || $i == 4): ?>
-                  <div class="card orange">
-               <?php else: ?>
-                  <div class="card orangeclair">
-               <?php endif ?>
-                  <div class="card-content white-text">
-                     <span><?php echo $news[$i]['nomNews'];?></span>
-                     <p><?php echo $news[$i]['contenuNews']; ?></p>
-                     <?php if ($news[$i]['lienNews'] != NULL): ?>
-                        <a href=<?php echo "\"" . $news[$i]['lienNews'] . "\""; ?>>LIEN</a>
-                     <?php endif ?>
-                     <?php if ($news[$i]['imageNews'] != NULL): ?>
-                        <img src=<?php echo "\"" . $news[$i]['imageNews'] . "\""; ?>></img>
-                     <?php endif ?>
-                  </div>
-               </div>
-            </div>
-      <?php endfor; ?>
-      <footer>
-         <a id="lienEspaceUtilisateur" href="deconnexion.php">Deconnexion</a>
-      </footer>
-      </aside>
-   <?php endif; ?>
+
+   <!-- HEADER -->
+   <?php include('html_includes/news.php');?>
+
+   <!-- FOOTER -->
+   <?php include('html_includes/footer.php');?>
       
    </body>
 </html>
