@@ -11,16 +11,21 @@
    $bd = new accessBD;
    $bd->connect();
 
-   $req = "SELECT * FROM NEWS ORDER BY idNews DESC";
-   $news = $bd->get_requete($req);
-   
-   $dir    = 'uploads';
+   $dir    = 'galerie';
    $photosGalerie = scandir($dir, 1);
 
    if ($_SESSION['erreur'] == -1) {
       var_dump($_SESSION['erreur']);
       header('Location: deconnexion.php');
    }
+
+   if (isset($_POST['idNewsASupprimer'])){
+     $idNewsASupprimer = $_POST['idNewsASupprimer'];
+     var_dump($idNewsASupprimer);
+     // $reqSupprimerNews = "DELETE FROM NEWS
+     //                 WHERE idNews ='".$idNewsASupprimer."'";
+     // $supprimerNews = $bd->set_requete($reqSupprimerNews);                      
+   } 
 
 ?>
 
@@ -41,6 +46,7 @@
                <!-- Titre du site non affiché -->
                <h1 id="titreSite">Librairie La Parade</h1>
                <img id="logo" src="images/logo_laparade.png"></img>
+
                <!-- Barre de navigation -->
                <ul id="nav-mobile" class="right hide-on-med-and-down">
                   <li class="active"><a href="index.php">Accueil</a></li>
@@ -61,7 +67,10 @@
       <section id="presentation" class="row"> 
          <div id="accrochePresentation" class="card col">
             <div id="bienvenue">
-               <h3>Bienvenue</h3>
+               <h3>Bienvenue
+                  <?php if (isset($_SESSION['login'])): ?> administrateur
+                  <?php endif; ?>
+                  </h3>
                <p><?php
                   $fichier='presentation.txt';
                   $contenu_string = file_get_contents($fichier);
@@ -75,20 +84,38 @@
                <ul id="ensemblePhotos">
                   <?php $i = 1;foreach ($photosGalerie as $photo) :?>
                      <?php if (!in_array($photo,array(".",".."))) : ?>
-                        <li><a href=<?php echo 'uploads/' . $photo;?>></a></li>
+                        <li><a href=<?php echo 'galerie/' . $photo;?>></a></li>
                      <?php endif;?>
                   <?php endforeach;?>
                </ul>
                <dl id="photo">
                   <?php if (!in_array($photosGalerie[0],array(".",".."))) : ?>
                      <dt><?php echo $photosGalerie[0];?></dt>
-                     <dd><img id="photoAAfficher" src=<?php echo 'uploads/' . $photosGalerie[0];?> alt=<?php echo 'uploads/' . $photosGalerie[0];?> /></dd>
+                     <dd><img id="photoAAfficher" src=<?php echo 'galerie/' . $photosGalerie[0];?> alt=<?php echo 'uploads/' . $photosGalerie[0];?> /></dd>
                   <?php endif; ?>
                </dl>
                <ul id="nav">
                   <li id="prec"><a class="waves-effect waves-light btn-large" id="prevButton" ><i class="material-icons left">skip_previous</i></a></li>
                   <li id="suiv"><a class="waves-effect waves-light btn-large" id="nextButton" ><i class="material-icons left">skip_next</i></a></li>
                </ul>
+               <?php if (isset($_SESSION['login'])): ?>
+                  <form action="index.php" method="post" enctype="multipart/form-data">
+                     <input type="hidden" name="idPhotosASupprimer" value=<?php echo $photo; ?> value=<?php echo $photo; ?>/>  
+                     <button id="boutonSupprImagesGalerie" onclick="affichePopUp()" type="submit" name="action">
+                        Supprimer cette image
+                     </button>
+                  </form>
+               <?php endif; ?>
+               <br />
+               <?php if (isset($_SESSION['login'])): ?>
+                  <form action="uploadImagesGalerie.php" method="post" enctype="multipart/form-data">
+                     <div class="input-field">
+                       <input type="file" name="fileToUpload" id="fileToUpload">
+                     </div>
+                     <button id="boutonAjoutImagesGalerie" onclick="affichePopUp()" type="submit" name="action">Ajouter
+                    </button>
+                  </form>
+               <?php endif; ?>
          </div>
          </div>
          <div id="presentationService" class="row">

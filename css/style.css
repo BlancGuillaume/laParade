@@ -15,8 +15,16 @@ img.card-image {
   background-color: #ffa726 !important;
 }
 
+.vert {
+ background-color: #4db6ac !important;
+  
+}
+
 .white-text {
   color: #FFFFFF !important;
+}
+.orange-text {
+  color: #ff9800 !important;
 }
 
 
@@ -1705,12 +1713,12 @@ max-height: inherit;
 }
 
 .eachNew {
-  width: 285.438px;
+  width: 15.5%;
   height:379px;
   display:inline-block;
   text-align: center;
   float:left;
-  margin-right:2%;
+  margin-left:1%;
 }
 
 .eachNew img {
@@ -1720,7 +1728,7 @@ max-height: inherit;
 }
 
 #formulaireAjoutNews {
-  width: 100%;
+  width: 98%;
   /*margin:3% 0% 2% 1%;*/
   margin:1% 0% 2% 1%;
   text-align: justify;
@@ -1772,4 +1780,26 @@ footer {
 }
 #collapse3 {
   border-top: 1px solid silver;
+}
+
+.titreNews {
+  color: white;
+  font-weight: bold;
+}
+
+#fileToUpload {
+ float:left;
+ margin-bottom: 4%;
+}
+
+#boutonAjoutImagesGalerie {
+  float: right;
+  width:25%;
+  margin-bottom: 4%;
+}
+
+#boutonSupprImagesGalerie {
+  float:center;
+  margin:0;
+  height: 36px;
 }

@@ -4,10 +4,7 @@
 
 	$bd = new accessBD;
 	$bd->connect();
-
-	$req = "SELECT * FROM NEWS ORDER BY idNews DESC";
-   	$news = $bd->get_requete($req);
-
+	
    // On regarde si le formulaire a été complété 
    if (!empty($_POST)) {
 

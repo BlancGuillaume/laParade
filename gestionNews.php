@@ -60,8 +60,8 @@
       </header>
       
       <section id="formulaireAjoutNews" class="row"> 
-         <form action="upload.php" method="post" enctype="multipart/form-data">
-        <!-- Page Layout here -->
+          <form action="upload.php" method="post" enctype="multipart/form-data">
+          <!-- Page Layout here -->
             <div id="cardNews" class="card col white">
                <h5>La news</h5>
                <div class="row">
@@ -104,57 +104,46 @@
         </script>
       </section>
 
-      <div class="collapsible-header" id="collapseHeader3"><i class="material-icons" >done</i>Message traite</div>
-        <div class="collapsible-body" id="collapse3"><p>
-            <?php for ($i = 0; !empty($news[$i]); $i++) : ?>
-              <div class="col s3 m3">
-                <div class="card">
-                    <div class="card-content black-text">
-                    <strong>
-                      <?php echo $news[$i]['nomNews']; ?>
-                    </strong>
-                    <!-- CONTENU NEWS -->
-                    <p><?php echo $news[$i]['contenuNews']; ?></p>
-                    <!-- IMAGE NEWS -->
-                    <?php if ($news[$i]['imageNews'] != NULL): ?>
-                      <img src=<?php echo "\"" . $news[$i]['imageNews'] . "\""; ?>></img><br />
-                    <?php endif ?>
-                    <!-- LIEN NEWS -->
-                    <?php if ($news[$i]['lienNews'] != NULL): ?>
-                      <a href=<?php echo "\"" . $news[$i]['lienNews'] . "\""; ?>>LIEN</a><br />
-                    <?php endif; ?>
-                    <br>
-                  </div>
-               </div>
-            </div>
-          <?php endfor; ?>
-        </p></div>
-
       <section id="containerAllNews">
-         <?php for ($i = 0; !empty($news[$i]); $i++) : ?>
+        <?php $couleur=1; ?>
+        <?php for ($i = 0; !empty($news[$i]); $i++) : ?>
+          <?php if($couleur == 1) : ?>
+            <div class="card orangefonce eachNew">
+            <?php $couleur++; ?>
+          <?php elseif($couleur == 2) : ?>
             <div class="card orange eachNew">
-			   <?php $idNews = $news[$i]['idNews']; ?>
-               <!-- TITRE NEWS -->
-			   <?php echo $news[$i]['nomNews'];?>
-               <h5><?php echo $nomNews; ?></h5>
-               <!-- CONTENU NEWS -->
-               <p><?php echo $news[$i]['contenuNews']; ?></p>
-               <!-- IMAGE NEWS -->
-               <?php if ($news[$i]['imageNews'] != NULL): ?>
-                  <img src=<?php echo "\"" . $news[$i]['imageNews'] . "\""; ?>></img><br />
-               <?php endif ?>
-               <!-- LIEN NEWS -->
-               <?php if ($news[$i]['lienNews'] != NULL): ?>
-                  <a href=<?php echo "\"" . $news[$i]['lienNews'] . "\""; ?>>LIEN</a><br />
-               <?php endif; ?>
-			   <!-- Bouton pour supprimer la news : on envoie par POST l'id de la news à supprimer -->
-			   <form action="gestionNews.php" method="post">
-						<input type="hidden" name="idNewsASupprimer"  value=<?php echo $idNews; ?> />  
-						<button id="boutonSupprimerNew" type="submit"  name="action">Supprimer</button>
-			    </form>	 
-            </div>
-         <?php endfor;?>
-         </form>
+            <?php $couleur++; ?>
+          <?php else : ?>
+            <div class="card vert eachNew">
+            <?php $couleur=1; ?>
+          <?php endif; ?>
+            <?php $idNews = $news[$i]['idNews']; ?>
+
+            <!-- TITRE NEWS -->
+            <p class="titreNews"><?php echo $news[$i]['nomNews'];?></p>
+
+            <!-- CONTENU NEWS -->
+            <p><?php echo $news[$i]['contenuNews']; ?></p>
+
+            <!-- IMAGE NEWS -->
+            <?php if ($news[$i]['imageNews'] != NULL): ?>
+              <img src=<?php echo "\"" . $news[$i]['imageNews'] . "\""; ?>></img><br />
+            <?php endif ?>
+
+            <!-- LIEN NEWS -->
+            <?php if ($news[$i]['lienNews'] != NULL): ?>
+              <a href=<?php echo "\"" . $news[$i]['lienNews'] . "\""; ?>>LIEN</a><br />
+            <?php endif; ?>
+
+  			    <!-- Bouton pour supprimer la news : on envoie par POST l'id de la news à supprimer -->
+            <form action="gestionNews.php" method="post">
+              <input type="hidden" name="idNewsASupprimer" value=<?php echo $idNews; ?> />  
+              <button id="boutonSupprimerNew" type="submit" name="action" class="waves-effect waves-light btn-large">Supprimer</button>
+            </form>	 
+
+          </div>
+        <?php endfor;?>
+      </form>
       </section>
 
       <!-- FOOTER -->

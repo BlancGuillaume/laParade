@@ -34,10 +34,7 @@
 												  
 																								  
 		$result = $bd->set_requete($reqMessage);	  
-	}
-
-	$req = "SELECT * FROM NEWS ORDER BY idNews DESC";
-   	$news = $bd->get_requete($req);												  
+	}										  
 ?>
 
 <!DOCTYPE HTML>
