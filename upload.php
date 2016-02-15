@@ -16,7 +16,8 @@ if (!empty($_POST)) {
 	$nomNews = $_POST['nomNews'];
 	$contenuNews = $_POST['contenuNews'];
 	$lienNews = $_POST['lienNews'];
-	if (!empty(basename($_FILES["fileToUpload"]["name"]))) {
+	$var = basename($_FILES["fileToUpload"]["name"]);
+	if (!empty($var)) {
 		// News avec image
 		$imageNews = "uploads/"; // Dossier dans lequel est stocké l'image. On s'en sert pour afficher les cards news
 		$imageNews.= basename($_FILES["fileToUpload"]["name"]);
@@ -33,8 +34,8 @@ if (!empty($_POST)) {
 }
 
 // ////////////////////////  UPLOAD DE L'IMAGE //////////////////////
-
-if (!empty(basename($_FILES["fileToUpload"]["name"]))) {
+$var = basename($_FILES["fileToUpload"]["name"]);
+if (!empty($var)) {
 	$target_dir = "uploads/";
 	$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 	$uploadOk = 1;
@@ -80,7 +81,7 @@ if (!empty(basename($_FILES["fileToUpload"]["name"]))) {
 			echo "The file " . basename($_FILES["fileToUpload"]["name"]) . " a ete uploade.";
 
 			// redirection sur la même page
-			header('Location: news.php');
+			header('Location: gestionNews.php');
 			exit();
 		}
 		else {
@@ -90,7 +91,7 @@ if (!empty(basename($_FILES["fileToUpload"]["name"]))) {
 }
 else {
 	echo "rien a uploader";
-	header('Location: news.php');
+	header('Location: gestionNews.php');
 	exit();
 }
 
