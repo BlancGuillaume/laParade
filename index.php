@@ -11,7 +11,7 @@
    $bd = new accessBD;
    $bd->connect();
 
-   $dir    = 'galerie';
+   $dir = 'galerie';
    $photosGalerie = scandir($dir, 1);
 
    if ($_SESSION['erreur'] == -1) {
@@ -19,14 +19,23 @@
       header('Location: deconnexion.php');
    }
 
-   if (isset($_POST['idNewsASupprimer'])){
-     $idNewsASupprimer = $_POST['idNewsASupprimer'];
-     var_dump($idNewsASupprimer);
-     // $reqSupprimerNews = "DELETE FROM NEWS
-     //                 WHERE idNews ='".$idNewsASupprimer."'";
-     // $supprimerNews = $bd->set_requete($reqSupprimerNews);                      
-   } 
+   // Suppression image 
+   if (isset($_POST['nomImageASupprimer'])){
 
+      $element = explode("/", $_POST['nomImageASupprimer']);
+
+      $tmp = 0;
+      for ($i = 0 ; $i < count($element) ; $i++) {
+         var_dump($element[$i]);
+         if ($tmp == 1 || strcmp($element[$i],"galerie") == 0) {
+            $tmp = 1; 
+            if ($cheminImage != NULL) $cheminImage = $cheminImage . '/' . $element[$i];
+            else $cheminImage = $element[$i];
+         }
+      }
+      unlink($cheminImage);    
+      header('Location: index.php');            
+   } 
 ?>
 
 <!DOCTYPE HTML>
@@ -91,7 +100,7 @@
                <dl id="photo">
                   <?php if (!in_array($photosGalerie[0],array(".",".."))) : ?>
                      <dt><?php echo $photosGalerie[0];?></dt>
-                     <dd><img id="photoAAfficher" src=<?php echo 'galerie/' . $photosGalerie[0];?> alt=<?php echo 'uploads/' . $photosGalerie[0];?> /></dd>
+                     <dd><img id="photoAAfficher" src=<?php echo 'galerie/' . $photosGalerie[0];?> alt=<?php echo 'galerie/' . $photosGalerie[0];?> /></dd>
                   <?php endif; ?>
                </dl>
                <ul id="nav">
@@ -99,12 +108,10 @@
                   <li id="suiv"><a class="waves-effect waves-light btn-large" id="nextButton" ><i class="material-icons left">skip_next</i></a></li>
                </ul>
                <?php if (isset($_SESSION['login'])): ?>
-                  <form action="index.php" method="post" enctype="multipart/form-data">
-                     <input type="hidden" name="idPhotosASupprimer" value=<?php echo $photo; ?> value=<?php echo $photo; ?>/>  
-                     <button id="boutonSupprImagesGalerie" onclick="affichePopUp()" type="submit" name="action">
-                        Supprimer cette image
-                     </button>
-                  </form>
+                  <form action="index.php" method="post">
+                    <input type="hidden" id="nomImageASupprimer" name="nomImageASupprimer" value=<?php echo 'galerie/' . $photosGalerie[0]; ?> />  
+                    <button id="boutonSupprimerNew" type="submit" name="action" class="waves-effect waves-light btn-large">Supprimer</button>
+                  </form>   
                <?php endif; ?>
                <br />
                <?php if (isset($_SESSION['login'])): ?>
@@ -112,9 +119,37 @@
                      <div class="input-field">
                        <input type="file" name="fileToUpload" id="fileToUpload">
                      </div>
-                     <button id="boutonAjoutImagesGalerie" onclick="affichePopUp()" type="submit" name="action">Ajouter
-                    </button>
+                     <button id="boutonAjoutImagesGalerie" type="submit" name="action">Ajouter</button>
                   </form>
+                  <!-- Affichage de la pop up d'ajout de news (réussi ou non ?)-->
+                  <?php if ($_SESSION['erreurGalerie'] != "no") :?>
+                     <?php if ($_SESSION['erreurGalerie'] == "champs") : ?>
+                        <script>alert("L'image n'a pas été uploadé. Vous n'avez pas sélectionné d'image.");</script>
+
+                      <?php elseif ($_SESSION['erreurGalerie'] == "notImage") : ?>
+                        <script>alert("L'image n'a pas été uploadé. L'image choisi n'est pas une image.");</script>
+
+                      <?php elseif ($_SESSION['erreurGalerie'] == "taille") : ?>
+                        <script>alert("L'image n'a pas été uploadé. L'image est trop grande.");</script>
+
+                      <?php elseif ($_SESSION['erreurGalerie'] == "format") : ?>
+                        <script>alert("L'image n'a pas été uploadé. Seuls les formats : jpg, gif, jpeg, png sont acceptés.");</script>
+
+                     <?php elseif ($_SESSION['erreurGalerie'] == "existeDeja") : ?>
+                        <script>alert("L'image n'a pas été uploadé. Elle existe déjà.");</script>
+
+                      <?php elseif ($_SESSION['erreurGalerie'] == "upload") : ?>
+                        <script>alert("L'image n'a pas été uploadé. Erreur lors du téléchargement.");</script>
+
+                      <?php endif;?>
+
+                  <?php else : ?>
+                     <script>alert("L'image' a été ajouté à la galerie");</script>
+                  <?php endif;?>
+
+                  <?php unset($_SESSION['erreurGalerie']); ?>
+                  <?php unset($_FILES["fileToUpload"]["name"]); ?>
+
                <?php endif; ?>
          </div>
          </div>

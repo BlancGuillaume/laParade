@@ -134,6 +134,7 @@
           </script>
         <?php endif;?>
         <?php unset($_SESSION['erreurNews']); ?>
+        <?php unset($_FILES["fileToUpload"]["name"]); ?>
       </section>
 
 

@@ -54,6 +54,10 @@ function afficherImages()
   var next = document.getElementById('nextButton');
   var prev = document.getElementById('prevButton');
 
+  // pour la supression 
+  var photoASupprimer = document.getElementById('nomImageASupprimer');
+
+
 
   for (var i = 0 ; i < liens.length ; i++) {
 
@@ -62,11 +66,16 @@ function afficherImages()
       if (numPhoto == (liens.length - 1)) {
         photo.src = liens[0].href;
         numPhoto = 0;
+        document.getElementById("nomImageASupprimer").value=photo.src;
+        //photoASupprimer.value = photo.alt;
       }
       else {
         photo.src = liens[numPhoto+1].href;
         numPhoto++;
+        document.getElementById("nomImageASupprimer").value=photo.src;
+        //photoASupprimer.value = photo.alt;
       }
+      //window.location.reload();
     };
 
     // quand on appuie sur le bouton precedent
@@ -74,11 +83,17 @@ function afficherImages()
       if (numPhoto == 0) {
         photo.src = liens[(liens.length - 1)].href;
         numPhoto = (liens.length - 1);
+        document.getElementById("nomImageASupprimer").value=photo.src;
+        //photoASupprimer.value = photo.alt;
       }
       else {
         photo.src = liens[numPhoto-1].href; 
         numPhoto--;
+        document.getElementById("nomImageASupprimer").value=photo.src;
+        //photoASupprimer.value = photo.alt;
+
       }
+      //window.location.reload();
     };
   } 
 }
