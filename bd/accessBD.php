@@ -18,7 +18,6 @@ class accessBD {
 
     function set_requete($requete) { // pour INSERT, UPDATE...
         // Exécution de la requête
-        // echo $requete . '<br />';
         $result = mysql_query($requete);
 		
 

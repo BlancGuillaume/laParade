@@ -1,35 +1,40 @@
 <?php 
-   session_start();
-   // page disponible uniquement par admin
-   if (!isset($_SESSION['login']))
-   {
-      header('Location: index.php');
-   }
+  session_start();
 
-   ini_set('display_errors','off'); // Pour ne pas avoir le message d'erreur : The mysql extension is deprecated
-   include('bd/accessBD.php'); 
+  // page disponible uniquement par admin
+  if (!isset($_SESSION['login']))
+  {
+    header('Location: index.php');
+  }
 
-   $bd = new accessBD;
-   $bd->connect();
+  ini_set('display_errors','off'); // Pour ne pas avoir le message d'erreur : The mysql extension is deprecated
+  
+  // Connexion à la base de données
+  include('bd/accessBD.php'); 
+  $bd = new accessBD;
+  $bd->connect();
+
+  $dir = 'uploads';
+  $photosGalerie = scandir($dir, 1);
+
+  // TO DO : je sais plus à quoi ça sert ça ? 
+  if ($_SESSION['erreur'] == -1) {
+    // var_dump($_SESSION['erreur']);
+    header('Location: deconnexion.php');
+  }
    
-   $dir    = 'uploads';
-   $photosGalerie = scandir($dir, 1);
-
-   if ($_SESSION['erreur'] == -1) {
-      var_dump($_SESSION['erreur']);
-      header('Location: deconnexion.php');
-   }
-   
-   if (isset($_POST['idNewsASupprimer'])){
+  // Suppression news 
+  if (isset($_POST['idNewsASupprimer'])){
 		$idNewsASupprimer = $_POST['idNewsASupprimer'];
-		var_dump($idNewsASupprimer);
+		// var_dump($idNewsASupprimer);
 		$reqSupprimerNews = "DELETE FROM NEWS
-							 WHERE idNews ='".$idNewsASupprimer."'";
+				                 WHERE idNews ='".$idNewsASupprimer."'";
 		$supprimerNews = $bd->set_requete($reqSupprimerNews);								
-	} 
+  } 
 	
+  // Récupération de toutes les news (de la plus récente à la plus ancienne)
 	$req = "SELECT * FROM NEWS ORDER BY idNews DESC";
-    $news = $bd->get_requete($req);
+  $news = $bd->get_requete($req);
 
 ?>
 
@@ -41,13 +46,13 @@
    <body>
       <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
       <script type="text/javascript" src="js/materialize.min.js"></script>
-      <!--<script type="text/javascript" src="js/script.js"></script>-->
       <header>
          <nav>
             <div>
                <!-- Titre du site non affiché -->
                <h1 id="titreSite">Librairie La Parade</h1>
                <img id="logo" src="images/logo_laparade.png"></img>
+
                <!-- Barre de navigation -->
                <ul id="nav-mobile" class="right hide-on-med-and-down">
                   <li><a href="index.php">Accueil</a></li>
@@ -61,7 +66,6 @@
       
       <section id="formulaireAjoutNews" class="row"> 
           <form action="upload.php" method="post" enctype="multipart/form-data">
-          <!-- Page Layout here -->
             <div id="cardNews" class="card col white">
                <h5>La news</h5>
                <div class="row">
@@ -96,14 +100,44 @@
            </button>
 
         </form>
-        <!-- Affiche PopUp d'ajout de news -->
-        <script>
-            function affichePopUp() {
-                alert("La news a été ajouté à la galerie");
-            }
-        </script>
+
+        <!-- Affichage de la pop up d'ajout de news (réussi ou non ?)-->
+        <?php if ($_SESSION['erreurNews'] != "no") :?>
+          <?php if ($_SESSION['erreurNews'] == "champs") : ?>
+            <script>
+                alert("La news n'a pas été ajouté. Le nom et le contenu de la news sont obligatoires.");
+            </script>
+          <?php elseif ($_SESSION['erreurNews'] == "bd") : ?>
+            <script>
+                alert("La news n'a pas été ajouté. Problème lié à la base de données.");
+            </script>
+          <?php elseif ($_SESSION['erreurNews'] == "notImage") : ?>
+            <script>
+                alert("La news a été ajouté à la galerie sans image. L'image choisi n'est pas une image.");
+            </script>
+          <?php elseif ($_SESSION['erreurNews'] == "taille") : ?>
+            <script>
+                alert("La news a été ajouté à la galerie sans image. L'image est trop grande.");
+            </script>
+          <?php elseif ($_SESSION['erreurNews'] == "format") : ?>
+            <script>
+                alert("La news a été ajouté à la galerie sans image. Seuls les formats : jpg, gif, jpeg, png sont acceptés.");
+            </script>
+          <?php elseif ($_SESSION['erreurNews'] == "upload") : ?>
+            <script>
+                alert("La news a été ajouté à la galerie sans image. Erreur lors du téléchargement.");
+            </script>
+          <?php endif;?>
+        <?php else : ?>
+          <script>
+            alert("La news a été ajouté à la galerie");
+          </script>
+        <?php endif;?>
+        <?php unset($_SESSION['erreurNews']); ?>
       </section>
 
+
+      <!-- Affichage de toutes les news -->
       <section id="containerAllNews">
         <?php $couleur=1; ?>
         <?php for ($i = 0; !empty($news[$i]); $i++) : ?>

@@ -1,98 +1,94 @@
 <?php
+session_start();
 ini_set('display_errors', 'off'); // Pour ne pas avoir le message d'erreur : The mysql extension is deprecated
 include ('bd/accessBD.php');
 
-// On regarde si le formulaire a été complété
+unset($_SESSION['erreurNews']);
+// Les champs nom et contenu news doivent obligatoirement être remplis
+if (!empty($_POST['nomNews']) && !empty($_POST['contenuNews'])) {
 
-if (!empty($_POST)) {
-
-	// le formulaire a été complété, connexion à la BD
-
+	/********* AJOUT NEWS DANS LA BASE DE DONNEE *********/
+	// Connexion à la base de données
 	$bd = new accessBD;
 	$bd->connect();
 
 	// Récupération de toutes les informations du formulaire d'ajout de news
+	if (isset($_POST['nomNews'])) {$nomNews = $_POST['nomNews'];} else {$nomNews = NULL;}
+	if (isset($_POST['contenuNews'])) {$contenuNews = $_POST['contenuNews'];} else {$contenuNews = NULL;}
+	if (isset($_POST['lienNews'])) {$lienNews = $_POST['lienNews'];} else {$lienNews = NULL;}
+	$var = basename($_FILES["fileToUpload"]["name"]); 
 
-	$nomNews = $_POST['nomNews'];
-	$contenuNews = $_POST['contenuNews'];
-	$lienNews = $_POST['lienNews'];
-	$var = basename($_FILES["fileToUpload"]["name"]);
-	if (!empty($var)) {
-		// News avec image
+
+	if (empty($var) != NULL) { // News avec image
 		$imageNews = "uploads/"; // Dossier dans lequel est stocké l'image. On s'en sert pour afficher les cards news
 		$imageNews.= basename($_FILES["fileToUpload"]["name"]);
 		$reqNews = "INSERT INTO NEWS (nomNews, contenuNews, imageNews,  lienNews)
 					VALUES ('" . $nomNews . "','" . $contenuNews . "','" . $imageNews . "','" . $lienNews . "')";
 	}
-	else {
-		// News sans image
+	else { // News sans image
 		$reqNews = "INSERT INTO NEWS (nomNews, contenuNews, lienNews)
 					VALUES ('" . $nomNews . "','" . $contenuNews . "','" . $lienNews . "')";
 	}
 
 	$result = $bd->set_requete($reqNews);
-}
+	if ($result == FALSE) {
+		$_SESSION['erreurNews'] = "bd";
+	}
 
-// ////////////////////////  UPLOAD DE L'IMAGE //////////////////////
-$var = basename($_FILES["fileToUpload"]["name"]);
-if (!empty($var)) {
-	$target_dir = "uploads/";
-	$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-	$uploadOk = 1;
-	$imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
+	/************* UPLOAD DE L'IMAGE *************/
+	if (!empty($var)) {
+		// $dossier = "uploads/";
+		// $target_file = $dir . basename($_FILES["fileToUpload"]["name"]);
+		$typeImage = pathinfo($imageNews, PATHINFO_EXTENSION);
 
-	// Check if image file is a actual image or fake image
-	if (isset($_POST["submit"])) {
-		$check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-		if ($check !== false) {
-			echo "Le fichier est une image - " . $check["mime"] . ".";
-			$uploadOk = 1;
+		// Vérifier si l'image est bien une image (pas de fichier texte, musique etc)
+		// TO DO : je comprends pas ce qu'est ce $_POST["submit"] ???? Et en plus pourquoi tu utilises getimagesize ? 
+		// 		   ça permet de Retourner la taille d'une image donc je vois pas le rapport là 
+		if (isset($_POST["submit"])) {
+			$check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+			if ($check == false) {
+				$_SESSION['erreurNews'] = "notImage";
+			}
 		}
-		else {
-			echo "Le fichier n'est pas une image";
-			$uploadOk = 0;
+
+		// Vérifie que le fichier n'existe pas déja : dans ce cas pas d'erreur annoncé mais pas d'upload d'image
+		 if (file_exists($imageNews)) {
+		 	$_SESSION['erreurNews'] = "existeDeja";
 		}
-	}
 
-	// Vérifie que le fichier n'existe pas déja
-	if (file_exists($target_file)) {
-		echo "Désolé le fichier existe déja";
-		$uploadOk = 0;
-	}
+		// Vérifie la taille du fichier
+		if ($_FILES["fileToUpload"]["size"] > 500000) {
+	        $_SESSION['erreurNews'] = "taille";
+		}
 
-	// Vérifie la taille du fichier
-	if ($_FILES["fileToUpload"]["size"] > 500000) {
-		echo "Désolé, votre image est trop volumineuse";
-		$uploadOk = 0;
-	}
+		// N'autorise que les extensions d'images
+		if ($typeImage != "jpg" && $typeImage != "png" && $typeImage != "jpeg" && $typeImage != "gif") {
+			$_SESSION['erreurNews'] = "format";
+		}
 
-	// N'autorise que les extensions d'images
-	if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
-		echo "Désolé, seul les fichiers JPG, JPEG, PNG & GIF files sont autorisés.";
-		$uploadOk = 0;
-	}
 
-	if ($uploadOk == 0) {
-		echo "Désolé votre image n'a pas été uploadé";
-		// Si OK, on essaye d'uploader l'image
+		// il n'y a pas d'erreur donc on upload l'image dans le dossier uploads
+		if (empty($_SESSION['erreurNews'])) {
+			if(!(move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $imageNews))) {
+				$_SESSION['erreurNews'] = "upload";
+			}
+			else {
+				$_SESSION['erreurNews'] = "no";
+			}
+
+		}
 	}
 	else {
-		if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-			echo "The file " . basename($_FILES["fileToUpload"]["name"]) . " a ete uploade.";
-
-			// redirection sur la même page
-			header('Location: gestionNews.php');
-			exit();
-		}
-		else {
-			echo "Désolé, il y a eu une erreur pendant l'upload de l'image";
+		if (empty($_SESSION['erreurNews'])) {
+			$_SESSION['erreurNews'] = "no";
 		}
 	}
 }
+
 else {
-	echo "rien a uploader";
-	header('Location: gestionNews.php');
-	exit();
+	$_SESSION['erreurNews'] = "champs";
 }
 
+header('Location: gestionNews.php');
+exit;
 ?>
