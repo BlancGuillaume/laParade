@@ -46,15 +46,18 @@
 		<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 		<script type="text/javascript" src="js/materialize.min.js"></script>
 		<script type="text/javascript" src="js/script.js"></script>
+		
 		<!-- HEADER -->
 		<header>
-		 <nav>
-		    <div>
-		       <!-- Titre du site non affiché -->
-		       <h1 id="titreSite">Librairie La Parade</h1>
-		       <img id="logo" src="images/logo_laparade.png"></img>
-		       <!-- Barre de navigation -->
-		       <ul id="nav-mobile" class="right hide-on-med-and-down">
+		<!-- Barre de navigation -->
+        <nav id="barreNavigation">
+            <div>
+               <!-- Titre du site non affiché -->
+               <h1 id="titreSite">Librairie La Parade</h1>
+               <!-- Logo -->
+               <img id="logo" src="images/logo_laparade.png"></img>
+               <!-- Menu -->
+               <ul id="menu">
 		          <li><a href="index.php">Accueil</a></li>
 		          <?php if (!isset($_SESSION['login'])) :?>
 		             <li><a href="reservation.php">Reservation</a></li>

@@ -99,24 +99,26 @@
 
 		<!-- HEADER -->
       	<header>
-		   <nav>
-		      <div>
-		         <!-- Titre du site non affiché -->
-		         <h1 id="titreSite">Librairie La Parade</h1>
-		         <img id="logo" src="images/logo_laparade.png"></img>
-		         <!-- Barre de navigation -->
-		         <ul id="nav-mobile" class="right hide-on-med-and-down">
-		            <li><a href="index.php">Accueil</a></li>
-		            <?php if (!isset($_SESSION['login'])) :?>
-		               <li class="active"><a href="reservation.php">Reservation</a></li>
-		               <li><a href="contact.php">Contact</a></li>
-		            <?php else :?>
-		               <li><a href="gestionNews.php">News</a></li>
-		               <li><a href="gestionReservation.php">Reservation</a></li>
-		               <li><a href="gestionContact.php">Messages</a></li>
-		            <?php endif; ?>
-		         </ul>
-		      </div>
+        	<!-- Barre de navigation -->
+        	<nav id="barreNavigation">
+	            <div>
+	                <!-- Titre du site non affiché -->
+	                <h1 id="titreSite">Librairie La Parade</h1>
+	                <!-- Logo -->
+	                <img id="logo" src="images/logo_laparade.png"></img>
+	                <!-- Menu -->
+	                <ul id="menu">
+			            <li><a href="index.php">Accueil</a></li>
+			            <?php if (!isset($_SESSION['login'])) :?>
+			               <li class="active"><a href="reservation.php">Reservation</a></li>
+			               <li><a href="contact.php">Contact</a></li>
+			            <?php else :?>
+			               <li><a href="gestionNews.php">News</a></li>
+			               <li><a href="gestionReservation.php">Reservation</a></li>
+			               <li><a href="gestionContact.php">Messages</a></li>
+			            <?php endif; ?>
+			        </ul>
+			    </div>
 		   </nav>
 		</header>
 

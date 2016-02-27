@@ -50,14 +50,15 @@
 
       <!-- HEADER -->
       <header>
-         <nav>
+         <!-- Barre de navigation -->
+         <nav id="barreNavigation">
             <div>
                <!-- Titre du site non affiché -->
                <h1 id="titreSite">Librairie La Parade</h1>
+               <!-- Logo -->
                <img id="logo" src="images/logo_laparade.png"></img>
-
-               <!-- Barre de navigation -->
-               <ul id="nav-mobile" class="right hide-on-med-and-down">
+               <!-- Menu -->
+               <ul id="menu">
                   <li class="active"><a href="index.php">Accueil</a></li>
                   <?php if (!isset($_SESSION['login'])) :?>
                      <li><a href="reservation.php">Reservation</a></li>
@@ -79,7 +80,7 @@
                <h3>Bienvenue
                   <?php if (isset($_SESSION['login'])): ?> administrateur
                   <?php endif; ?>
-                  </h3>
+               </h3>
                <p><?php
                   $fichier='presentation.txt';
                   $contenu_string = file_get_contents($fichier);
@@ -160,7 +161,7 @@
                <p>Grace a l'onglet <a href="reservation.html">RESERVATION</a>, vous pouvez désormais réserver vos livres en remplissant simplement le formulaire.
                   Votre bon et dévoué librairie validera alors votre commande et vous contactera lors de l'arrivée de vos livres !</p>
             </div>
-            <div id="presentationNews"class="card col white">
+            <div id="presentationNews" class="card col white">
                <h5>News</h5>
                <!-- <img id="imageNews" src="images/news.jpg"></img> -->
                <p>Afin de vous tenir informés de toutes les dernières nouveautés de votre libraire, des news apparaissent à gauche de votre écran.</p>
