@@ -19,79 +19,115 @@
 		// Récupération de toutes les informations du formulaire de réservation
 		$dateReservation = date("Y-m-d H:i:s"); // le format DATETIME de MySQL
 		$dateLimiteReservation =  $_POST['dateLimiteReception'];  
-		//var_dump($dateLimiteReservation);
+		
+		// Fonction addslashes pour éviter erreur d'insertions de bdd
 		$commentaireReservation = addslashes($_POST['commentaire']);
 		$mailClient = $_POST['email'];
-		$nomClient = $_POST['nom'];
-		$prenomClient = $_POST['prenom'];
+		$nomClient = addslashes($_POST['nom']);
+		$prenomClient = addslashes($_POST['prenom']);
 		$numClient = $_POST['telephone'];
-		$nomEtablissement = $_POST['etablissement'];
+		$nomEtablissement = addslashes($_POST['etablissement']);
 		$numISBM = $_POST['isbn'];
-		$nomLivre = $_POST['titre'];
-		$auteurLivre = $_POST['auteur'];
-		$editeurLivre = $_POST['editeur'];
+		$nomLivre = addslashes($_POST['titre']);
+		$auteurLivre = addslashes($_POST['auteur']);
+		$editeurLivre = addslashes($_POST['editeur']);
 		$statusReservation = 0;
-   
-		$reqClientExiste = 	"SELECT * 
+ 
+		$erreurFormulaire = 0; // différent de 0 s'il y a une erreur 
+		
+		// Plusieurs champs obligatoires peuvent avoir été omis.
+		// On va consruire le message au fur et a mesure
+		$erreurMessage = "La réservation a échouée, le(s) champ(s) suivant doivent être complétés : ";
+		
+		 if (empty($nomLivre)) {
+			$erreurMessage .= "titre ";
+			$erreurFormulaire = 1;
+		 }
+		 if (empty($auteurLivre)) {
+			$erreurMessage .= "auteur ";
+			$erreurFormulaire = 1;
+		 }
+		 if (empty($editeurLivre)) {
+			$erreurMessage .= "editeur ";
+			$erreurFormulaire = 1;
+		 }
+		 if (empty($mailClient)) {
+			$erreurMessage .= "mail ";
+			$erreurFormulaire = 1;
+		 }
+		 if (empty($nomClient)) {
+			$erreurMessage .= "nom ";
+			$erreurFormulaire = 1;
+		 }
+		 if (empty($prenomClient)) {
+			$erreurMessage .= "prénom ";
+			$erreurFormulaire = 1;
+		 }
+		 
+		// Affichage de la pop du succès de la réservation, ou de l'echec dans le cas contraire
+		if ($erreurFormulaire == 1) {
+			// Il y a eu une erreur
+			echo "<script> alert('".$erreurMessage."');</script>";
+		} else {
+			// Ajout de la réservation	
+			$reqClientExiste = 	"SELECT * 
 							FROM CLIENT 
 							WHERE mailClient = '".$mailClient."'"; 
-		$resultClientExiste = $bd->get_requete($reqClientExiste);
+			$resultClientExiste = $bd->get_requete($reqClientExiste);
    
-		// Le client est t'il déja dans la bd ? 
-		if (empty($resultClientExiste)) {
-			// Non : ajout du client
-			$reqInsertionClient = "INSERT INTO CLIENT VALUES ('".$mailClient."', '".$nomClient."', '".$prenomClient."', '".$numClient."')"; 
-			$result = $bd->set_requete($reqInsertionClient);
-		} 
-   
-		// Un établissement a t'il été renseigné ?
-		if (!empty($nomEtablissement)) {
-			// Oui un établissement a été renseigné
-		
-			$reqEtablissementExiste = 	"SELECT * 
-										FROM ETABLISSEMENT 
-										WHERE nomEtablissement = '".$nomEtablissement."'"; 
-			$resultEtablissementExiste = $bd->get_requete($reqEtablissementExiste);
-		
-			// L'etablissement est il dans la bd ? 
-			if (empty($resultEtablissementExiste)) {			
-				// Non : ajout de l'établissement
-				$reqInsertionEtablissement = "INSERT INTO ETABLISSEMENT VALUES ('".$nomEtablissement."')"; 
-				$result = $bd->set_requete($reqInsertionEtablissement);
+			// Le client est t'il déja dans la bd ? 
+			if (empty($resultClientExiste)) {
+				// Non : ajout du client
+				$reqInsertionClient = "INSERT INTO CLIENT VALUES ('".$mailClient."', '".$nomClient."', '".$prenomClient."', '".$numClient."')"; 
+				$result = $bd->set_requete($reqInsertionClient);
 			} 
-		}	
    
-		$reqReservation = "INSERT INTO RESERVATION (dateReservation, 
-													dateLimiteReservation,
-													commentaireReservation,
-													mailClientReservation,
-													nomEtablissementReservation,
-													numISBM,
-													nomLivre,
-													auteurLivre,
-													editeurLivre,
-													statusReservation)
+			// Un établissement a t'il été renseigné ?
+			if (!empty($nomEtablissement)) {
+				// Oui un établissement a été renseigné
 		
-		VALUES ('".$dateReservation."', 
-				'".$dateLimiteReservation."', 
-				'".$commentaireReservation."',
-				'".$mailClient."',
-				'".$nomEtablissement."',
-				'".$numISBM."',
-				'".$nomLivre."',
-				'".$auteurLivre."',
-				'".$editeurLivre."',
-				'".$statusReservation."')";
+				$reqEtablissementExiste = 	"SELECT * 
+											FROM ETABLISSEMENT 
+											WHERE nomEtablissement = '".$nomEtablissement."'"; 
+				$resultEtablissementExiste = $bd->get_requete($reqEtablissementExiste);
+		
+				// L'etablissement est il dans la bd ? 
+				if (empty($resultEtablissementExiste)) {			
+					// Non : ajout de l'établissement
+					$reqInsertionEtablissement = "INSERT INTO ETABLISSEMENT VALUES ('".$nomEtablissement."')"; 
+					$result = $bd->set_requete($reqInsertionEtablissement);
+				} 
+			}	
+   
+			$reqReservation = "INSERT INTO RESERVATION (dateReservation, 
+														dateLimiteReservation,
+														commentaireReservation,
+														mailClientReservation,
+														nomEtablissementReservation,
+														numISBM,
+														nomLivre,
+														auteurLivre,
+														editeurLivre,
+														statusReservation)
+		
+			VALUES ('".$dateReservation."', 
+					'".$dateLimiteReservation."', 
+					'".$commentaireReservation."',
+					'".$mailClient."',
+					'".$nomEtablissement."',
+					'".$numISBM."',
+					'".$nomLivre."',
+					'".$auteurLivre."',
+					'".$editeurLivre."',
+					'".$statusReservation."')";
 													  										 
-		$result = $bd->set_requete($reqReservation);	  
+			$result = $bd->set_requete($reqReservation);	  
 		
-		// Popup de succès 
-		echo "<script> alert(\"Réservation effectuée. Nous vous contacterons prochainement\");</script>";
+			// Popup de succès 
+			echo "<script> alert(\"Réservation effectuée. Nous vous contacterons prochainement\");</script>";
+		}	
 	}												  
 ?>
-
-
-
 
 <!DOCTYPE HTML>
 <html>
@@ -241,7 +277,7 @@
 				</form>
 			</div>
 		</div>
-
+		
 		<!-- NEWS -->
 		<?php include('html_includes/news.php');?>
 
