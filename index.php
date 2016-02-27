@@ -19,6 +19,14 @@
    $dir = 'galerie';
    $photosGalerie = scandir($dir, 1);
 
+
+   /* POUR MODIFIER TEXTE D'ACCUEIL */ 
+   $fichierTexteAcceuil='presentation.txt';
+   if (isset($_POST['texteAccueil'])){
+      file_put_contents($fichierTexteAcceuil, utf8_encode($_POST['texteAccueil']));
+      header('Location: index.php');  
+   }
+
    /* POUR LA GALERIE : suppression de l'image sélectionnée */
    if (isset($_POST['nomImageASupprimer'])){
 
@@ -84,13 +92,22 @@
                </h3>
 
                <!-- Affichage du contenu du fichier presentation.txt --> 
+               <?php if (!isset($_SESSION['login'])) : ?>
                <p>
                   <?php
-                     $fichier='presentation.txt';
-                     $contenu_string = file_get_contents($fichier);
+                     $contenu_string = file_get_contents($fichierTexteAcceuil);
                      print utf8_encode($contenu_string);
                   ?>
                </p><br><br>
+               <?php else : ?>
+                  <form action="index.php" method="post">
+                     <textarea id="texteAccueil" name="texteAccueil" class="materialize-textarea validate"><?php
+                        $contenu_string = file_get_contents($fichierTexteAcceuil);
+                        print utf8_encode($contenu_string);
+                     ?></textarea>
+                     <button id="ajoutTexteAccueil" type="submit" name="action" class="waves-effect waves-light btn-large">Mettre à jour</button>
+                  </form>   
+               <?php endif; ?>
             </div>
 
             <!-- GALERIE --> 

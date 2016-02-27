@@ -167,7 +167,7 @@
 							<div class="input-field col s12">
 								<i class="material-icons prefix">web</i>
 								<input type="date" class="datepicker" name="dateLimiteReception">
-								<label for="commentaire">Date limite de reception</label>
+								<label for="dateLimiteReception">Date limite de reception</label>
 							</div>
 							<!-- Initialisation du dateppicker -->
 							<script type="text/javascript">
