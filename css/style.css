@@ -314,6 +314,9 @@ font-size: medium;
   margin:1% 0% 2% 1%;
   text-align: justify;
 }
+#accrochePresentation {
+  width: 100%;
+}
 
 /* Card de la page index */
 #bienvenue {
@@ -440,18 +443,6 @@ button:focus {
   margin-top: 5%;
 }
 
-#boutonAjoutImagesGalerie {
-  float: right;
-  width:25%;
-  margin-bottom: 4%;
-}
-
-#boutonSupprImagesGalerie {
-  float:center;
-  margin:0;
-  height: 36px;
-}
-
 /*************************************************** GALERIE ***************************************************/
 #galerie {
   width:25%;
@@ -504,6 +495,18 @@ button:focus {
 
 dt {
   position:absolute; top:-999px; left:-9999px;
+}
+
+#boutonAjoutImagesGalerie {
+  float: right;
+  width:25%;
+  margin-bottom: 4%;
+}
+
+#boutonSupprImagesGalerie {
+  float:center;
+  margin:0;
+  height: 36px;
 }
 
 
