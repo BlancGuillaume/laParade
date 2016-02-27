@@ -57,8 +57,6 @@ function afficherImages()
   // pour la supression 
   var photoASupprimer = document.getElementById('nomImageASupprimer');
 
-
-
   for (var i = 0 ; i < liens.length ; i++) {
 
     // quand on appuie sur le bouton suivant

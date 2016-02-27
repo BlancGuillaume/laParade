@@ -1,13 +1,15 @@
 <?php 
 	session_start();
+
+	// RECUPERATION DU CHEMIN DU FICHIER A UPLOADER
 	$var = basename($_FILES["fileToUpload"]["name"]);
-	var_dump($var);
+
 	/************* UPLOAD DE L'IMAGE *************/
 	if (!empty($var)) {
-		$imageGalerie = "galerie/"; // Dossier dans lequel est stocké l'image. On s'en sert pour afficher les cards news
+		// Dossier dans lequel est stocké l'image
+		$imageGalerie = "galerie/"; 
 		$imageGalerie.= $var;
 		$typeImage = strtolower(pathinfo($imageGalerie, PATHINFO_EXTENSION));
-		var_dump($typeImage);
 
 		// Vérifier si l'image est bien une image (pas de fichier texte, musique etc)
 		// TO DO : je comprends pas ce qu'est ce $_POST["submit"] ???? Et en plus pourquoi tu utilises getimagesize ? 
@@ -19,29 +21,28 @@
 			}
 		}
 
-		// Vérifie que le fichier n'existe pas déja
+		// ERREUR : image est déjà présente dans galerie
 		 if (file_exists($imageGalerie)) {
 		 	$_SESSION['erreurGalerie'] = "existeDeja";
 		}
 
-		// Vérifie la taille du fichier
+		// ERREUR : image trop grande
 		if ($_FILES["fileToUpload"]["size"] > 500000) {
 	        $_SESSION['erreurGalerie'] = "taille";
 		}
 
-		// N'autorise que les extensions d'images
+		// ERREUR : mauvais format d'image
 		if ($typeImage != "jpg"  && $typeImage != "jpe" && $typeImage != "png" && $typeImage != "jpeg" && $typeImage != "gif") {
 			$_SESSION['erreurGalerie'] = "format";
 		}
 
-
 		// il n'y a pas d'erreur donc on upload l'image dans le dossier uploads
 		if (empty($_SESSION['erreurGalerie'])) {
-			var_dump($imageGalerie);
-			var_dump($_FILES["fileToUpload"]["tmp_name"]);
+			// ERREUR : lors du téléchargement de l'image dans galerie
 			if(!(move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $imageGalerie))) {
 				$_SESSION['erreurGalerie'] = "upload";
 			}
+			// PAS D'ERREUR
 			else {
 				$_SESSION['erreurGalerie'] = "no";
 			}
@@ -49,10 +50,12 @@
 		}
 	}
 
+	// ERREUR : champ(s) non rempli(s)
 	else {
 		$_SESSION['erreurGalerie'] = "champs";
 	}
 
+	// REDIRECTION VERS PAGE D'ACCUEIL
 	header('Location: index.php');
 	exit;
 

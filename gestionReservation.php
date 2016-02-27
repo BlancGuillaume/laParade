@@ -1,17 +1,21 @@
 <?php 
-   session_start();
-   // page disponible uniquement par admin
-   if (!isset($_SESSION['login']))
-   {
-      header('Location: index.php');
-   }
-     
-   ini_set('display_errors','off'); // Pour ne pas avoir le message d'erreur : The mysql extension is deprecated
-   include('bd/accessBD.php'); 
-   $bd = new accessBD;
-   $bd->connect();
+	session_start();
 
-   $reqNouvellesReservations = "SELECT  r.idReservation,
+	// PAGE DISPONIBLE UNIQUEMENT PAR L'ADMINISTRATEUR : sinon redirection à la page d'accueil
+	if (!isset($_SESSION['login']))
+	{
+		header('Location: index.php');
+	}
+	// Pour ne pas avoir le message d'erreur : The mysql extension is deprecated
+	ini_set('display_errors','off'); 
+
+	// CONNEXION A LA BASE DE DONNEES
+	include('bd/accessBD.php'); 
+	$bd = new accessBD;
+	$bd->connect();
+
+	// REQUETE PERMETTANT DE RECUPERER TOUTES LES NOUVELLES RESERVATIONS
+    $reqNouvellesReservations = "SELECT  r.idReservation,
 										r.dateReservation, 
 										r.dateLimiteReservation, 
 										r.commentaireReservation, 
@@ -28,8 +32,9 @@
 								FROM RESERVATION r, CLIENT c
 								WHERE statusReservation = 0
 								AND r.mailClientReservation = c.mailClient";
-								
-   $reqReservationsEnCours = "SELECT    r.idReservation,
+	
+	// REQUETE PERMETTANT DE RECUPERER TOUTES LES RESERVATIONS EN COURS						
+    $reqReservationsEnCours = "SELECT    r.idReservation,
 										r.dateReservation, 
 										r.dateLimiteReservation, 
 										r.commentaireReservation, 
@@ -46,6 +51,8 @@
 								FROM RESERVATION r, CLIENT c
 								WHERE statusReservation = 1
 								AND r.mailClientReservation = c.mailClient";
+
+	// REQUETE PERMETTANT DE RECUPERER TOUTES LES RESERVATIONS TERMINEES
 	$reqReservationsTerminees = "SELECT r.idReservation, 
 										r.dateReservation, 
 										r.dateLimiteReservation, 
@@ -62,33 +69,32 @@
 										c.numClient
 								FROM RESERVATION r, CLIENT c
 								WHERE statusReservation = 2
-								AND r.mailClientReservation = c.mailClient";							
-														
-   if (isset($_POST['status'])){
-      // On update le status de la reservation
-	  if ($_POST['status'] == 1) {
-		$idReservationaChanger = $_POST['idReservationAChanger'];
-		$reqChangerStatusReservation = "UPDATE RESERVATION
-										SET statusReservation = 1
-										WHERE idReservation ='".$idReservationaChanger."'";
+								AND r.mailClientReservation = c.mailClient";		
+	$nouvellesReservations = $bd->get_requete($reqNouvellesReservations);
+    $reservationsEnCours = $bd->get_requete($reqReservationsEnCours);
+    $reservationsTerminees = $bd->get_requete($reqReservationsTerminees);					
+	
+	// CHANGEMENT DE STATUS D'UNE RESERVATION (l'administrateur a appuyé sur le bouton TRAITER)								
+    if (isset($_POST['status'])){
+		// On update le status de la reservation
+		if ($_POST['status'] == 1) {
+			$idReservationaChanger = $_POST['idReservationAChanger'];
+			$reqChangerStatusReservation = "UPDATE RESERVATION
+											SET statusReservation = 1
+											WHERE idReservation ='".$idReservationaChanger."'";
  																 
  													 
- 		$updateStatusReservation = $bd->set_requete($reqChangerStatusReservation);
-	  } else if($_POST['status'] == 2 ) {
-		$idReservationaChanger = $_POST['idReservationAChanger'];
-		$reqChangerStatusReservation = "UPDATE RESERVATION
-										SET statusReservation = 2
-										WHERE idReservation ='".$idReservationaChanger."'";									 
- 		echo $reqChangerStatusReservation;								 
- 		$updateStatusReservation = $bd->set_requete($reqChangerStatusReservation);
-	  }
+ 			$updateStatusReservation = $bd->set_requete($reqChangerStatusReservation);
+	  	} 
+	  	else if($_POST['status'] == 2 ) {
+			$idReservationaChanger = $_POST['idReservationAChanger'];
+			$reqChangerStatusReservation = "UPDATE RESERVATION
+											SET statusReservation = 2
+											WHERE idReservation ='".$idReservationaChanger."'";									 
+	 		echo $reqChangerStatusReservation;								 
+	 		$updateStatusReservation = $bd->set_requete($reqChangerStatusReservation);
+	  	}
 	}
-	
-   $nouvellesReservations = $bd->get_requete($reqNouvellesReservations);
-   $reservationsEnCours = $bd->get_requete($reqReservationsEnCours);
-   $reservationsTerminees = $bd->get_requete($reqReservationsTerminees);
-   
-
 ?>
 
 <!DOCTYPE HTML>

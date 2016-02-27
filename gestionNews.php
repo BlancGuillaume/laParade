@@ -1,32 +1,33 @@
 <?php 
   session_start();
 
-  // page disponible uniquement par admin
+  // PAGE DISPONIBLE UNIQUEMENT PAR L'ADMINISTRATEUR : sinon redirection à la page d'accueil
   if (!isset($_SESSION['login']))
   {
     header('Location: index.php');
   }
 
-  ini_set('display_errors','off'); // Pour ne pas avoir le message d'erreur : The mysql extension is deprecated
+  // Pour ne pas avoir le message d'erreur : The mysql extension is deprecated
+  ini_set('display_errors','off'); 
   
-  // Connexion à la base de données
+  // CONNEXION A LA BASE DE DONNEES
   include('bd/accessBD.php'); 
   $bd = new accessBD;
   $bd->connect();
 
+  /* POUR LES NEWS : récupération des images du dossier uploads */
   $dir = 'uploads';
   $photosGalerie = scandir($dir, 1);
 
-  // TO DO : je sais plus à quoi ça sert ça ? 
-  if ($_SESSION['erreur'] == -1) {
-    // var_dump($_SESSION['erreur']);
-    header('Location: deconnexion.php');
+  /* POUR LA CONNEXION : affichage alerte si erreur de connexion */
+  if ($_SESSION['erreurConnection'] == -1) {
+    unset($_SESSION['erreurConnection']);
+    echo '<script>alert("Echec de la connection : mail ou mot de passe invalide.");</script>';
   }
    
-  // Suppression news 
+  // SUPPRESSION NEWS
   if (isset($_POST['idNewsASupprimer'])){
 		$idNewsASupprimer = $_POST['idNewsASupprimer'];
-		// var_dump($idNewsASupprimer);
 		$reqSupprimerNews = "DELETE FROM NEWS
 				                 WHERE idNews ='".$idNewsASupprimer."'";
 		$supprimerNews = $bd->set_requete($reqSupprimerNews);								

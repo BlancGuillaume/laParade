@@ -1,25 +1,25 @@
 <?php 
    session_start();
-   if (isset($_SESSION['login']))
-   {
-      //var_dump($_SESSION['login']);
-   }
 
-   ini_set('display_errors','off'); // Pour ne pas avoir le message d'erreur : The mysql extension is deprecated
+   // Pour ne pas avoir le message d'erreur : The mysql extension is deprecated
+   ini_set('display_errors','off'); 
+   
+   // CONNEXION A LA BASE DE DONNEES 
    include('bd/accessBD.php'); 
-
    $bd = new accessBD;
    $bd->connect();
+   
+   /* POUR LA CONNEXION : affichage alerte si erreur de connexion */
+   if ($_SESSION['erreurConnection'] == -1) {
+      unset($_SESSION['erreurConnection']);
+      echo '<script>alert("Echec de la connection : mail ou mot de passe invalide.");</script>';
+   }
 
+   /* POUR LA GALERIE : récupération des images du dossier galerie */
    $dir = 'galerie';
    $photosGalerie = scandir($dir, 1);
 
-   if ($_SESSION['erreur'] == -1) {
-      var_dump($_SESSION['erreur']);
-      header('Location: deconnexion.php');
-   }
-
-   // Suppression image 
+   /* POUR LA GALERIE : suppression de l'image sélectionnée */
    if (isset($_POST['nomImageASupprimer'])){
 
       $element = explode("/", $_POST['nomImageASupprimer']);
@@ -33,6 +33,7 @@
             else $cheminImage = $element[$i];
          }
       }
+      // suppression du lien
       unlink($cheminImage);    
       header('Location: index.php');            
    } 
@@ -81,15 +82,18 @@
                   <?php if (isset($_SESSION['login'])): ?> administrateur
                   <?php endif; ?>
                </h3>
-               <p><?php
-                  $fichier='presentation.txt';
-                  $contenu_string = file_get_contents($fichier);
-                  print utf8_encode($contenu_string);
-               ?></p>
 
-                  <br><br></p>
+               <!-- Affichage du contenu du fichier presentation.txt --> 
+               <p>
+                  <?php
+                     $fichier='presentation.txt';
+                     $contenu_string = file_get_contents($fichier);
+                     print utf8_encode($contenu_string);
+                  ?>
+               </p><br><br>
             </div>
 
+            <!-- GALERIE --> 
             <div id="galerie">
                <ul id="ensemblePhotos">
                   <?php $i = 1;foreach ($photosGalerie as $photo) :?>
@@ -104,10 +108,12 @@
                      <dd><img id="photoAAfficher" src=<?php echo 'galerie/' . $photosGalerie[0];?> alt=<?php echo 'galerie/' . $photosGalerie[0];?> /></dd>
                   <?php endif; ?>
                </dl>
+               <!-- NAVIGATION DANS LA GALERIE (cf fonction afficherImages de js/script.js) --> 
                <ul id="navGalerie">
                   <li id="prec"><a class="waves-effect waves-light btn-large" id="prevButton" ><i class="material-icons left">skip_previous</i></a></li>
                   <li id="suiv"><a class="waves-effect waves-light btn-large" id="nextButton" ><i class="material-icons left">skip_next</i></a></li>
                </ul>
+               <!-- SUPPRESSION IMAGE (contenu administrateur) --> 
                <?php if (isset($_SESSION['login'])): ?>
                   <form action="index.php" method="post">
                     <input type="hidden" id="nomImageASupprimer" name="nomImageASupprimer" value=<?php echo 'galerie/' . $photosGalerie[0]; ?> />  
@@ -115,6 +121,7 @@
                   </form>   
                <?php endif; ?>
                <br />
+               <!-- AJOUT IMAGE (contenu administrateur) --> 
                <?php if (isset($_SESSION['login'])): ?>
                   <form action="uploadImagesGalerie.php" method="post" enctype="multipart/form-data">
                      <div class="input-field">
@@ -122,7 +129,8 @@
                      </div>
                      <button id="boutonAjoutImagesGalerie" type="submit" name="action">Ajouter</button>
                   </form>
-                  <!-- Affichage de la pop up d'ajout de news (réussi ou non ?)-->
+
+                  <!-- Affichage de la pop up d'ajout des images (pour savoir si téléchargement a réussi ou non)-->
                   <?php if ($_SESSION['erreurGalerie'] != "no") :?>
                      <?php if ($_SESSION['erreurGalerie'] == "champs") : ?>
                         <script>alert("L'image n'a pas été uploadé. Vous n'avez pas sélectionné d'image.");</script>
@@ -141,18 +149,20 @@
 
                       <?php elseif ($_SESSION['erreurGalerie'] == "upload") : ?>
                         <script>alert("L'image n'a pas été uploadé. Erreur lors du téléchargement.");</script>
-
                       <?php endif;?>
 
                   <?php else : ?>
                      <script>alert("L'image' a été ajouté à la galerie");</script>
                   <?php endif;?>
 
+                  <!-- On réinitialise les variables --> 
                   <?php unset($_SESSION['erreurGalerie']); ?>
                   <?php unset($_FILES["fileToUpload"]["name"]); ?>
 
                <?php endif; ?>
          </div>
+         
+         <!-- PRESENTATION DES DIFFERENTS SERVICES QUE PROPOSENT LA LIBRAIRIE --> 
          </div>
          <div id="presentationService" class="row">
             <div id="presentationReservation" class="card col white">

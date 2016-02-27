@@ -1,9 +1,17 @@
 <?php 
-   ini_set('display_errors','off'); // Pour ne pas avoir le message d'erreur : The mysql extension is deprecated
-   include('bd/accessBD.php'); 
+	// Pour ne pas avoir le message d'erreur : The mysql extension is deprecated
+    ini_set('display_errors','off'); 
 
+    // CONNEXION A LA BASE DE DONNEES
+    include('bd/accessBD.php'); 
 	$bd = new accessBD;
 	$bd->connect();
+
+	/* POUR LA CONNEXION : affichage alerte si erreur de connexion */
+	if ($_SESSION['erreurConnection'] == -1) {
+		unset($_SESSION['erreurConnection']);
+		echo '<script>alert("Echec de la connection : mail ou mot de passe invalide.");</script>';
+	}
 	
    // On regarde si le formulaire a été complété 
    if (!empty($_POST)) {
@@ -11,7 +19,7 @@
 		// Récupération de toutes les informations du formulaire de réservation
 		$dateReservation = date("Y-m-d H:i:s"); // le format DATETIME de MySQL
 		$dateLimiteReservation =  $_POST['dateLimiteReception'];  
-		var_dump($dateLimiteReservation);
+		//var_dump($dateLimiteReservation);
 		$commentaireReservation = addslashes($_POST['commentaire']);
 		$mailClient = $_POST['email'];
 		$nomClient = $_POST['nom'];

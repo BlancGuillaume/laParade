@@ -1,52 +1,60 @@
 <?php 
-   session_start();
-   // page disponible uniquement par admin
-   if (!isset($_SESSION['login']))
-   {
-      header('Location: index.php');
-   }
+    session_start();
 
-   ini_set('display_errors','off'); // Pour ne pas avoir le message d'erreur : The mysql extension is deprecated
-   include('bd/accessBD.php'); 
+	// PAGE DISPONIBLE UNIQUEMENT PAR L'ADMINISTRATEUR : sinon redirection à la page d'accueil
+	if (!isset($_SESSION['login']))
+	{
+	  header('Location: index.php');
+	}
 
-   $bd = new accessBD;
-   $bd->connect();
+	// Pour ne pas avoir le message d'erreur : The mysql extension is deprecated
+   	ini_set('display_errors','off'); 
 
-   $reqNouveauMessage = "SELECT  m.idMessage,
-								 m.contenuMessage,
-								 m.dateMessage,
-							   	 c.mailClient,
-								 c.nomClient,
-								 c.prenomClient,
-								 c.numClient
+   	// CONNEXION A LA BASE DE DONNEES
+   	include('bd/accessBD.php'); 
+	$bd = new accessBD;
+	$bd->connect();
+
+	// REQUETE PERMETTANT DE RECUPERER LES NOUVEAUX MESSAGES
+    $reqNouveauMessage = "SELECT  m.idMessage,
+								  m.contenuMessage,
+								  m.dateMessage,
+							   	  c.mailClient,
+								  c.nomClient,
+								  c.prenomClient,
+								  c.numClient
 						FROM MESSAGE m, CLIENT c
 						WHERE m.statusMessage = 0
 						AND m.mailClientMessage = c.mailClient";
-								
-   $reqMessageTraite = "SELECT   m.idMessage,
-								 m.contenuMessage,
-								 m.dateMessage,
-							   	 c.mailClient,
-								 c.nomClient,
-								 c.prenomClient,
-								 c.numClient
+	$nouveauMessage = $bd->get_requete($reqNouveauMessage);
+
+	// REQUETE PERMETTANT DE RECUPERER LES MESSAGES	TRAITES					
+    $reqMessageTraite = "SELECT   m.idMessage,
+								  m.contenuMessage,
+								  m.dateMessage,
+							   	  c.mailClient,
+								  c.nomClient,
+								  c.prenomClient,
+								  c.numClient
 						FROM MESSAGE m, CLIENT c
 						WHERE m.statusMessage = 1
 						AND m.mailClientMessage = c.mailClient";
 
-   if (isset($_POST['status'])){
-      // On update le status du message
-	  if ($_POST['status'] == 1) {
-		$idMessageStatusChange = $_POST['idMessageAChanger'];
-		$reqChangerStatusMessage      = "UPDATE MESSAGE
+    $messageTraite = $bd->get_requete($reqMessageTraite);
+
+	// CHANGEMENT DE STATUS D'UN MESSAGE (l'administrateur a appuyé sur le bouton TRAITER)
+	if (isset($_POST['status'])){
+		// On update le status du message
+		if ($_POST['status'] == 1) {
+			$idMessageStatusChange = $_POST['idMessageAChanger'];
+			$reqChangerStatusMessage = "UPDATE MESSAGE
 										SET statusMessage = 1
 										WHERE idMessage ='".$idMessageStatusChange."'";
-		$updateStatusMessage = $bd->set_requete($reqChangerStatusMessage);								
+			$updateStatusMessage = $bd->set_requete($reqChangerStatusMessage);								
 	  }
 	} 
 	
-   $nouveauMessage = $bd->get_requete($reqNouveauMessage);
-   $messageTraite = $bd->get_requete($reqMessageTraite);
+    
 ?>
 
 <!DOCTYPE HTML>
@@ -170,7 +178,6 @@
 							<?php if (isset($value['contenuMessage'])) { ?>
 								<p><?php echo  "Message : ".$value['contenuMessage']; ?></p>
 							<?php } ?>	
-         						
 
                               </div>
                            </div>
