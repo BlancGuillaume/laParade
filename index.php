@@ -104,7 +104,7 @@
                      <dd><img id="photoAAfficher" src=<?php echo 'galerie/' . $photosGalerie[0];?> alt=<?php echo 'galerie/' . $photosGalerie[0];?> /></dd>
                   <?php endif; ?>
                </dl>
-               <ul id="nav">
+               <ul id="navGalerie">
                   <li id="prec"><a class="waves-effect waves-light btn-large" id="prevButton" ><i class="material-icons left">skip_previous</i></a></li>
                   <li id="suiv"><a class="waves-effect waves-light btn-large" id="nextButton" ><i class="material-icons left">skip_next</i></a></li>
                </ul>
