@@ -13,8 +13,8 @@
 		$dateMessage = date("Y-m-d H:i:s"); // le format DATETIME de MySQL
 		$contenuMessage = addslashes($_POST['commentaire']);
 		$mailClient = $_POST['email'];
-		$nomClient = $_POST['nomMessage'];
-		$prenomClient = $_POST['prenomMessage'];
+		$nomClient = addslashes($_POST['nomMessage']);
+		$prenomClient = addslashes($_POST['prenomMessage']);
 		$numClient = $_POST['telephone'];
 		$statusMessage = 0; // nouveau message
 		$reqClientExiste = 	"SELECT * 
@@ -33,7 +33,10 @@
 						 VALUES ('".$contenuMessage."','".$dateMessage."','".$mailClient."','".$statusMessage."')";
 												  
 																								  
-		$result = $bd->set_requete($reqMessage);	  
+		$result = $bd->set_requete($reqMessage);
+		
+		// Popup de succès 
+		echo "<script> alert(\"Le message a été envoyés avec succès. Nous vous répondre au plus vite.\");</script>";		
 	}										  
 ?>
 
