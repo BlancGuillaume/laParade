@@ -44,14 +44,23 @@
 
 	// CHANGEMENT DE STATUS D'UN MESSAGE (l'administrateur a appuyé sur le bouton TRAITER)
 	if (isset($_POST['status'])){
-		// On update le status du message
 		if ($_POST['status'] == 1) {
+			// On update le status du message
 			$idMessageStatusChange = $_POST['idMessageAChanger'];
 			$reqChangerStatusMessage = "UPDATE MESSAGE
 										SET statusMessage = 1
 										WHERE idMessage ='".$idMessageStatusChange."'";
 			$updateStatusMessage = $bd->set_requete($reqChangerStatusMessage);								
-	  }
+		}
+		else if ($_POST['status'] == 2) { 
+			// on supprime le message
+			var_dump("a supprimer");
+			var_dump($idMessageStatusChange);
+			$idMessageStatusChange = $_POST['idMessageASupprimer'];
+			$reqSupprimerMessage = "DELETE FROM MESSAGE WHERE idMessage ='".$idMessageStatusChange."'";
+			$supprimerMessage = $bd->set_requete($reqSupprimerMessage);								
+		} 
+		header('Location: gestionContact.php');
 	} 
 	
     
@@ -108,25 +117,25 @@
                               <div class="card-content black-text">
          						<!--<p><?php echo $value['idMessage']; ?></p>-->
 								<strong>Le client : </strong>
-								<?php if (isset($value['nomClient'])) { ?>
+								<?php if (!empty($value['nomClient'])) { ?>
 									<p><?php echo "Nom : ".$value['nomClient']; ?></p>
 								<?php } ?>	
-								<?php if (isset($value['prenomClient'])) { ?>
+								<?php if (!empty($value['prenomClient'])) { ?>
 									<p><?php echo "Prenom : ".$value['prenomClient']; ?></p>
 								<?php } ?>	
-								<?php if (isset($value['mailClient'])) { ?>
+								<?php if (!empty($value['mailClient'])) { ?>
 									<p><?php echo  "Mail : ".$value['mailClient']; ?></p>
 								<?php } ?>	
-								<?php if (isset($value['numClient'])) { ?>
+								<?php if (!empty($value['numClient'])) { ?>
 									<p><?php echo  "Tel : ".$value['numClient']; ?></p>
 								<?php } ?>	
 								<br>
 								
 								<strong>Le message : </strong>
-								<?php if (isset($value['dateMessage'])) { ?>
+								<?php if (!empty($value['dateMessage'])) { ?>
 									<p><?php echo  "Date : ".$value['dateMessage']; ?></p>
 								<?php } ?>
-								<?php if (isset($value['contenuMessage'])) { ?>
+								<?php if (!empty($value['contenuMessage'])) { ?>
 									<p><?php echo  "Message : ".$value['contenuMessage']; ?></p>
 								<?php } ?>	
 								<br>
@@ -155,31 +164,38 @@
                         <div class="col s3 m3">
                               <div class="card green">
                               <div class="card-content black-text">
-         						<!-- <p><?php echo $value['idMessage']; ?></p> -->
+								<!-- L'id du message a supprimer -->
+         						<?php $idMessageASupprimer = $value['idMessage']; ?></p>
 								<strong>Le client : </strong>
-								<?php if (isset($value['nomClient'])) { ?>
+								<?php if (!empty($value['nomClient'])) { ?>
 									<p><?php echo "Nom : ".$value['nomClient']; ?></p>
 								<?php } ?>	
-								<?php if (isset($value['prenomClient'])) { ?>
+								<?php if (!empty($value['prenomClient'])) { ?>
 									<p><?php echo "Prenom : ".$value['prenomClient']; ?></p>
 							<?php } ?>	
-							<?php if (isset($value['mailClient'])) { ?>
+							<?php if (!empty($value['mailClient'])) { ?>
 								<p><?php echo  "Mail : ".$value['mailClient']; ?></p>
 							<?php } ?>	
-							<?php if (isset($value['numClient'])) { ?>
+							<?php if (!empty($value['numClient'])) { ?>
 								<p><?php echo  "Tel : ".$value['numClient']; ?></p>
 							<?php } ?>	
 							<br>
 								
 							<strong>Le message : </strong>
-							<?php if (isset($value['dateMessage'])) { ?>
+							<?php if (!empty($value['dateMessage'])) { ?>
 								<p><?php echo  "Date : ".$value['dateMessage']; ?></p>
 							<?php } ?>
-							<?php if (isset($value['contenuMessage'])) { ?>
+							<?php if (!empty($value['contenuMessage'])) { ?>
 								<p><?php echo  "Message : ".$value['contenuMessage']; ?></p>
 							<?php } ?>	
-
                               </div>
+							  <!-- Bouton pour changer le status du message : on le supprime
+						    On envoie par POST l'id du message à supprimer -->
+							<form action="gestionContact.php" method="post">
+								<input type="hidden" name="status" value="2" /> <!-- 2 pour supprimer message -->
+								<input type="hidden" name="idMessageASupprimer" value=<?php echo $idMessageASupprimer; ?> /> 
+								<button id="boutonGestionMessage" class="btn waves-effect waves-light" type="submit"  name="action">supprimer</button>
+							</form>
                            </div>
                         </div>
                   <?php } ?>
