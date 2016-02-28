@@ -10,14 +10,13 @@ if (!empty($_POST['nomNews']) && !empty($_POST['contenuNews'])) {
 	$bd = new accessBD;
 	$bd->connect();
 	// Récupération de toutes les informations du formulaire d'ajout de news
-	if (isset($_POST['nomNews'])) {$nomNews = $_POST['nomNews'];} else {$nomNews = NULL;}
-	if (isset($_POST['contenuNews'])) {$contenuNews = $_POST['contenuNews'];} else {$contenuNews = NULL;}
-	if (isset($_POST['lienNews'])) {$lienNews = $_POST['lienNews'];} else {$lienNews = NULL;}
+	if (isset($_POST['nomNews'])) { $nomNews = addslashes($_POST['nomNews']);} else {$nomNews = NULL;}
+	if (isset($_POST['contenuNews'])) {$contenuNews = addslashes($_POST['contenuNews']);} else {$contenuNews = NULL;}
+	if (isset($_POST['lienNews'])) {$lienNews = addslashes($_POST['lienNews']);} else {$lienNews = NULL;}
 	$var = basename($_FILES["fileToUpload"]["name"]); 
 
 
 	if (!empty($var)) { // News avec image
-		echo "blajdjfujfiijfi";
 		$imageNews = "uploads/"; // Dossier dans lequel est stocké l'image. On s'en sert pour afficher les cards news
 		$imageNews.= basename($_FILES["fileToUpload"]["name"]);
 		$reqNews = "INSERT INTO NEWS (nomNews, contenuNews, imageNews,  lienNews)
@@ -33,7 +32,6 @@ if (!empty($_POST['nomNews']) && !empty($_POST['contenuNews'])) {
 	}
 	$typeImage = pathinfo($imageNews, PATHINFO_EXTENSION);
 
-	var_dump($imageNews);
 	/************* UPLOAD DE L'IMAGE *************/
 	if (!empty($var)) {
 		// $dossier = "uploads/";
@@ -41,8 +39,6 @@ if (!empty($_POST['nomNews']) && !empty($_POST['contenuNews'])) {
 		
 		var_dump($typeImage);
 		// Vérifier si l'image est bien une image (pas de fichier texte, musique etc)
-		// TO DO : je comprends pas ce qu'est ce $_POST["submit"] ???? Et en plus pourquoi tu utilises getimagesize ? 
-		// 		   ça permet de Retourner la taille d'une image donc je vois pas le rapport là 
 		if (isset($_POST["submit"])) {
 			$check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
 			if ($check == false) {
