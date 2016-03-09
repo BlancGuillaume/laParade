@@ -74,6 +74,9 @@
    <body>
       <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
       <script type="text/javascript" src="js/materialize.min.js"></script>
+      <script src="js/jquery.lazyload.js"></script>
+      <script type="text/javascript" src="js/script.js"></script>
+
       <header>
         <!-- Barre de navigation -->
         <nav id="barreNavigation">
@@ -81,7 +84,7 @@
                <!-- Titre du site non affiché -->
                <h1 id="titreSite">Librairie La Parade</h1>
                <!-- Logo -->
-               <img id="logo" src="images/logo_laparade.png"></img>
+               <img id="logo" class="imgAsynchrone" data-original="images/logo_laparade.png"></img>
                <!-- Menu -->
                <ul id="menu">
                   <li><a href="index.php">Accueil</a></li>

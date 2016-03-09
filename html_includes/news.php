@@ -22,7 +22,7 @@ $news = $bd->get_requete($req); ?>
                      <a href=<?php echo "\"" . $news[$i]['lienNews'] . "\""; ?>>LIEN</a>
                   <?php endif ?>
                   <?php if ($news[$i]['imageNews'] != NULL): ?>
-                     <img src=<?php echo "\"" . $news[$i]['imageNews'] . "\""; ?>></img>
+                     <img class="imgAsynchrone" data-original=<?php echo "\"" . $news[$i]['imageNews'] . "\""; ?>></img>
                   <?php endif ?>
                </div>
             </div>

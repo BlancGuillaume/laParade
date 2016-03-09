@@ -95,5 +95,8 @@ function afficherImages()
     };
   } 
 }
-
 window.onload = afficherImages;
+
+$(function() {
+   $("img.imgAsynchrone").lazyload();
+});

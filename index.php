@@ -56,6 +56,7 @@
       <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
       <script type="text/javascript" src="js/materialize.min.js"></script>
       <script type="text/javascript" src="js/script.js"></script>
+      <script src="js/jquery.lazyload.js"></script>
 
       <!-- HEADER -->
       <header>
@@ -65,7 +66,7 @@
                <!-- Titre du site non affiché -->
                <h1 id="titreSite">Librairie La Parade</h1>
                <!-- Logo -->
-               <img id="logo" src="images/logo_laparade.png"></img>
+               <img class="imgAsynchrone" data-original="images/logo_laparade.png" width="182" height="130">
                <!-- Menu -->
                <ul id="menu">
                   <li class="active"><a href="index.php">Accueil</a></li>
@@ -122,7 +123,7 @@
                <dl id="photo">
                   <?php if (!in_array($photosGalerie[0],array(".",".."))) : ?>
                      <dt><?php echo $photosGalerie[0];?></dt>
-                     <dd><img id="photoAAfficher" src=<?php echo 'galerie/' . $photosGalerie[0];?> alt=<?php echo 'galerie/' . $photosGalerie[0];?> /></dd>
+                     <dd><img id="photoAAfficher" class="imgAsynchrone" data-original=<?php echo 'galerie/' . $photosGalerie[0];?> alt=<?php echo 'galerie/' . $photosGalerie[0];?> /></dd>
                   <?php endif; ?>
                </dl>
                <!-- NAVIGATION DANS LA GALERIE (cf fonction afficherImages de js/script.js) --> 
@@ -184,7 +185,7 @@
          <div id="presentationService" class="row">
             <div id="presentationReservation" class="card col white">
                <h5>Reservation de livres</h5>
-               <img id="imageLivre" src="images/livre.jpg"></img>
+               <img id="imageLivre" class="imgAsynchrone" data-original="images/livre.jpg"></img>
                <p>Grace a l'onglet <a href="reservation.html">RESERVATION</a>, vous pouvez désormais réserver vos livres en remplissant simplement le formulaire.
                   Votre bon et dévoué librairie validera alors votre commande et vous contactera lors de l'arrivée de vos livres !</p>
             </div>
