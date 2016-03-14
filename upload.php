@@ -34,10 +34,7 @@ if (!empty($_POST['nomNews']) && !empty($_POST['contenuNews'])) {
 
 	/************* UPLOAD DE L'IMAGE *************/
 	if (!empty($var)) {
-		// $dossier = "uploads/";
-		// $target_file = $dir . basename($_FILES["fileToUpload"]["name"]);
 		
-		var_dump($typeImage);
 		// Vérifier si l'image est bien une image (pas de fichier texte, musique etc)
 		if (isset($_POST["submit"])) {
 			$check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);

@@ -54,8 +54,6 @@
 		}
 		else if ($_POST['status'] == 2) { 
 			// on supprime le message
-			var_dump("a supprimer");
-			var_dump($idMessageStatusChange);
 			$idMessageStatusChange = $_POST['idMessageASupprimer'];
 			$reqSupprimerMessage = "DELETE FROM MESSAGE WHERE idMessage ='".$idMessageStatusChange."'";
 			$supprimerMessage = $bd->set_requete($reqSupprimerMessage);								
@@ -73,9 +71,9 @@
 
    <body>
       <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-      <script type="text/javascript" src="js/materialize.min.js"></script>
-      <script src="js/jquery.lazyload.js"></script>
-      <script type="text/javascript" src="js/script.js"></script>
+      <script type="text/javascript" src="js/codeAutre/materialize.min.js"></script>
+      <script src="js/codeAutre/jquery.lazyload.js"></script>
+      <script type="text/javascript" src="js/notreCode/script.js"></script>
 
       <header>
         <!-- Barre de navigation -->
@@ -210,7 +208,7 @@
       </ul>
    </section>
 
-   <!-- HEADER -->
+   <!-- NEWS -->
    <?php include('html_includes/news.php');?>
 
    <!-- FOOTER -->

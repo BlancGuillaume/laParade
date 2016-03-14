@@ -34,7 +34,7 @@
 
       $tmp = 0;
       for ($i = 0 ; $i < count($element) ; $i++) {
-         var_dump($element[$i]);
+         //var_dump($element[$i]);
          if ($tmp == 1 || strcmp($element[$i],"galerie") == 0) {
             $tmp = 1; 
             if ($cheminImage != NULL) $cheminImage = $cheminImage . '/' . $element[$i];
@@ -54,9 +54,9 @@
 
    <body>
       <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-      <script type="text/javascript" src="js/materialize.min.js"></script>
-      <script type="text/javascript" src="js/script.js"></script>
-      <script src="js/jquery.lazyload.js"></script>
+      <script type="text/javascript" src="js/codeAutre/materialize.min.js"></script>
+      <script type="text/javascript" src="js/notreCode/script.js"></script>
+      <script src="js/codeAutre/jquery.lazyload.js"></script>
 
       <!-- HEADER -->
       <header>
@@ -186,7 +186,7 @@
             <div id="presentationReservation" class="card col white">
                <h5>Reservation de livres</h5>
                <img id="imageLivre" class="imgAsynchrone" data-original="images/livre.jpg"></img>
-               <p>Grace a l'onglet <a href="reservation.html">RESERVATION</a>, vous pouvez désormais réserver vos livres en remplissant simplement le formulaire.
+               <p>Grace a l'onglet <a href="reservation.php">RESERVATION</a>, vous pouvez désormais réserver vos livres en remplissant simplement le formulaire.
                   Votre bon et dévoué librairie validera alors votre commande et vous contactera lors de l'arrivée de vos livres !</p>
             </div>
             <div id="presentationNews" class="card col white">
@@ -197,12 +197,12 @@
              <div id="presentationContact" class="card col white">
                <h5>Contact</h5>
                <!-- <img id="imageContact" src="images/contact.jpg"></img> -->
-               <p>Pour toutes questions, vous pouvez contacter votre librairie grâce à l'onglet <a href="contact.html">CONTACT</a>.</p>
+               <p>Pour toutes questions, vous pouvez contacter votre librairie grâce à l'onglet <a href="contact.php">CONTACT</a>.</p>
             </div>
          </div>
       </section>
 
-      <!-- HEADER -->
+      <!-- NEWS -->
       <?php include('html_includes/news.php');?>
 
       <!-- FOOTER -->

@@ -47,9 +47,9 @@
 
 	<body>
 		<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-		<script type="text/javascript" src="js/materialize.min.js"></script>
-		<script type="text/javascript" src="js/script.js"></script>
-		<script src="js/jquery.lazyload.js"></script>
+		<script type="text/javascript" src="js/codeAutre/materialize.min.js"></script>
+		<script type="text/javascript" src="js/notreCode/script.js"></script>
+		<script src="js/codeAutre/jquery.lazyload.js"></script>
 		
 		<!-- HEADER -->
 		<header>
@@ -121,7 +121,8 @@
 				</button>
 			</form>
 		</section>
-		<!-- HEADER -->
+
+		<!-- NEWS -->
 		<?php include('html_includes/news.php');?>
 
 		<!-- FOOTER -->

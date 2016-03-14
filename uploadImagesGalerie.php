@@ -12,8 +12,6 @@
 		$typeImage = strtolower(pathinfo($imageGalerie, PATHINFO_EXTENSION));
 
 		// Vérifier si l'image est bien une image (pas de fichier texte, musique etc)
-		// TO DO : je comprends pas ce qu'est ce $_POST["submit"] ???? Et en plus pourquoi tu utilises getimagesize ? 
-		// 		   ça permet de Retourner la taille d'une image donc je vois pas le rapport là 
 		if (isset($_POST["submit"])) {
 			$check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
 			if ($check == false) {

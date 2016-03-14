@@ -91,7 +91,7 @@
 			$reqChangerStatusReservation = "UPDATE RESERVATION
 											SET statusReservation = 2
 											WHERE idReservation ='".$idReservationaChanger."'";									 
-	 		echo $reqChangerStatusReservation;								 
+	 		//echo $reqChangerStatusReservation;								 
 	 		$updateStatusReservation = $bd->set_requete($reqChangerStatusReservation);
 	  	}
 		
@@ -111,8 +111,11 @@
     <?php include('html_includes/head.php');?>
 
    <body>
-       <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-       <script type="text/javascript" src="js/materialize.min.js"></script>
+      <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+      <script type="text/javascript" src="js/codeAutre/materialize.min.js"></script>
+      <script type="text/javascript" src="js/notreCode/script.js"></script>
+      <script src="js/codeAutre/jquery.lazyload.js"></script>
+
        <header>
           	<!-- Barre de navigation -->
          	<nav id="barreNavigation">
@@ -332,8 +335,8 @@
 		  	</ul>
 		</section>
 
-		<!-- HEADER -->
-		<?php include('html_includes/news.php');?>
+	    <!-- NEWS -->
+	    <?php include('html_includes/news.php');?>
 
 		<!-- FOOTER -->
 		<?php include('html_includes/footer.php');?>
